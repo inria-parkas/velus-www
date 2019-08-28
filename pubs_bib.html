@@ -1,6 +1,6 @@
 <!DOCTYPE html>				       <html lang="en">				 <head>						   <meta charset="utf-8"/>			   <title>PARKAS Bibliography</title>		 </head>					 <body>						   <div class="parkas-raw">
-<h1>velus.bib</h1><a name="velus:jfla:2017"></a><pre>
-@inproceedings{velus:jfla:2017,
+<h1>velus.bib</h1><a name="JFLA17"></a><pre>
+@inproceedings{JFLA17,
   title = {{V{\'e}rification de la g{\'e}n{\'e}ration modulaire du code imp{\'e}ratif pour Lustre}},
   author = {Bourke, Timothy and Dagand, Pierre-Evariste and Pouzet, Marc and Rieg, Lionel},
   url = {https://hal.inria.fr/hal-01403830},
@@ -11,12 +11,28 @@
   keywords = {Langages synchrones (Lustre) ;  Compilation ;  Assistants de Preuve (Coq)},
   pdf = {https://hal.inria.fr/hal-01403830/file/bourke%20%281%29.pdf},
   hal_id = {hal-01403830},
-  hal_version = {v1}
+  hal_version = {v1},
+  abstract = {
+    Synchronous languages are used to program critical control applications.
+    The Scade language, used in industry for these applications, is based on
+    the Lustre language introduced by Caspi and Halbwachs. In this article
+    we treat the formalization and proof, in the Coq proof assistant, of a
+    key compilation pass: the translation of programs from Lustre into an
+    imperative language. The challenge is to change from a synchronous
+    dataflow semantics, where programs manipulate streams, to an imperative
+    semantics, where the program manipulates memory sequentially. We specify
+    and verify a simple code generator that treats core Lustre features:
+    sampling, nodes, and delays. The proof uses an intermediate semantic
+    model that mixes dataflow and imperative characteristics and allows the
+    statement of an essential inductive invariant. We exploit this
+    formalization to verify a classic optimization that fuses conditional
+    structures in the generated imperative code.
+  }
 }
 </pre>
 
-<a name="velus:pldi:2017"></a><pre>
-@inproceedings{velus:pldi:2017,
+<a name="PLDI17"></a><pre>
+@inproceedings{PLDI17,
   title = {{A Formally Verified Compiler for Lustre}},
   author = {Bourke, Timothy and Brun, L{\'e}lio and Dagand, Pierre-Evariste and Leroy, Xavier and Pouzet, Marc and Rieg, Lionel},
   url = {https://hal.inria.fr/hal-01512286},
@@ -28,12 +44,30 @@
   keywords = {Synchronous Languages (Lustre) ; Verified Compilation ; Interactive Theorem Proving (Coq)},
   pdf = {https://hal.inria.fr/hal-01512286/file/velus-pldi17.pdf},
   hal_id = {hal-01512286},
-  hal_version = {v1}
+  hal_version = {v1},
+  abstract = {
+    The correct compilation of block diagram languages like Lustre, Scade,
+    and a discrete subset of Simulink is important since they are used to
+    program critical embedded control software. We describe the
+    specification and verification in an Interactive Theorem Prover of a
+    compilation chain that treats the key aspects of Lustre: sampling,
+    nodes, and delays. Building on CompCert, we show that repeated execution
+    of the generated assembly code faithfully implements the dataflow
+    semantics of source programs.
+
+    We resolve two key technical challenges. The first is the change from a
+    synchronous dataflow semantics, where programs manipulate streams of
+    values, to an imperative one, where computations manipulate memory
+    sequentially. The second is the verified compilation of an imperative
+    language with encapsulated state to C code where the state is realized
+    by nested records. We also treat a standard control optimization that
+    eliminates unnecessary conditional statements.
+  }
 }
 </pre>
 
-<a name="velus:jfla:2019"></a><pre>
-@inproceedings{velus:jfla:2019,
+<a name="JFLA19"></a><pre>
+@inproceedings{JFLA19,
   title = {{Clocked arguments in a verified Lustre compiler}},
   author = {Bourke, Timothy and Pouzet, Marc},
   url = {https://hal.inria.fr/hal-02005639},
@@ -45,12 +79,31 @@
   month = jan,
   pdf = {https://hal.inria.fr/hal-02005639/file/bourke-pouzet-jfla2019.pdf},
   hal_id = {hal-02005639},
-  hal_version = {v1}
+  hal_version = {v1},
+  abstract = {
+    Lustre is a synchronous language for programming systems as block
+    diagrams from which low-level imperative code is generated
+    automatically. Recent work applies the Coq interactive proof assistant
+    to specify a compiler from a core subset of Lustre to the Clight input
+    language of CompCert from which assembly code is generated. The overall
+    correctness proof connects the stream semantics of Lustre to the
+    imperative semantics of the assembly code.
+
+    Every stream in a Lustre program is associated with a static ‘clock’
+    that represents when it is active. Compilation transforms the clocks
+    into conditional statements that control when the corresponding value
+    are calculated. Previous work made the simplifying assumption that the
+    inputs and outputs of any given block shared the same static clock. This
+    paper describes one way to lift this restriction. It requires enriching
+    the static typing rules for clocks and the semantic model, and, to
+    satisfy the Clight semantics, adding a compilation pass to ensure that
+    any variable passed to a function call has been initialized.
+  }
 }
 </pre>
 
-<a name="velus:scopes:2008"></a><pre>
-@inproceedings{velus:scopes:2008,
+<a name="SCOPES18"></a><pre>
+@inproceedings{SCOPES18,
   title = {{Towards a verified Lustre compiler with modular reset}},
   author = {Bourke, Timothy and Brun, L{\'e}lio and Pouzet, Marc},
   url = {https://hal.inria.fr/hal-01817949},
@@ -65,7 +118,13 @@
   keywords = {Compilers ; Formal software verification ; Semantics ; Synchronous Languages (Lustre) ; Verified Compilation},
   pdf = {https://hal.inria.fr/hal-01817949/file/paper.pdf},
   hal_id = {hal-01817949},
-  hal_version = {v1}
+  hal_version = {v1},
+  abstract = {
+    This paper presents ongoing work to add a modular reset construct to a
+    verified Lustre compiler. We present a novel formal specification for
+    the construct and sketch our plans to integrate it into the compiler and
+    its correctness proof.
+  }
 }
 </pre>
 
