@@ -142,9 +142,27 @@
   month = jan,
   doi = {10.1145/3371112},
   keywords = {CCS Concepts: $\bullet$ Software and its engineering $\rightarrow$ Formal language definitions ; Software verification ; Compilers ; $\bullet$ Computer systems organization $\rightarrow$ Embedded software Additional Key Words and Phrases: stream languages ; verified compilation ; interactive theorem proving},
-  pdf = {https://dl.acm.org/doi/pdf/10.1145/3371112?download=true},
+  pdf = {https://dl.acm.org/doi/pdf/10.1145/3371112?download=true&.pdf},
   hal_id = {hal-02426573},
-  hal_version = {v1}
+  hal_version = {v1},
+  abstract = {
+    Specifications based on block diagrams and state machines are used to
+    design control software, especially in the certified development of
+    safety-critical applications. Tools like SCADE Suite and
+    Simulink/Stateflow are equipped with compilers that translate such
+    specifications into executable code. They provide programming languages
+    for composing functions over streams as typified by Dataflow Synchronous
+    Languages like Lustre.
+
+    Recent work builds on CompCert to specify and verify a compiler for the
+    core of Lustre in the Coq Interactive Theorem Prover. It formally links
+    the stream-based semantics of the source language to the sequential
+    memory manipulations of generated assembly code. We extend this work to
+    treat a primitive for resetting subsystems. Our contributions include
+    new semantic rules that are suitable for mechanized reasoning, a novel
+    intermediate language for generating optimized code, and proofs of
+    correctness for the associated compilation passes.
+  }
 }
 </pre>
 
