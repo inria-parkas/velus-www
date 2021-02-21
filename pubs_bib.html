@@ -71,7 +71,7 @@
   title = {{Clocked arguments in a verified Lustre compiler}},
   author = {Bourke, Timothy and Pouzet, Marc},
   url = {https://hal.inria.fr/hal-02005639},
-  booktitle = {{JFLA 2019 - Les Trenti{\`e}mes Journ{\'e}es Francophones des Langages Applicatifs}},
+  booktitle = {{JFLA 2019 - Les trenti{\`e}mes Journ{\'e}es Francophones des Langages Applicatifs}},
   address = {Les Rousses, France},
   series = {Les actes des trenti{\`e}mes Journ{\'e}es Francophones des Langages Applicatifs (JFLA 2019)},
   pages = 16,
@@ -98,6 +98,36 @@
     the static typing rules for clocks and the semantic model, and, to
     satisfy the Clight semantics, adding a compilation pass to ensure that
     any variable passed to a function call has been initialized.
+  }
+}
+</pre>
+
+<a name="JFLA21"></a><pre>
+@inproceedings{JFLA21,
+  title = {Normalisation v{\'{e}}rifi{\'{e}}e du langage Lustre},
+  author = {Timothy Bourke
+		 and Paul Jeanmaire
+		 and Basile Pesin
+		 and Marc Pouzet},
+  booktitle = {{JFLA 2021 - Les trente-deuxi{\`e}mes Journ{\'e}es Francophones des Langages Applicatifs}},
+  year = 2021,
+  month = apr,
+  address = {Saint M{\'{e}}dard d'Excideuil, Dordogne, France},
+  abstract = {
+    Lustre is a synchronous dataflow language designed for programming
+    embedded systems. In the Vélus project, we use Coq to develop and
+    formalize a compiler that accepts a normalized form of the language and
+    produces imperative code. While this restricted form is suitable for
+    code generated from a user interface based on block diagrams, we wanted
+    to allow programmers to use the complete language.
+
+    In this article, we present the normalization pass that transforms the
+    complete language into the normalized one. This transformation is
+    divided into three steps so as to simplify the correctness proofs. To
+    show that the semantics is preserved, it is necessary to prove that the
+    three steps preserve certain static and dynamic properties of the
+    language. In particular, the relation between the clock types and the
+    dynamic semantic must be established.
   }
 }
 </pre>
