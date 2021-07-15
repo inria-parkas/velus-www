@@ -201,4 +201,46 @@
 }
 </pre>
 
+<a name="EMSOFT21"></a><pre>
+@article{EMSOFT21,
+  author = {Timothy Bourke
+		 and Paul Jeanmaire
+		 and Basile Pesin
+		 and Marc Pouzet},
+  title = {Verified {Lustre} Normalization with Node Subsampling},
+  journal = {ACM Transactions on Embedded Computing Systems},
+  year = 2021,
+  month = oct,
+  volume = {TBA},
+  number = {TBA},
+  pages = {TBA},
+  note = {ESWEEK special issue including presentations at the 21st
+		 Int. Conf. on Embedded Software (EMSOFT 2020)},
+  abstract = {
+    Dataflow languages allow the specification of reactive systems by
+    mutually recursive stream equations, functions, and boolean activation
+    conditions called clocks. Lustre and Scade are dataflow languages for
+    programming embedded systems. Dataflow programs are compiled by a
+    succession of passes. This article focuses on the normalization pass
+    which rewrites programs into the simpler form required for code
+    generation.
+
+    Vélus is a compiler from a normalized form of Lustre to CompCert's
+    Clight language. Its specification in the Coq interactive theorem prover
+    includes an end-to-end correctness proof that the values prescribed by
+    the dataflow semantics of source programs are produced by executions of
+    generated assembly code. We describe how to extend Vélus with a
+    normalization pass and to allow subsampled node inputs and outputs. We
+    propose semantic definitions for the unrestricted language, divide
+    normalization into three steps to facilitate proofs, adapt the clock
+    type system to handle richer node definitions, and extend the end-to-end
+    correctness theorem to incorporate the new features. The proofs require
+    reasoning about the relation between static clock annotations and the
+    presence and absence of values in the dynamic semantics. The
+    generalization of node inputs requires adding a compiler pass to ensure
+    the initialization of variables passed in function calls.
+  }
+}
+</pre>
+
 </div></body></html>

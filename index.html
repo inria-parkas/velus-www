@@ -1,43 +1,48 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta content="ie=edge" http-equiv="x-ua-compatible"/><link href="velus.css" rel="stylesheet"/><title>Vélus: Verified Lustre compiler</title><meta description="Vélus is a verified Lustre compiler developed at Inria Paris."/><link href="icons/apple-icon-512x512.png" rel="apple-touch-icon" sizes="512x512"/><link href="icons/apple-icon-196x196.png" rel="apple-touch-icon" sizes="196x196"/><link href="icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/><link href="icons/apple-icon-172x172.png" rel="apple-touch-icon" sizes="172x172"/><link href="icons/apple-icon-167x167.png" rel="apple-touch-icon" sizes="167x167"/><link href="icons/apple-icon-152x152.png" rel="apple-touch-icon" sizes="152x152"/><link href="icons/apple-icon-144x144.png" rel="apple-touch-icon" sizes="144x144"/><link href="icons/apple-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/><link href="icons/apple-icon-114x114.png" rel="apple-touch-icon" sizes="114x114"/><link href="icons/apple-icon-100x100.png" rel="apple-touch-icon" sizes="100x100"/><link href="icons/apple-icon-88x88.png" rel="apple-touch-icon" sizes="88x88"/><link href="icons/apple-icon-87x87.png" rel="apple-touch-icon" sizes="87x87"/><link href="icons/apple-icon-80x80.png" rel="apple-touch-icon" sizes="80x80"/><link href="icons/apple-icon-76x76.png" rel="apple-touch-icon" sizes="76x76"/><link href="icons/apple-icon-72x72.png" rel="apple-touch-icon" sizes="72x72"/><link href="icons/apple-icon-60x60.png" rel="apple-touch-icon" sizes="60x60"/><link href="icons/apple-icon-58x58.png" rel="apple-touch-icon" sizes="58x58"/><link href="icons/apple-icon-57x57.png" rel="apple-touch-icon" sizes="57x57"/><link href="icons/apple-icon-55x55.png" rel="apple-touch-icon" sizes="55x55"/><link href="icons/apple-icon-50x50.png" rel="apple-touch-icon" sizes="50x50"/><link href="icons/apple-icon-48x48.png" rel="apple-touch-icon" sizes="48x48"/><link href="icons/apple-icon-40x40.png" rel="apple-touch-icon" sizes="40x40"/><link href="icons/apple-icon-29x29.png" rel="apple-touch-icon" sizes="29x29"/><link href="icons/apple-icon-20x20.png" rel="apple-touch-icon" sizes="20x20"/><link href="icons/icon-256x256.png" type="image/png" rel="icon" sizes="256x256"/><link href="icons/icon-128x128.png" type="image/png" rel="icon" sizes="128x128"/><link href="icons/icon-96x96.png" type="image/png" rel="icon" sizes="96x96"/><link href="icons/icon-64x64.png" type="image/png" rel="icon" sizes="64x64"/><link href="icons/icon-48x48.png" type="image/png" rel="icon" sizes="48x48"/><link href="icons/icon-32x32.png" type="image/png" rel="icon" sizes="32x32"/><link href="icons/icon-24x24.png" type="image/png" rel="icon" sizes="24x24"/><link href="icons/icon-16x16.png" type="image/png" rel="icon" sizes="16x16"/><link href="/icons/manifest.json" rel="manifest"/><meta name="msapplication-TileColor" content="#ffffff"/><meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png"/><meta name="theme-color" content="#ffffff"/></head><body><div class="velus-all"><div class="velus-content" data-spy="scroll" data-target="#velus-side-bar"><div class="velus-logo-outer"><div class="velus-logo"><img class="img-fluid velus-logo" alt="Vélus" src="img/velus-logo.png"/><div class="velus-under-logo">Verified Lustre compilation</div></div></div><div class="row below-logo"><div class="col-md-7 col-xl-6 overview"><p>The <strong>Vélus project</strong> is an ongoing and long-term effort to extend 
-techniques for formal specification and verification in Interactive Theorem 
-Provers to the languages, tools, and applications of Model-Based 
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta content="ie=edge" http-equiv="x-ua-compatible"/><link href="velus.css" rel="stylesheet"/><title>Vélus: Verified Lustre compiler</title><meta description="Vélus is a verified Lustre compiler developed at Inria Paris."/><link href="icons/apple-icon-512x512.png" rel="apple-touch-icon" sizes="512x512"/><link href="icons/apple-icon-196x196.png" rel="apple-touch-icon" sizes="196x196"/><link href="icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/><link href="icons/apple-icon-172x172.png" rel="apple-touch-icon" sizes="172x172"/><link href="icons/apple-icon-167x167.png" rel="apple-touch-icon" sizes="167x167"/><link href="icons/apple-icon-152x152.png" rel="apple-touch-icon" sizes="152x152"/><link href="icons/apple-icon-144x144.png" rel="apple-touch-icon" sizes="144x144"/><link href="icons/apple-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/><link href="icons/apple-icon-114x114.png" rel="apple-touch-icon" sizes="114x114"/><link href="icons/apple-icon-100x100.png" rel="apple-touch-icon" sizes="100x100"/><link href="icons/apple-icon-88x88.png" rel="apple-touch-icon" sizes="88x88"/><link href="icons/apple-icon-87x87.png" rel="apple-touch-icon" sizes="87x87"/><link href="icons/apple-icon-80x80.png" rel="apple-touch-icon" sizes="80x80"/><link href="icons/apple-icon-76x76.png" rel="apple-touch-icon" sizes="76x76"/><link href="icons/apple-icon-72x72.png" rel="apple-touch-icon" sizes="72x72"/><link href="icons/apple-icon-60x60.png" rel="apple-touch-icon" sizes="60x60"/><link href="icons/apple-icon-58x58.png" rel="apple-touch-icon" sizes="58x58"/><link href="icons/apple-icon-57x57.png" rel="apple-touch-icon" sizes="57x57"/><link href="icons/apple-icon-55x55.png" rel="apple-touch-icon" sizes="55x55"/><link href="icons/apple-icon-50x50.png" rel="apple-touch-icon" sizes="50x50"/><link href="icons/apple-icon-48x48.png" rel="apple-touch-icon" sizes="48x48"/><link href="icons/apple-icon-40x40.png" rel="apple-touch-icon" sizes="40x40"/><link href="icons/apple-icon-29x29.png" rel="apple-touch-icon" sizes="29x29"/><link href="icons/apple-icon-20x20.png" rel="apple-touch-icon" sizes="20x20"/><link href="icons/icon-256x256.png" type="image/png" rel="icon" sizes="256x256"/><link href="icons/icon-128x128.png" type="image/png" rel="icon" sizes="128x128"/><link href="icons/icon-96x96.png" type="image/png" rel="icon" sizes="96x96"/><link href="icons/icon-64x64.png" type="image/png" rel="icon" sizes="64x64"/><link href="icons/icon-48x48.png" type="image/png" rel="icon" sizes="48x48"/><link href="icons/icon-32x32.png" type="image/png" rel="icon" sizes="32x32"/><link href="icons/icon-24x24.png" type="image/png" rel="icon" sizes="24x24"/><link href="icons/icon-16x16.png" type="image/png" rel="icon" sizes="16x16"/><link href="/icons/manifest.json" rel="manifest"/><meta name="msapplication-TileColor" content="#ffffff"/><meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png"/><meta name="theme-color" content="#ffffff"/></head><body><div class="velus-all"><div class="velus-content" data-spy="scroll" data-target="#velus-side-bar"><div class="velus-logo-outer"><div class="velus-logo"><img class="img-fluid velus-logo" alt="Vélus" src="img/velus-logo.png"/><div class="velus-under-logo">Verified Lustre compilation</div></div></div><div class="row below-logo"><div class="col-md-7 col-xl-6 overview"><p>The <strong>Vélus project</strong> is an ongoing and long-term effort to extend
+techniques for formal specification and verification in Interactive Theorem
+Provers to the languages, tools, and applications of Model-Based
 Development.</p>
-<p>We focus specifically on dataflow synchronous languages like Lustre and 
+<p>We focus specifically on dataflow synchronous languages like Lustre and
 Scade and we work in <a href="https://www.coq.inria.fr">Coq</a>.
-The main concrete result of our project is the <strong>Vélus</strong> verified Lustre 
+The main concrete result of our project is the <strong>Vélus</strong> verified Lustre
 compiler.
-This compiler can be seen as an extension of 
+This compiler can be seen as an extension of
 <a href="http://compcert.inria.fr/">CompCert</a> for compiling Lustre.</p>
-<h2 id="Model-Based-Development">Model-Based Development</h2>
-
-<p><em>Embedded control software</em> defines the interactions of specialized hardware 
+<h2>Model-Based Development</h2>
+<p><em>Embedded control software</em> defines the interactions of specialized hardware
 with the physical world.
-It normally ticks away unnoticed inside systems like medical devices, 
+It normally ticks away unnoticed inside systems like medical devices,
 trains, aircraft, satellites, and factories.
-But this software is complex and potentially serious errors are difficult to 
+But this software is complex and potentially serious errors are difficult to
 avoid, especially over many years of maintenance and reuse.
-Engineers have long designed such systems using block diagrams and state 
+Engineers have long designed such systems using block diagrams and state
 machines to represent the underlying mathematical models.
-The key idea of Model-Based Development is that such models can be 
-executable and serve as the base for simulation, validation, and automatic 
+The key idea of Model-Based Development is that such models can be
+executable and serve as the base for simulation, validation, and automatic
 code generation.</p>
-<h2 id="Interactive-Theorem-Provers">Interactive Theorem Provers</h2>
-
-<p>Interactive theorem provers, also sometimes called as proof assistants, are 
-software tools for functional programming, formal specification, and 
+<h2>Interactive Theorem Provers</h2>
+<p>Interactive theorem provers, also sometimes called as proof assistants, are
+software tools for functional programming, formal specification, and
 machine-checked proof.
 Broadly speaking, our goals are to</p>
-<ol><li><p>Develop semantic models for the source language inside an interactive 
- theorem prover.</p>
-</li><li><p>Develop a compiler with a formal proof that the semantics of a source 
- model are implemented by the code generated for it.</p>
-</li><li><p>Provide tools for interactive reasoning about source models and libraries 
- with results guaranteed down to the code that executes.</p>
-</li></ol></div><div class="col-md-5 col-xl-6"><h1>News</h1><dl class="velus-news"></dl><div class="under-news"><h1 id="The-Team">The Team</h1>
-
-<p>Active development is concentrated at the <a href="http://parkas.di.ens.fr/">PARKAS</a> 
-research team at <a href="http://www.inria.fr/en/centre/paris-rocquencourt">Inria 
+<ol>
+<li>
+<p>Develop semantic models for the source language inside an interactive
+theorem prover.</p>
+</li>
+<li>
+<p>Develop a compiler with a formal proof that the semantics of a source
+model are implemented by the code generated for it.</p>
+</li>
+<li>
+<p>Provide tools for interactive reasoning about source models and libraries
+with results guaranteed down to the code that executes.</p>
+</li>
+</ol>
+<h2>The Team</h2>
+<p>Active development is concentrated at the <a href="http://parkas.di.ens.fr/">PARKAS</a>
+research team at <a href="http://www.inria.fr/en/centre/paris-rocquencourt">Inria
 Paris</a>.</p>
 <p>The following people contribute or have contributed to the project:
 <a href="https://www.tbrk.org">Timothy Bourke</a>,
@@ -49,9 +54,31 @@ Paris</a>.</p>
 <a href="https://www.di.ens.fr/~pouzet/">Marc Pouzet</a>,
 and
 <a href="http://www-verimag.imag.fr/~riegl/">Lionel Rieg</a>.</p>
-<h1 id="Source-Code">Source Code</h1>
-
-<p>The <a href="https://github.com/INRIA/velus">source code</a> is available under an 
-<a href="https://github.com/INRIA/velus/blob/popl20-artifact/LICENSE">Inria Non-Commercial 
+<h2>Source Code</h2>
+<p>The <a href="https://github.com/INRIA/velus">source code</a> is available under an
+<a href="https://github.com/INRIA/velus/blob/popl20-artifact/LICENSE">Inria Non-Commercial
 License</a>.</p>
-</div><div class="sponsors"><img class="logo" src="img/inria.png"/><img class="logo" src="img/ens-psl.png"/><img class="logo small" src="img/anr.png"/></div></div></div></div><div class="navbar navbar-expand-md fixed-top navbar-dark bg-primary velus-navbar"><a class="navbar-brand" href="index.html">Vélus</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar" aria-expanded="false" aria-label="Toggle navigation">•••</button><div class="collapse navbar-collapse" id="collapsingNavbar"><ul class="navbar-nav mr-auto"><li class="nav-item"><a class="nav-link" href="compiler.html">compiler</a></li><li class="nav-item"><a class="nav-link" href="publications.html">publications</a></li></ul></div></div><script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script><script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script><script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script></div></body></html>
+</div><div class="col-md-5 col-xl-6"><h1>News</h1><dl class="velus-news"><dt><dt>2021-07-06</dt></dt><dd><dd><p>Our paper on extending Vélus with normalization and node subsampling has
+been accepted at <a href="https://esweek.org/emsoft/">EMSOFT 2021</a>.</p>
+</dd></dd><dt><dt>2020-10-01</dt></dt><dd><dd><p><a href="https://www.di.ens.fr/paul.jeanmaire">Paul Jeanmaire</a> joins the project as
+a PhD student.</p>
+</dd></dd><dt><dt>2020-09-01</dt></dt><dd><dd><p><a href="https://vertmo.org">Basile Pesin</a> joins the project as a PhD student.</p>
+</dd></dd><dt><dt>2020-07-06</dt></dt><dd><dd><p><a href="https://www.leliobrun.net">Lélio</a>'s <a href="http://parkas.di.ens.fr/seminars.html#2020-07-06_Brun">thesis
+defense</a>.</p>
+</dd></dd><dt><dt>2020-01-24</dt></dt><dd><dd><p>Lélio presented his <a href="files/popl2020-velus.pdf">slides</a> at POPL 2020.
+A <a href="https://youtu.be/DaPzcXwW9Kk">video</a> is available.</p>
+</dd></dd><dt><dt>2019-10-11</dt></dt><dd><dd><p>Our paper on extending Vélus with a reset operator has been
+<a href="https://popl20.sigplan.org/track/POPL-2020-Research-Papers#event-overview">accepted</a>
+at <a href="https://popl20.sigplan.org">POPL 2020</a>.</p>
+</dd></dd><dt><dt>2019-09-02</dt></dt><dd><dd><p><a href="https://jobs.inria.fr/public/classic/en/offres/2019-01991">Postdoc</a> and
+<a href="https://jobs.inria.fr/public/classic/en/offres/2019-01951">PhD</a> positions in the Vélus project are now open on Inria's recruitment
+website.</p>
+</dd></dd><dt><dt>2019-07-12</dt></dt><dd><dd><p>The <a href="https://anr.fr/fr/1er-resultats-aapg-2019/">ANR</a> (French national
+funding agency) will fund the <strong>FidelR</strong>, <em>Fidelity in Reactive Systems
+Design and Compilation</em>, JCJC project.
+The goal is to add state machines to the Vélus compiler and develop
+techniques for interactive verification of Lustre programs.
+Anyone wanting to do a post doc or PhD in these topics should contact
+<a href="mailto:Timothy.Bourke@inria.fr">us</a>.</p>
+</dd></dd><dt><dt>2019-07-01</dt></dt><dd><dd><p>Creation of the Vélus website.</p>
+</dd></dd></dl><div class="under-news"></div><div class="sponsors"><img class="logo" src="img/inria.png"/><img class="logo" src="img/ens-psl.png"/><img class="logo small" src="img/anr.png"/></div></div></div></div><div class="navbar navbar-expand-md fixed-top navbar-dark bg-primary velus-navbar"><a class="navbar-brand" href="index.html">Vélus</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar" aria-expanded="false" aria-label="Toggle navigation">•••</button><div class="collapse navbar-collapse" id="collapsingNavbar"><ul class="navbar-nav mr-auto"><li class="nav-item"><a class="nav-link" href="compiler.html">compiler</a></li><li class="nav-item"><a class="nav-link" href="publications.html">publications</a></li></ul></div></div><script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script><script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script><script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script></div></body></html>
