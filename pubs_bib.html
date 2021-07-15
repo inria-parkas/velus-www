@@ -102,36 +102,6 @@
 }
 </pre>
 
-<a name="JFLA21"></a><pre>
-@inproceedings{JFLA21,
-  title = {Normalisation v{\'{e}}rifi{\'{e}}e du langage Lustre},
-  author = {Timothy Bourke
-		 and Paul Jeanmaire
-		 and Basile Pesin
-		 and Marc Pouzet},
-  booktitle = {{JFLA 2021 - Les trente-deuxi{\`e}mes Journ{\'e}es Francophones des Langages Applicatifs}},
-  year = 2021,
-  month = apr,
-  address = {Saint M{\'{e}}dard d'Excideuil, Dordogne, France},
-  abstract = {
-    Lustre is a synchronous dataflow language designed for programming
-    embedded systems. In the Vélus project, we use Coq to develop and
-    formalize a compiler that accepts a normalized form of the language and
-    produces imperative code. While this restricted form is suitable for
-    code generated from a user interface based on block diagrams, we wanted
-    to allow programmers to use the complete language.
-
-    In this article, we present the normalization pass that transforms the
-    complete language into the normalized one. This transformation is
-    divided into three steps so as to simplify the correctness proofs. To
-    show that the semantics is preserved, it is necessary to prove that the
-    three steps preserve certain static and dynamic properties of the
-    language. In particular, the relation between the clock types and the
-    dynamic semantic must be established.
-  }
-}
-</pre>
-
 <a name="SCOPES18"></a><pre>
 @inproceedings{SCOPES18,
   title = {{Towards a verified Lustre compiler with modular reset}},
@@ -192,6 +162,41 @@
     new semantic rules that are suitable for mechanized reasoning, a novel
     intermediate language for generating optimized code, and proofs of
     correctness for the associated compilation passes.
+  }
+}
+</pre>
+
+<a name="JFLA21"></a><pre>
+@inproceedings{JFLA21,
+  title = {Normalisation v{\'{e}}rifi{\'{e}}e du langage {Lustre}},
+  author = {Timothy Bourke
+		 and Paul Jeanmaire
+		 and Basile Pesin
+		 and Marc Pouzet},
+  booktitle = {{JFLA 2021 - Les trente-deuxi{\`e}mes Journ{\'e}es Francophones des Langages Applicatifs}},
+  pages = {117--133},
+  year = 2021,
+  month = apr,
+  address = {Online},
+  url = {https://hal.inria.fr/hal-03287572},
+  pdf = {https://hal.inria.fr/hal-03287572/file/jfla.pdf},
+  hal_id = {hal-03287572},
+  hal_version = {v1},
+  abstract = {
+    Lustre is a synchronous dataflow language designed for programming
+    embedded systems. In the Vélus project, we use Coq to develop and
+    formalize a compiler that accepts a normalized form of the language and
+    produces imperative code. While this restricted form is suitable for
+    code generated from a user interface based on block diagrams, we wanted
+    to allow programmers to use the complete language.
+
+    In this article, we present the normalization pass that transforms the
+    complete language into the normalized one. This transformation is
+    divided into three steps so as to simplify the correctness proofs. To
+    show that the semantics is preserved, it is necessary to prove that the
+    three steps preserve certain static and dynamic properties of the
+    language. In particular, the relation between the clock types and the
+    dynamic semantic must be established.
   }
 }
 </pre>
