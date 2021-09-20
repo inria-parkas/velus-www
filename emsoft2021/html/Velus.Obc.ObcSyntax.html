@@ -1,0 +1,463 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module ObcSyntax</title>
+<meta name="description" content="Documentation of Coq module ObcSyntax" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module ObcSyntax</h1>
+<div class="coq">
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Common.Common.html">Common</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Operators.html">Operators</a></span>.<br/>
+<br/>
+<span class="kwd">Open</span> <span class="kwd">Scope</span> <span class="id">bool_scope</span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<span class="kwd">Import</span> <span class="id">List.ListNotations</span>.<br/>
+<span class="kwd">Open</span> <span class="kwd">Scope</span> <span class="id">list_scope</span>.<br/>
+<br/>
+<h1> Obc syntax </h1>
+<br/>
+<br/>
+<span class="kwd">Module</span> <span class="kwd">Type</span> <span class="id"><a name="OBCSYNTAX">OBCSYNTAX</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Ids</span> : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Op</span> : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">OpAux</span> : <span class="id"><a href="Velus.Operators.html#OPERATORS_AUX">OPERATORS_AUX</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op">Op</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="OBCSYNTAX.exp">exp</a></span> : <span class="kwd">Type</span> :=<br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.Var">Var</a></span>   : <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op.type">type</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#exp">exp</a></span>                <br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.State">State</a></span> : <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op.type">type</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#exp">exp</a></span>                <br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.Const">Const</a></span> : <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op.const">const</a></span>-&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#exp">exp</a></span>                         <br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.Unop">Unop</a></span>  : <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op.unop">unop</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#exp">exp</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op.type">type</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#exp">exp</a></span>          <br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.Binop">Binop</a></span> : <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op.binop">binop</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#exp">exp</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#exp">exp</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op.type">type</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#exp">exp</a></span>  <br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.Valid">Valid</a></span> : <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op.type">type</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#exp">exp</a></span>.                         <br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Fixpoint</span> <span class="id"><a name="OBCSYNTAX.typeof">typeof</a></span> (<span class="id">e</span>: <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.exp">exp</a></span>): <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op.type">type</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#e">e</a></span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Const">Const</a></span> <span class="id">c</span> =&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op.type_const">type_const</a></span> <span class="id">c</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Var">Var</a></span> <span class="id">_</span> <span class="id">ty</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.State">State</a></span> <span class="id">_</span> <span class="id">ty</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Unop">Unop</a></span> <span class="id">_</span> <span class="id">_</span> <span class="id">ty</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Binop">Binop</a></span> <span class="id">_</span> <span class="id">_</span> <span class="id">_</span> <span class="id">ty</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Valid">Valid</a></span> <span class="id">_</span> <span class="id">ty</span> =&gt; <span class="id">ty</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="OBCSYNTAX.stmt">stmt</a></span> : <span class="kwd">Type</span> :=<br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.Assign">Assign</a></span> : <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.exp">exp</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#stmt">stmt</a></span>                    <br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.AssignSt">AssignSt</a></span> : <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.exp">exp</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#stmt">stmt</a></span>                  <br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.Ifte">Ifte</a></span> : <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.exp">exp</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#stmt">stmt</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#stmt">stmt</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#stmt">stmt</a></span>               <br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.Comp">Comp</a></span> : <span class="id"><a href="Velus.Obc.ObcSyntax.html#stmt">stmt</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#stmt">stmt</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#stmt">stmt</a></span>                      <br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.Call">Call</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.exp">exp</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#stmt">stmt</a></span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.Skip">Skip</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id"><a name="OBCSYNTAX.method">method</a></span> : <span class="kwd">Type</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.mk_method">mk_method</a></span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.m_name">m_name</a></span> : <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.m_in">m_in</a></span>   : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> * <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op.type">type</a></span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.m_vars">m_vars</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> * <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op.type">type</a></span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.m_out">m_out</a></span>  : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> * <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op.type">type</a></span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.m_body">m_body</a></span> : <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.stmt">stmt</a></span>;<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.m_nodupvars">m_nodupvars</a></span> : <span class="id"><a href="Velus.Common.CommonList.html#NoDupMembers">NoDupMembers</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#m_in">m_in</a></span> ++ <span class="id"><a href="Velus.Obc.ObcSyntax.html#m_vars">m_vars</a></span> ++ <span class="id"><a href="Velus.Obc.ObcSyntax.html#m_out">m_out</a></span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.m_good">m_good</a></span>      : <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Forall">Forall</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids.AtomOrGensym">AtomOrGensym</a></span> (<span class="id"><a href="Velus.Common.CommonPS.html#PSP.of_list">PSP.of_list</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids.gensym_prefs">gensym_prefs</a></span>)) (<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">map</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#fst">fst</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#m_in">m_in</a></span> ++ <span class="id"><a href="Velus.Obc.ObcSyntax.html#m_vars">m_vars</a></span> ++ <span class="id"><a href="Velus.Obc.ObcSyntax.html#m_out">m_out</a></span>)) /\<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids.atom">atom</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#m_name">m_name</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="OBCSYNTAX.meth_vars">meth_vars</a></span> <span class="id">m</span> := <span class="id"><a href="Velus.Obc.ObcSyntax.html#m">m</a></span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_in">m_in</a></span>) ++ <span class="id"><a href="Velus.Obc.ObcSyntax.html#m">m</a></span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_vars">m_vars</a></span>) ++ <span class="id"><a href="Velus.Obc.ObcSyntax.html#m">m</a></span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_out">m_out</a></span>).<br/>
+&nbsp;&nbsp;<span class="kwd">Hint</span> <span class="kwd">Resolve</span> <span class="id">m_nodupvars</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.m_nodupout">m_nodupout</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">f</span>, <span class="id"><a href="Velus.Common.CommonList.html#NoDupMembers">NoDupMembers</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_out">m_out</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof1')">Proof.</div>
+<div class="proofscript" id="proof1">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intro</span>; <span class="tactic">pose</span> <span class="id">proof</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_nodupvars">m_nodupvars</a></span> <span class="id">f</span>) <span class="kwd">as</span> <span class="id">Nodup</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="tactic">repeat</span> <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonList.html#NoDupMembers_app_r">NoDupMembers_app_r</a></span> <span class="kwd">in</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.m_nodupin">m_nodupin</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">f</span>, <span class="id"><a href="Velus.Common.CommonList.html#NoDupMembers">NoDupMembers</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_in">m_in</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof2')">Proof.</div>
+<div class="proofscript" id="proof2">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intro</span>; <span class="tactic">pose</span> <span class="id">proof</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_nodupvars">m_nodupvars</a></span> <span class="id">f</span>) <span class="kwd">as</span> <span class="id">Nodup</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonList.html#NoDupMembers_app_l">NoDupMembers_app_l</a></span> <span class="kwd">in</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id">m_nodupvars</span>':<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">f</span>, <span class="id"><a href="Velus.Common.CommonList.html#NoDupMembers">NoDupMembers</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_vars">m_vars</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof3')">Proof.</div>
+<div class="proofscript" id="proof3">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intro</span>; <span class="tactic">pose</span> <span class="id">proof</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_nodupvars">m_nodupvars</a></span> <span class="id">f</span>) <span class="kwd">as</span> <span class="id">Nodup</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonList.html#NoDupMembers_app_r">NoDupMembers_app_r</a></span>, <span class="id"><a href="Velus.Common.CommonList.html#NoDupMembers_app_l">NoDupMembers_app_l</a></span> <span class="kwd">in</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Remark</span> <span class="id"><a name="OBCSYNTAX.In_meth_vars_out">In_meth_vars_out</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">f</span> <span class="id">x</span> <span class="id">ty</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Common.CommonList.html#InMembers">InMembers</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#x">x</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_out">m_out</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#x">x</a></span>, <span class="id"><a href="Velus.Obc.ObcSyntax.html#ty">ty</a></span>) (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.meth_vars">meth_vars</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#x">x</a></span>, <span class="id"><a href="Velus.Obc.ObcSyntax.html#ty">ty</a></span>) <span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_out">m_out</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof4')">Proof.</div>
+<div class="proofscript" id="proof4">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">E</span> ?.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">pose</span> <span class="id">proof</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_nodupvars">m_nodupvars</a></span> <span class="id">f</span>) <span class="kwd">as</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonList.html#InMembers_In">InMembers_In</a></span> <span class="kwd">in</span> <span class="id">E</span> <span class="kwd">as</span> (<span class="id">ty</span>' &amp;?).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">assert</span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> (<span class="id">x</span>, <span class="id">ty</span>') (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.meth_vars">meth_vars</a></span> <span class="id">f</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">by</span> (<span class="id">now</span> <span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#in_or_app">in_or_app</a></span>; <span class="tactic">right</span>; <span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#in_or_app">in_or_app</a></span>; <span class="tactic">right</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="id">app_NoDupMembers_det</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.m_good_out">m_good_out</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">m</span> <span class="id">x</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#x">x</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#m">m</a></span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_out">m_out</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids.AtomOrGensym">AtomOrGensym</a></span> (<span class="id"><a href="Velus.Common.CommonPS.html#PSP.of_list">PSP.of_list</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids.gensym_prefs">gensym_prefs</a></span>) (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#fst">fst</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#x">x</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof5')">Proof.</div>
+<div class="proofscript" id="proof5">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">pose</span> <span class="id">proof</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_good">m_good</a></span> <span class="id">m</span>) <span class="kwd">as</span> (<span class="id">G</span>&amp;<span class="id">_</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Forall_forall">Forall_forall</a></span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#in_map">in_map</a></span>, <span class="id"><a href="Velus.Common.CommonList.html#in_app">in_app</a></span>; <span class="tactic">right</span>; <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonList.html#in_app">in_app</a></span>; <span class="id">now</span> <span class="tactic">right</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.m_good_in">m_good_in</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">m</span> <span class="id">x</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#x">x</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#m">m</a></span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_in">m_in</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids.AtomOrGensym">AtomOrGensym</a></span> (<span class="id"><a href="Velus.Common.CommonPS.html#PSP.of_list">PSP.of_list</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids.gensym_prefs">gensym_prefs</a></span>) (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#fst">fst</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#x">x</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof6')">Proof.</div>
+<div class="proofscript" id="proof6">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">pose</span> <span class="id">proof</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_good">m_good</a></span> <span class="id">m</span>) <span class="kwd">as</span> (<span class="id">G</span>&amp;<span class="id">_</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Forall_forall">Forall_forall</a></span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#in_map">in_map</a></span>, <span class="id"><a href="Velus.Common.CommonList.html#in_app">in_app</a></span>; <span class="id">now</span> <span class="tactic">left</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.m_good_vars">m_good_vars</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">m</span> <span class="id">x</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#x">x</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#m">m</a></span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_vars">m_vars</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids.AtomOrGensym">AtomOrGensym</a></span> (<span class="id"><a href="Velus.Common.CommonPS.html#PSP.of_list">PSP.of_list</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids.gensym_prefs">gensym_prefs</a></span>) (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#fst">fst</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#x">x</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof7')">Proof.</div>
+<div class="proofscript" id="proof7">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">pose</span> <span class="id">proof</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_good">m_good</a></span> <span class="id">m</span>) <span class="kwd">as</span> (<span class="id">G</span>&amp;<span class="id">_</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Forall_forall">Forall_forall</a></span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#in_map">in_map</a></span>, <span class="id"><a href="Velus.Common.CommonList.html#in_app">in_app</a></span>; <span class="tactic">right</span>; <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonList.html#in_app">in_app</a></span>; <span class="id">now</span> <span class="tactic">left</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.m_AtomOrGensym">m_AtomOrGensym</a></span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">m</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Common.CommonList.html#InMembers">InMembers</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#x">x</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.meth_vars">meth_vars</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#m">m</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids.AtomOrGensym">AtomOrGensym</a></span> (<span class="id"><a href="Velus.Common.CommonPS.html#PSP.of_list">PSP.of_list</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids.gensym_prefs">gensym_prefs</a></span>) <span class="id"><a href="Velus.Obc.ObcSyntax.html#x">x</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof8')">Proof.</div>
+<div class="proofscript" id="proof8">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">Hinm</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">pose</span> <span class="id">proof</span> <span class="id">m</span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_good">m_good</a></span>) <span class="kwd">as</span> (<span class="id">Good</span>&amp;<span class="id">_</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id"><a href="Velus.Common.CommonList.html#fst_InMembers">fst_InMembers</a></span> <span class="kwd">in</span> <span class="id">Hinm</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Forall_forall">Forall_forall</a></span> <span class="kwd">in</span> <span class="id">Good</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Record</span> <span class="id"><a name="OBCSYNTAX.class">class</a></span> : <span class="kwd">Type</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.mk_class">mk_class</a></span> {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.c_name">c_name</a></span>    : <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.c_mems">c_mems</a></span>    : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> * <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op.type">type</a></span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.c_objs">c_objs</a></span>    : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> * <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span>);   <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.c_methods">c_methods</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.method">method</a></span>;<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.c_nodup">c_nodup</a></span>   : <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#NoDup">NoDup</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">map</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#fst">fst</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#c_mems">c_mems</a></span> ++ <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">map</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#fst">fst</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#c_objs">c_objs</a></span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.c_nodupm">c_nodupm</a></span>  : <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#NoDup">NoDup</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">map</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_name">m_name</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#c_methods">c_methods</a></span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="OBCSYNTAX.c_good">c_good</a></span>    : <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Forall">Forall</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids.AtomOrGensym">AtomOrGensym</a></span> (<span class="id"><a href="Velus.Common.CommonPS.html#PSP.of_list">PSP.of_list</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids.gensym_prefs">gensym_prefs</a></span>)) (<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">map</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#fst">fst</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#c_objs">c_objs</a></span>) /\ <span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids.atom">atom</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#c_name">c_name</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.c_nodupmems">c_nodupmems</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">c</span>, <span class="id"><a href="Velus.Common.CommonList.html#NoDupMembers">NoDupMembers</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_mems">c_mems</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#c">c</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof9')">Proof.</div>
+<div class="proofscript" id="proof9">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intro</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">pose</span> <span class="id">proof</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_nodup">c_nodup</a></span> <span class="id">c</span>) <span class="kwd">as</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonList.html#NoDup_app_weaken">NoDup_app_weaken</a></span> <span class="kwd">in</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="tactic">rewrite</span> <span class="id"><a href="Velus.Common.CommonList.html#fst_NoDupMembers">fst_NoDupMembers</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.c_nodupobjs">c_nodupobjs</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">c</span>, <span class="id"><a href="Velus.Common.CommonList.html#NoDupMembers">NoDupMembers</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_objs">c_objs</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#c">c</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof10')">Proof.</div>
+<div class="proofscript" id="proof10">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intro</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">pose</span> <span class="id">proof</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_nodup">c_nodup</a></span> <span class="id">c</span>) <span class="kwd">as</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Sorting.Permutation.html#Permutation_app_comm">Permutation.Permutation_app_comm</a></span> <span class="kwd">in</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonList.html#NoDup_app_weaken">NoDup_app_weaken</a></span> <span class="kwd">in</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="tactic">rewrite</span> <span class="id"><a href="Velus.Common.CommonList.html#fst_NoDupMembers">fst_NoDupMembers</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="OBCSYNTAX.program">program</a></span> : <span class="kwd">Type</span> := <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.class">class</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="OBCSYNTAX.find_method">find_method</a></span> (<span class="id">f</span>: <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span>): <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.method">method</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.method">method</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">fix</span> <span class="id">find</span> <span class="id">ms</span> := <span class="kwd">match</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#ms">ms</a></span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| [] =&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">m</span> :: <span class="id">ms</span>' =&gt; <span class="kwd">if</span> <span class="id"><a href="Velus.Common.CommonPS.html#ident_eqb">ident_eqb</a></span> <span class="id">m</span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_name">m_name</a></span>) <span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">then</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id">m</span> <span class="kwd">else</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#find">find</a></span> <span class="id">ms</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="OBCSYNTAX.find_class">find_class</a></span> (<span class="id">n</span>: <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span>) : <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.program">program</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.class">class</a></span> * <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.class">class</a></span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">fix</span> <span class="id">find</span> <span class="id">p</span> := <span class="kwd">match</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#p">p</a></span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| [] =&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">c</span> :: <span class="id">p</span>' =&gt; <span class="kwd">if</span> <span class="id"><a href="Velus.Common.CommonPS.html#ident_eqb">ident_eqb</a></span> <span class="id">c</span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_name">c_name</a></span>) <span class="id"><a href="Velus.Obc.ObcSyntax.html#n">n</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">then</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> (<span class="id">c</span>, <span class="id">p</span>') <span class="kwd">else</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#find">find</a></span> <span class="id">p</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="OBCSYNTAX.Forall_methods">Forall_methods</a></span> <span class="id">P</span> <span class="id">p</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Forall">Forall</a></span> (<span class="kwd">fun</span> <span class="id">c</span> =&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Forall">Forall</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#P">P</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#c">c</a></span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_methods">c_methods</a></span>)) <span class="id"><a href="Velus.Obc.ObcSyntax.html#p">p</a></span>.<br/>
+<br/>
+<div class="doc">Properties of method lookups </div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Remark</span> <span class="id"><a name="OBCSYNTAX.find_method_In">find_method_In</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">fid</span> <span class="id">ms</span> <span class="id">f</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_method">find_method</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#fid">fid</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#ms">ms</a></span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#ms">ms</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof11')">Proof.</div>
+<div class="proofscript" id="proof11">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">Hfind</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">ms</span>; <span class="tactic">inversion</span> <span class="id">Hfind</span> <span class="kwd">as</span> [<span class="id">H</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> (<span class="id"><a href="Velus.Common.CommonPS.html#ident_eqb">ident_eqb</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_name">m_name</a></span> <span class="id">a</span>) <span class="id">fid</span>) <span class="id">eqn</span>: <span class="id">E</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">inversion</span> <span class="id">H</span>; <span class="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#in_eq">in_eq</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">auto</span> <span class="kwd">using</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#in_cons">in_cons</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Remark</span> <span class="id"><a name="OBCSYNTAX.find_method_name">find_method_name</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">fid</span> <span class="id">fs</span> <span class="id">f</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_method">find_method</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#fid">fid</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#fs">fs</a></span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_name">m_name</a></span>) = <span class="id"><a href="Velus.Obc.ObcSyntax.html#fid">fid</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof12')">Proof.</div>
+<div class="proofscript" id="proof12">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">Hfind</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">fs</span>; <span class="tactic">inversion</span> <span class="id">Hfind</span> <span class="kwd">as</span> [<span class="id">H</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> (<span class="id"><a href="Velus.Common.CommonPS.html#ident_eqb">ident_eqb</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_name">m_name</a></span> <span class="id">a</span>) <span class="id">fid</span>) <span class="id">eqn</span>: <span class="id">E</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">inversion</span> <span class="id">H</span>; <span class="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.Common.html#ident_eqb_eq">ident_eqb_eq</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id">now</span> <span class="tactic">apply</span> <span class="id">IHfs</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.find_method_map">find_method_map</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">f</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">forall</span> <span class="id">m</span>, (<span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#m">m</a></span>).(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_name">m_name</a></span>) = <span class="id"><a href="Velus.Obc.ObcSyntax.html#m">m</a></span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_name">m_name</a></span>)) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">n</span> <span class="id">ms</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_method">find_method</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#n">n</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">map</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#ms">ms</a></span>) = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option_map">option_map</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_method">find_method</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#n">n</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#ms">ms</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof13')">Proof.</div>
+<div class="proofscript" id="proof13">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> <span class="id">f</span> <span class="id">Hfname</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">ms</span> <span class="kwd">as</span> [|<span class="id">m</span> <span class="id">ms</span> <span class="id">IH</span>]; <span class="tactic">auto</span>. <span class="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> (<span class="id"><a href="Velus.Common.CommonPS.html#ident_eqb">ident_eqb</a></span> (<span class="id">f</span> <span class="id">m</span>).(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.m_name">m_name</a></span>) <span class="id">n</span>) <span class="id">eqn</span>:<span class="id">Heq</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> <span class="id">Hfname</span> <span class="kwd">in</span> <span class="id">Heq</span>; <span class="tactic">rewrite</span> <span class="id">Heq</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+<div class="doc">Properties of class lookups </div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.find_class_none">find_class_none</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">clsnm</span> <span class="id">cls</span> <span class="id">prog</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class">find_class</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#clsnm">clsnm</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#cls">cls</a></span>::<span class="id"><a href="Velus.Obc.ObcSyntax.html#prog">prog</a></span>) = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&gt; (<span class="id"><a href="Velus.Obc.ObcSyntax.html#cls">cls</a></span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_name">c_name</a></span>) &lt;&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#clsnm">clsnm</a></span> /\ <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class">find_class</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#clsnm">clsnm</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#prog">prog</a></span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof14')">Proof.</div>
+<div class="proofscript" id="proof14">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> <span class="id">clsnm</span> <span class="id">cls</span> <span class="id">prog</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">simpl</span>; <span class="tactic">destruct</span> (<span class="id"><a href="Velus.Common.CommonPS.html#ident_eqb">ident_eqb</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_name">c_name</a></span> <span class="id">cls</span>) <span class="id">clsnm</span>) <span class="id">eqn</span>: <span class="id">E</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">split</span>; <span class="tactic">intro</span> <span class="id">HH</span>; <span class="tactic">try</span> <span class="tactic">discriminate</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">HH</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Common.Common.html#ident_eqb_eq">ident_eqb_eq</a></span> <span class="kwd">in</span> <span class="id">E</span>; <span class="id">contradiction</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.Common.html#ident_eqb_neq">ident_eqb_neq</a></span> <span class="kwd">in</span> <span class="id">E</span>; <span class="tactic">split</span>; <span class="tactic">intro</span> <span class="id">HH</span>; <span class="tactic">tauto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Remark</span> <span class="id"><a name="OBCSYNTAX.find_class_app">find_class_app</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">id</span> <span class="id">cls</span> <span class="id">c</span> <span class="id">cls</span>',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class">find_class</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#id">id</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#cls">cls</a></span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#c">c</a></span>, <span class="id">cls</span>') -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">exists</span> <span class="id">cls</span>'',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#cls">cls</a></span> = <span class="id">cls</span>'' ++ <span class="id"><a href="Velus.Obc.ObcSyntax.html#c">c</a></span> :: <span class="id">cls</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\ <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class">find_class</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#id">id</a></span> <span class="id">cls</span>'' = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof15')">Proof.</div>
+<div class="proofscript" id="proof15">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">Hfind</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">cls</span>; <span class="tactic">inversion</span> <span class="id">Hfind</span> <span class="kwd">as</span> [<span class="id">H</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> (<span class="id"><a href="Velus.Common.CommonPS.html#ident_eqb">ident_eqb</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_name">c_name</a></span> <span class="id">a</span>) <span class="id">id</span>) <span class="id">eqn</span>: <span class="id">E</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">inversion</span> <span class="id">H</span>; <span class="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">exists</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">specialize</span> (<span class="id">IHcls</span> <span class="id">H</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">IHcls</span> <span class="kwd">as</span> (<span class="id">cls</span>'' &amp; <span class="id">Hcls</span>'' &amp; <span class="id">Hnone</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> <span class="id">Hcls</span>''.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">exists</span> (<span class="id">a</span> :: <span class="id">cls</span>''); <span class="tactic">split</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">simpl</span>; <span class="tactic">rewrite</span> <span class="id">E</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Remark</span> <span class="id"><a name="OBCSYNTAX.find_class_name">find_class_name</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">id</span> <span class="id">cls</span> <span class="id">c</span> <span class="id">cls</span>',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class">find_class</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#id">id</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#cls">cls</a></span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#c">c</a></span>, <span class="id">cls</span>') -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#c">c</a></span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_name">c_name</a></span>) = <span class="id"><a href="Velus.Obc.ObcSyntax.html#id">id</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof16')">Proof.</div>
+<div class="proofscript" id="proof16">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">Hfind</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">cls</span>; <span class="tactic">inversion</span> <span class="id">Hfind</span> <span class="kwd">as</span> [<span class="id">H</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> (<span class="id"><a href="Velus.Common.CommonPS.html#ident_eqb">ident_eqb</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_name">c_name</a></span> <span class="id">a</span>) <span class="id">id</span>) <span class="id">eqn</span>: <span class="id">E</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">inversion</span> <span class="id">H</span>; <span class="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.Common.html#ident_eqb_eq">ident_eqb_eq</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id">now</span> <span class="tactic">apply</span> <span class="id">IHcls</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Remark</span> <span class="id"><a name="OBCSYNTAX.find_class_In">find_class_In</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">id</span> <span class="id">cls</span> <span class="id">c</span> <span class="id">cls</span>',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class">find_class</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#id">id</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#cls">cls</a></span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#c">c</a></span>, <span class="id">cls</span>') -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#c">c</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#cls">cls</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof17')">Proof.</div>
+<div class="proofscript" id="proof17">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">Hfind</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">cls</span>; <span class="tactic">inversion</span> <span class="id">Hfind</span> <span class="kwd">as</span> [<span class="id">H</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> (<span class="id"><a href="Velus.Common.CommonPS.html#ident_eqb">ident_eqb</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_name">c_name</a></span> <span class="id">a</span>) <span class="id">id</span>) <span class="id">eqn</span>: <span class="id">E</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">inversion</span> <span class="id">H</span>; <span class="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#in_eq">in_eq</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#in_cons">in_cons</a></span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id">find_class_app</span>':<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">n</span> <span class="id">xs</span> <span class="id">ys</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class">find_class</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#n">n</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#xs">xs</a></span> ++ <span class="id"><a href="Velus.Obc.ObcSyntax.html#ys">ys</a></span>) = <span class="kwd">match</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class">find_class</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#n">n</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#xs">xs</a></span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span> =&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class">find_class</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#n">n</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#ys">ys</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> (<span class="id">c</span>, <span class="id">prog</span>) =&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> (<span class="id">c</span>, <span class="id">prog</span> ++ <span class="id"><a href="Velus.Obc.ObcSyntax.html#ys">ys</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof18')">Proof.</div>
+<div class="proofscript" id="proof18">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">xs</span> <span class="kwd">as</span> [|<span class="id">c</span> <span class="id">xs</span> <span class="id">IH</span>]; <span class="tactic">simpl</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intro</span> <span class="id">ys</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> (<span class="id"><a href="Velus.Common.CommonPS.html#ident_eqb">ident_eqb</a></span> <span class="id">c</span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_name">c_name</a></span>) <span class="id">n</span>); <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.not_In_find_class">not_In_find_class</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">n</span> <span class="id">prog</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#n">n</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">map</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_name">c_name</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#prog">prog</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class">find_class</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#n">n</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#prog">prog</a></span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof19')">Proof.</div>
+<div class="proofscript" id="proof19">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">prog</span> <span class="kwd">as</span> [|<span class="id">c</span> <span class="id">prog</span> <span class="id">IH</span>]; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">simpl</span>; <span class="tactic">intro</span> <span class="id">Hnin</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Logic.Decidable.html#not_or">Decidable.not_or</a></span> <span class="kwd">in</span> <span class="id">Hnin</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">Hnin</span> <span class="kwd">as</span> (<span class="id">Hnin1</span> &amp; <span class="id">Hnin2</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> (<span class="id">IH</span> <span class="id">Hnin2</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Common.Common.html#ident_eqb_neq">ident_eqb_neq</a></span> <span class="kwd">in</span> <span class="id">Hnin1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="tactic">rewrite</span> <span class="id">Hnin1</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.find_class_ltsuffix">find_class_ltsuffix</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">n</span> <span class="id">prog</span> <span class="id">c</span> <span class="id">prog</span>',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class">find_class</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#n">n</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#prog">prog</a></span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#c">c</a></span>, <span class="id">prog</span>') -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Common.CommonList.html#ltsuffix">ltsuffix</a></span> <span class="id">prog</span>' <span class="id"><a href="Velus.Obc.ObcSyntax.html#prog">prog</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof20')">Proof.</div>
+<div class="proofscript" id="proof20">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">prog</span> <span class="kwd">as</span> [|<span class="id">c</span> <span class="id">prog</span> <span class="id">IH</span>]. <span class="id">now</span> <span class="tactic">inversion</span> 1.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">red</span>; <span class="tactic">simpl</span>. <span class="tactic">intros</span> <span class="id">c</span>' <span class="id">prog</span>' <span class="id">Hfind</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> (<span class="id"><a href="Velus.Common.CommonPS.html#ident_eqb">ident_eqb</a></span> <span class="id">c</span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_name">c_name</a></span>) <span class="id">n</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id">inv</span> <span class="id">Hfind</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">exists</span> [<span class="id">c</span>']. <span class="tactic">simpl</span>; <span class="tactic">split</span>; <span class="tactic">auto</span>; <span class="tactic">discriminate</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">destruct</span> (<span class="id">IH</span> <span class="id">_</span> <span class="id">_</span> <span class="id">Hfind</span>) <span class="kwd">as</span> (<span class="id">xs</span> &amp; <span class="id">Hprog</span> &amp; <span class="id">Hxs</span>). <span class="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">exists</span> (<span class="id">c</span>::<span class="id">xs</span>); <span class="tactic">simpl</span>; <span class="tactic">split</span>; <span class="tactic">auto</span>; <span class="tactic">discriminate</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.find_class_ltsuffix2">find_class_ltsuffix2</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">n</span> <span class="id">prog1</span> <span class="id">prog2</span> <span class="id">c1</span> <span class="id">c2</span> <span class="id">prog1</span>' <span class="id">prog2</span>',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class">find_class</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#n">n</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#prog1">prog1</a></span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#c1">c1</a></span>, <span class="id">prog1</span>') -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class">find_class</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#n">n</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#prog2">prog2</a></span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#c2">c2</a></span>, <span class="id">prog2</span>') -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Common.CommonList.html#ltsuffix2">ltsuffix2</a></span> (<span class="id">prog1</span>', <span class="id">prog2</span>') (<span class="id"><a href="Velus.Obc.ObcSyntax.html#prog1">prog1</a></span>, <span class="id"><a href="Velus.Obc.ObcSyntax.html#prog2">prog2</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof21')">Proof.</div>
+<div class="proofscript" id="proof21">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">split</span>; <span class="tactic">eauto</span> <span class="kwd">using</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class_ltsuffix">find_class_ltsuffix</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.Forall_methods_find">Forall_methods_find</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">prog</span> <span class="id">P</span> <span class="id">cid</span> <span class="id">c</span> <span class="id">prog</span>' <span class="id">fid</span> <span class="id">f</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Forall_methods">Forall_methods</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#P">P</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#prog">prog</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class">find_class</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#cid">cid</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#prog">prog</a></span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#c">c</a></span>, <span class="id">prog</span>') -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_method">find_method</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#fid">fid</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#c">c</a></span>.(<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.c_methods">c_methods</a></span>) = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#P">P</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#f">f</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof22')">Proof.</div>
+<div class="proofscript" id="proof22">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">unfold</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Forall_methods">Forall_methods</a></span>; <span class="tactic">intros</span> * <span class="id">Spec</span> <span class="id">Findc</span> <span class="id">Findf</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_class_In">find_class_In</a></span> <span class="kwd">in</span> <span class="id">Findc</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.find_method_In">find_method_In</a></span> <span class="kwd">in</span> <span class="id">Findf</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">do</span> 2 <span class="tactic">eapply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Forall_forall">Forall_forall</a></span> <span class="kwd">in</span> <span class="id">Spec</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+<div class="doc">Syntactic predicates </div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="OBCSYNTAX.Is_free_in_exp">Is_free_in_exp</a></span> : <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.exp">exp</a></span> -&gt; <span class="kwd">Prop</span> :=<br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.FreeVar">FreeVar</a></span>: <span class="kwd">forall</span> <span class="id">i</span> <span class="id">ty</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#Is_free_in_exp">Is_free_in_exp</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Var">Var</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#ty">ty</a></span>)<br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.FreeState">FreeState</a></span>: <span class="kwd">forall</span> <span class="id">i</span> <span class="id">ty</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#Is_free_in_exp">Is_free_in_exp</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.State">State</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#ty">ty</a></span>)<br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.FreeUnop">FreeUnop</a></span>: <span class="kwd">forall</span> <span class="id">i</span> <span class="id">op</span> <span class="id">e</span> <span class="id">ty</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#Is_free_in_exp">Is_free_in_exp</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#e">e</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#Is_free_in_exp">Is_free_in_exp</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Unop">Unop</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#op">op</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#e">e</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#ty">ty</a></span>)<br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.FreeBinop">FreeBinop</a></span>: <span class="kwd">forall</span> <span class="id">i</span> <span class="id">op</span> <span class="id">e1</span> <span class="id">e2</span> <span class="id">ty</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#Is_free_in_exp">Is_free_in_exp</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#e1">e1</a></span> \/ <span class="id"><a href="Velus.Obc.ObcSyntax.html#Is_free_in_exp">Is_free_in_exp</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#e2">e2</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#Is_free_in_exp">Is_free_in_exp</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Binop">Binop</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#op">op</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#e1">e1</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#e2">e2</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#ty">ty</a></span>)<br/>
+&nbsp;&nbsp;| <span class="id"><a name="OBCSYNTAX.FreeValid">FreeValid</a></span>: <span class="kwd">forall</span> <span class="id">i</span> <span class="id">t</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Obc.ObcSyntax.html#Is_free_in_exp">Is_free_in_exp</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Valid">Valid</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#t">t</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.not_free_aux1">not_free_aux1</a></span> : <span class="kwd">forall</span> <span class="id">i</span> <span class="id">op</span> <span class="id">e</span> <span class="id">ty</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Is_free_in_exp">Is_free_in_exp</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Unop">Unop</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#op">op</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#e">e</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#ty">ty</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Is_free_in_exp">Is_free_in_exp</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#e">e</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof23')">Proof.</div>
+<div class="proofscript" id="proof23">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">auto</span> <span class="kwd">using</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Is_free_in_exp">Is_free_in_exp</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.not_free_aux2">not_free_aux2</a></span> : <span class="kwd">forall</span> <span class="id">i</span> <span class="id">op</span> <span class="id">e1</span> <span class="id">e2</span> <span class="id">ty</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Is_free_in_exp">Is_free_in_exp</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Binop">Binop</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#op">op</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#e1">e1</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#e2">e2</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#ty">ty</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Is_free_in_exp">Is_free_in_exp</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#e1">e1</a></span> /\ ~<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Is_free_in_exp">Is_free_in_exp</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#i">i</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#e2">e2</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof24')">Proof.</div>
+<div class="proofscript" id="proof24">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> <span class="id">i</span> <span class="id">op</span> <span class="id">e1</span> <span class="id">e2</span> <span class="id">ty</span> <span class="id">Hfree</span>; <span class="tactic">split</span>; <span class="tactic">intro</span> <span class="id">H</span>; <span class="tactic">apply</span> <span class="id">Hfree</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">constructor</span>; [<span class="id">now</span> <span class="tactic">left</span> | <span class="id">now</span> <span class="tactic">right</span>].<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Ltac</span> <span class="id">not_free</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">lazymatch</span> <span class="id">goal</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">H</span> : ~<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Is_free_in_exp">Is_free_in_exp</a></span> ?<span class="id">x</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Var">Var</a></span> ?<span class="id">i</span> ?<span class="id">ty</span>) |- <span class="id">_</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">HH</span> := <span class="tactic">fresh</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">assert</span> (<span class="id">HH</span> : <span class="id">i</span> &lt;&gt; <span class="id">x</span>) <span class="tactic">by</span> (<span class="tactic">intro</span>; <span class="tactic">subst</span>; <span class="tactic">apply</span> <span class="id">H</span>; <span class="tactic">constructor</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">clear</span> <span class="id">H</span>; <span class="tactic">rename</span> <span class="id">HH</span> <span class="id">into</span> <span class="id">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">H</span> : ~<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Is_free_in_exp">Is_free_in_exp</a></span> ?<span class="id">x</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.State">State</a></span> ?<span class="id">i</span> ?<span class="id">ty</span>) |- <span class="id">_</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">HH</span> := <span class="tactic">fresh</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">assert</span> (<span class="id">HH</span> : <span class="id">i</span> &lt;&gt; <span class="id">x</span>) <span class="tactic">by</span> (<span class="tactic">intro</span>; <span class="tactic">subst</span>; <span class="tactic">apply</span> <span class="id">H</span>; <span class="tactic">constructor</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">clear</span> <span class="id">H</span>; <span class="tactic">rename</span> <span class="id">HH</span> <span class="id">into</span> <span class="id">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">H</span> : ~<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Is_free_in_exp">Is_free_in_exp</a></span> ?<span class="id">x</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Valid">Valid</a></span> ?<span class="id">i</span> ?<span class="id">ty</span>) |- <span class="id">_</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">HH</span> := <span class="tactic">fresh</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">assert</span> (<span class="id">HH</span> : <span class="id">i</span> &lt;&gt; <span class="id">x</span>) <span class="tactic">by</span> (<span class="tactic">intro</span>; <span class="tactic">subst</span>; <span class="tactic">apply</span> <span class="id">H</span>; <span class="tactic">constructor</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">clear</span> <span class="id">H</span>; <span class="tactic">rename</span> <span class="id">HH</span> <span class="id">into</span> <span class="id">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">H</span> : ~<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Is_free_in_exp">Is_free_in_exp</a></span> ?<span class="id">x</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Unop">Unop</a></span> ?<span class="id">op</span> ?<span class="id">e</span> ?<span class="id">ty</span>) |- <span class="id">_</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.not_free_aux1">not_free_aux1</a></span> <span class="kwd">in</span> <span class="id">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">H</span> : ~<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Is_free_in_exp">Is_free_in_exp</a></span> ?<span class="id">x</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.Binop">Binop</a></span> ?<span class="id">op</span> ?<span class="id">e1</span> ?<span class="id">e2</span> ?<span class="id">ty</span>) |- <span class="id">_</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> (<span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.not_free_aux2">not_free_aux2</a></span> <span class="id">x</span> <span class="id">op</span> <span class="id">e1</span> <span class="id">e2</span> <span class="id">ty</span> <span class="id">H</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+<div class="doc">Misc. properties </div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="OBCSYNTAX.exp_dec">exp_dec</a></span> : <span class="kwd">forall</span> <span class="id">e1</span> <span class="id">e2</span> : <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.exp">exp</a></span>, {<span class="id"><a href="Velus.Obc.ObcSyntax.html#e1">e1</a></span> = <span class="id"><a href="Velus.Obc.ObcSyntax.html#e2">e2</a></span>} + {<span class="id"><a href="Velus.Obc.ObcSyntax.html#e1">e1</a></span> &lt;&gt; <span class="id"><a href="Velus.Obc.ObcSyntax.html#e2">e2</a></span>}.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof25')">Proof.</div>
+<div class="proofscript" id="proof25">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">decide</span> <span class="id">equality</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">try</span> <span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Classes.EquivDec.html#equiv_dec">equiv_dec</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Instance</span>: <span class="id"><a href="http://coq.inria.fr/library/Coq.Classes.EquivDec.html#EqDec">EqDec</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.exp">exp</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Logic.html#eq">eq</a></span> := { <span class="id"><a href="http://coq.inria.fr/library/Coq.Classes.EquivDec.html#equiv_dec">equiv_dec</a></span> := <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX.exp_dec">exp_dec</a></span> }.<br/>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX">OBCSYNTAX</a></span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="id"><a name="ObcSyntaxFun">ObcSyntaxFun</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Ids</span>   : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Op</span>    : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">OpAux</span> : <span class="id"><a href="Velus.Operators.html#OPERATORS_AUX">OPERATORS_AUX</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op">Op</a></span>) &lt;: <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX">OBCSYNTAX</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op">Op</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OpAux">OpAux</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Include</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OBCSYNTAX">OBCSYNTAX</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#Op">Op</a></span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#OpAux">OpAux</a></span>.<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.Obc.ObcSyntax.html#ObcSyntaxFun">ObcSyntaxFun</a></span>.<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</a></div>
+</body>
+</html>

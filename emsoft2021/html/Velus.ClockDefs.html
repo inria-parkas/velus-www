@@ -1,0 +1,51 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module ClockDefs</title>
+<meta name="description" content="Documentation of Coq module ClockDefs" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module ClockDefs</h1>
+<div class="coq">
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Numbers.BinNums.html">BinNums</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="ident">ident</a></span> := <span class="id"><a href="http://coq.inria.fr/library/Coq.Numbers.BinNums.html#positive">positive</a></span>.<br/>
+<br/>
+<br/>
+<span class="kwd">Inductive</span> <span class="id"><a name="clock">clock</a></span> : <span class="kwd">Type</span> :=<br/>
+| <span class="id"><a name="Cbase">Cbase</a></span> : <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span>                            <br/>
+| <span class="id"><a name="Con">Con</a></span>   : <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span> -&gt; <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#bool">bool</a></span> -&gt; <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span>. <br/>
+<br/>
+<h2> Instantiate variable clocks from a base clock and substitution </h2>
+<span class="kwd">Fixpoint</span> <span class="id"><a name="instck">instck</a></span> (<span class="id">bk</span>: <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span>) (<span class="id">sub</span>: <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span>) (<span class="id">ck</span>: <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span> :=<br/>
+&nbsp;&nbsp;<span class="kwd">match</span> <span class="id"><a href="Velus.ClockDefs.html#ck">ck</a></span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;| <span class="id"><a href="Velus.ClockDefs.html#Cbase">Cbase</a></span> =&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id"><a href="Velus.ClockDefs.html#bk">bk</a></span><br/>
+&nbsp;&nbsp;| <span class="id"><a href="Velus.ClockDefs.html#Con">Con</a></span> <span class="id">ck</span> <span class="id">x</span> <span class="id">b</span> =&gt; <span class="kwd">match</span> <span class="id"><a href="Velus.ClockDefs.html#instck">instck</a></span> <span class="id"><a href="Velus.ClockDefs.html#bk">bk</a></span> <span class="id"><a href="Velus.ClockDefs.html#sub">sub</a></span> <span class="id"><a href="Velus.ClockDefs.html#ck">ck</a></span>, <span class="id"><a href="Velus.ClockDefs.html#sub">sub</a></span> <span class="id">x</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id">ck</span>', <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id">x</span>' =&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> (<span class="id"><a href="Velus.ClockDefs.html#Con">Con</a></span> <span class="id">ck</span>' <span class="id">x</span>' <span class="id">b</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">_</span>, <span class="id">_</span> =&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="nclock">nclock</a></span> : <span class="kwd">Type</span> := <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span> * <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="stripname">stripname</a></span> : <span class="id"><a href="Velus.ClockDefs.html#nclock">nclock</a></span> -&gt; <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span> := <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#fst">fst</a></span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="indexes">indexes</a></span> (<span class="id">ncks</span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Velus.ClockDefs.html#nclock">nclock</a></span>) : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Numbers.BinNums.html#positive">positive</a></span> :=<br/>
+&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#fold_right">fold_right</a></span> (<span class="kwd">fun</span> <span class="id">nck</span> <span class="id">acc</span> =&gt; <span class="kwd">match</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#snd">snd</a></span> <span class="id"><a href="Velus.ClockDefs.html#nck">nck</a></span> <span class="kwd">with</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span> =&gt; <span class="id"><a href="Velus.ClockDefs.html#acc">acc</a></span> | <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id">nm</span> =&gt; <span class="id">nm</span>::<span class="id"><a href="Velus.ClockDefs.html#acc">acc</a></span> <span class="kwd">end</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#nil">nil</a></span> <span class="id"><a href="Velus.ClockDefs.html#ncks">ncks</a></span>.<br/>
+<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</a></div>
+</body>
+</html>

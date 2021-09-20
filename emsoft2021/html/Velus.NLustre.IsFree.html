@@ -1,0 +1,133 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module IsFree</title>
+<meta name="description" content="Documentation of Coq module IsFree" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module IsFree</h1>
+<div class="coq">
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Common.Common.html">Common</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Operators.html">Operators</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Clocks.html">Clocks</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.CoreExpr.CESyntax.html">CoreExpr.CESyntax</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.NLustre.NLSyntax.html">NLustre.NLSyntax</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.CoreExpr.CEIsFree.html">CoreExpr.CEIsFree</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<br/>
+<h1> Free variables </h1>
+<br/>
+<br/>
+<span class="kwd">Module</span> <span class="kwd">Type</span> <span class="id"><a name="ISFREE">ISFREE</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Ids</span>          : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Op</span>           : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">CESyn</span> : <span class="id"><a href="Velus.CoreExpr.CESyntax.html#CESYNTAX">CESYNTAX</a></span>     <span class="id"><a href="Velus.NLustre.IsFree.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Syn</span>   : <span class="id"><a href="Velus.NLustre.NLSyntax.html#NLSYNTAX">NLSYNTAX</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Ids">Ids</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Op">Op</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#CESyn">CESyn</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">CEIsF</span> : <span class="id"><a href="Velus.CoreExpr.CEIsFree.html#CEISFREE">CEISFREE</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Ids">Ids</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Op">Op</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#CESyn">CESyn</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="ISFREE.Is_free_in_eq">Is_free_in_eq</a></span> : <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="Velus.NLustre.IsFree.html#Syn.equation">equation</a></span> -&gt; <span class="kwd">Prop</span> :=<br/>
+&nbsp;&nbsp;| <span class="id"><a name="ISFREE.FreeEqDef">FreeEqDef</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">ck</span> <span class="id">ce</span> <span class="id">i</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.Is_free_in_caexp">Is_free_in_caexp</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#i">i</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#ck">ck</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#ce">ce</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.NLustre.IsFree.html#Is_free_in_eq">Is_free_in_eq</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#i">i</a></span> (<span class="id"><a href="Velus.NLustre.IsFree.html#Syn.EqDef">EqDef</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#x">x</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#ck">ck</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#ce">ce</a></span>)<br/>
+&nbsp;&nbsp;| <span class="id"><a name="ISFREE.FreeEqApp">FreeEqApp</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">f</span> <span class="id">ck</span> <span class="id">les</span> <span class="id">i</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.Is_free_in_aexps">Is_free_in_aexps</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#i">i</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#ck">ck</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#les">les</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.NLustre.IsFree.html#Is_free_in_eq">Is_free_in_eq</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#i">i</a></span> (<span class="id"><a href="Velus.NLustre.IsFree.html#Syn.EqApp">EqApp</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#x">x</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#ck">ck</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#f">f</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#les">les</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span>)<br/>
+&nbsp;&nbsp;| <span class="id"><a name="ISFREE.FreeEqReset">FreeEqReset</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">f</span> <span class="id">ck</span> <span class="id">les</span> <span class="id">i</span> <span class="id">r</span> <span class="id">ck_r</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.Is_free_in_aexps">Is_free_in_aexps</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#i">i</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#ck">ck</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#les">les</a></span> \/ <span class="id"><a href="Velus.NLustre.IsFree.html#r">r</a></span> = <span class="id"><a href="Velus.NLustre.IsFree.html#i">i</a></span> \/ <span class="id"><a href="Velus.Clocks.html#Is_free_in_clock">Is_free_in_clock</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#i">i</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#ck_r">ck_r</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.NLustre.IsFree.html#Is_free_in_eq">Is_free_in_eq</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#i">i</a></span> (<span class="id"><a href="Velus.NLustre.IsFree.html#Syn.EqApp">EqApp</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#x">x</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#ck">ck</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#f">f</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#les">les</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> (<span class="id"><a href="Velus.NLustre.IsFree.html#r">r</a></span>, <span class="id"><a href="Velus.NLustre.IsFree.html#ck_r">ck_r</a></span>)))<br/>
+&nbsp;&nbsp;| <span class="id"><a name="ISFREE.FreeEqFby">FreeEqFby</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">v</span> <span class="id">ck</span> <span class="id">le</span> <span class="id">i</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.Is_free_in_aexp">Is_free_in_aexp</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#i">i</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#ck">ck</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#le">le</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.NLustre.IsFree.html#Is_free_in_eq">Is_free_in_eq</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#i">i</a></span> (<span class="id"><a href="Velus.NLustre.IsFree.html#Syn.EqFby">EqFby</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#x">x</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#ck">ck</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#v">v</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#le">le</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Hint</span> <span class="kwd">Constructors</span> <span class="id"><a href="Velus.NLustre.IsFree.html#Is_free_in_clock">Is_free_in_clock</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Is_free_in_exp">Is_free_in_exp</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.NLustre.IsFree.html#Is_free_in_aexp">Is_free_in_aexp</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Is_free_in_aexps">Is_free_in_aexps</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Is_free_in_cexp">Is_free_in_cexp</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.NLustre.IsFree.html#Is_free_in_caexp">Is_free_in_caexp</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Is_free_in_eq">Is_free_in_eq</a></span>.<br/>
+<br/>
+<h1> Decision procedure </h1>
+<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Fixpoint</span> <span class="id"><a name="ISFREE.free_in_equation">free_in_equation</a></span> (<span class="id">eq</span>: <span class="id"><a href="Velus.NLustre.IsFree.html#Syn.equation">equation</a></span>) (<span class="id">fvs</span>: <span class="id"><a href="Velus.Common.CommonPS.html#PS.t">PS.t</a></span>) : <span class="id"><a href="Velus.Common.CommonPS.html#PS.t">PS.t</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id"><a href="Velus.NLustre.IsFree.html#eq">eq</a></span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.NLustre.IsFree.html#Syn.EqDef">EqDef</a></span> <span class="id">_</span> <span class="id">ck</span> <span class="id">cae</span>      =&gt; <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_caexp">free_in_caexp</a></span> <span class="id">ck</span> <span class="id">cae</span> <span class="id"><a href="Velus.NLustre.IsFree.html#fvs">fvs</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.NLustre.IsFree.html#Syn.EqApp">EqApp</a></span> <span class="id">_</span> <span class="id">ck</span> <span class="id">f</span> <span class="id">laes</span> <span class="id">r</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">fvs</span> := <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_aexps">free_in_aexps</a></span> <span class="id">ck</span> <span class="id">laes</span> <span class="id"><a href="Velus.NLustre.IsFree.html#fvs">fvs</a></span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">r</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> (<span class="id">x</span>, <span class="id">ck_r</span>) =&gt; <span class="id"><a href="Velus.Common.CommonPS.html#PS.add">PS.add</a></span> <span class="id">x</span> (<span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_clock">free_in_clock</a></span> <span class="id">ck_r</span> <span class="id"><a href="Velus.NLustre.IsFree.html#fvs">fvs</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span> =&gt; <span class="id"><a href="Velus.NLustre.IsFree.html#fvs">fvs</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.NLustre.IsFree.html#Syn.EqFby">EqFby</a></span> <span class="id">_</span> <span class="id">ck</span> <span class="id">v</span> <span class="id">lae</span>    =&gt; <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_aexp">free_in_aexp</a></span> <span class="id">ck</span> <span class="id">lae</span> <span class="id"><a href="Velus.NLustre.IsFree.html#fvs">fvs</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+<h1> Specification lemmas </h1>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="ISFREE.free_in_equation_spec">free_in_equation_spec</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">eq</span> <span class="id">m</span>, <span class="id"><a href="Velus.Common.CommonPS.html#PS.In">PS.In</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#x">x</a></span> (<span class="id"><a href="Velus.NLustre.IsFree.html#ISFREE.free_in_equation">free_in_equation</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#eq">eq</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#m">m</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&gt; (<span class="id"><a href="Velus.NLustre.IsFree.html#ISFREE.Is_free_in_eq">Is_free_in_eq</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#x">x</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#eq">eq</a></span> \/ <span class="id"><a href="Velus.Common.CommonPS.html#PS.In">PS.In</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#x">x</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#m">m</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof1')">Proof.</div>
+<div class="proofscript" id="proof1">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Local</span> <span class="kwd">Ltac</span> <span class="id">aux</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">repeat</span> (<span class="kwd">match</span> <span class="id">goal</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">H</span>:<span class="id"><a href="Velus.NLustre.IsFree.html#ISFREE.Is_free_in_eq">Is_free_in_eq</a></span> <span class="id">_</span> <span class="id">_</span> |- <span class="id">_</span> =&gt; <span class="tactic">inversion_clear</span> <span class="id">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">H</span>:<span class="id"><a href="Velus.Common.CommonPS.html#PS.In">PS.In</a></span> <span class="id">_</span> (<span class="id"><a href="Velus.NLustre.IsFree.html#ISFREE.free_in_equation">free_in_equation</a></span> <span class="id">_</span> <span class="id">_</span>) |- <span class="id">_</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_caexp_spec">free_in_caexp_spec</a></span> <span class="kwd">in</span> <span class="id">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| <span class="tactic">apply</span> <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_aexp_spec">free_in_aexp_spec</a></span> <span class="kwd">in</span> <span class="id">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| <span class="tactic">apply</span> <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_aexps_spec">free_in_aexps_spec</a></span> <span class="kwd">in</span> <span class="id">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |- <span class="id"><a href="Velus.Common.CommonPS.html#PS.In">PS.In</a></span> <span class="id">_</span> (<span class="id"><a href="Velus.NLustre.IsFree.html#ISFREE.free_in_equation">free_in_equation</a></span> <span class="id">_</span> <span class="id">_</span>) =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_caexp_spec">free_in_caexp_spec</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| <span class="tactic">apply</span> <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_aexp_spec">free_in_aexp_spec</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| <span class="tactic">apply</span> <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_aexps_spec">free_in_aexps_spec</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">_</span> =&gt; <span class="tactic">intuition</span>; <span class="tactic">eauto</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>).<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">eq</span>; <span class="tactic">split</span>; <span class="tactic">intro</span> <span class="id">H</span>; <span class="id">aux</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">destruct</span> <span class="id">o</span> <span class="kwd">as</span> [(?&amp;?)|]; <span class="id">aux</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">simpl</span> <span class="kwd">in</span> <span class="id">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonPS.html#PS.add_spec">PS.add_spec</a></span> <span class="kwd">in</span> <span class="id">H</span> <span class="kwd">as</span> [|].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">subst</span>; <span class="tactic">left</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">apply</span> <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_clock_spec">free_in_clock_spec</a></span> <span class="kwd">in</span> <span class="id">H</span> <span class="kwd">as</span> [|]; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_aexps_spec">free_in_aexps_spec</a></span> <span class="kwd">in</span> <span class="id">H</span> <span class="kwd">as</span> [|]; <span class="id">aux</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">destruct</span> <span class="id">o</span>; <span class="id">aux</span>; <span class="tactic">simpl</span>; <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonPS.html#PS.add_spec">PS.add_spec</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_clock_spec">free_in_clock_spec</a></span>, <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_aexps_spec">free_in_aexps_spec</a></span>; <span class="tactic">intuition</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">subst</span>; <span class="tactic">simpl</span>. <span class="id">now</span> <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonPS.html#PSF.add_1">PSF.add_1</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">destruct</span> <span class="id">o</span>; <span class="id">aux</span>; <span class="tactic">simpl</span>; <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonPS.html#PS.add_spec">PS.add_spec</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_clock_spec">free_in_clock_spec</a></span>, <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_aexps_spec">free_in_aexps_spec</a></span>; <span class="tactic">intuition</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">simpl</span>; <span class="tactic">destruct</span> <span class="id">o</span> <span class="kwd">as</span> [(?&amp;?)|];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">try</span> <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonPS.html#PS.add_spec">PS.add_spec</a></span>; <span class="tactic">try</span> <span class="tactic">rewrite</span> <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_clock_spec">free_in_clock_spec</a></span>; <span class="tactic">try</span> <span class="tactic">rewrite</span> <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF.free_in_aexps_spec">free_in_aexps_spec</a></span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id">free_in_equation_spec</span>':<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">eq</span>, <span class="id"><a href="Velus.Common.CommonPS.html#PS.In">PS.In</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#x">x</a></span> (<span class="id"><a href="Velus.NLustre.IsFree.html#ISFREE.free_in_equation">free_in_equation</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#eq">eq</a></span> <span class="id"><a href="Velus.Common.CommonPS.html#PS.empty">PS.empty</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&gt; <span class="id"><a href="Velus.NLustre.IsFree.html#ISFREE.Is_free_in_eq">Is_free_in_eq</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#x">x</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#eq">eq</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof2')">Proof.</div>
+<div class="proofscript" id="proof2">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span>; <span class="tactic">rewrite</span> (<span class="id"><a href="Velus.NLustre.IsFree.html#ISFREE.free_in_equation_spec">free_in_equation_spec</a></span> <span class="id">x</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Logic.html#eq">eq</a></span> <span class="id"><a href="Velus.Common.CommonPS.html#PS.empty">PS.empty</a></span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intuition</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.NLustre.IsFree.html#ISFREE">ISFREE</a></span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="id"><a name="IsFreeFun">IsFreeFun</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Ids</span>   : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Op</span>    : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">CESyn</span> : <span class="id"><a href="Velus.CoreExpr.CESyntax.html#CESYNTAX">CESYNTAX</a></span>     <span class="id"><a href="Velus.NLustre.IsFree.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Syn</span>   : <span class="id"><a href="Velus.NLustre.NLSyntax.html#NLSYNTAX">NLSYNTAX</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Ids">Ids</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Op">Op</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#CESyn">CESyn</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">CEIsF</span> : <span class="id"><a href="Velus.CoreExpr.CEIsFree.html#CEISFREE">CEISFREE</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Ids">Ids</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Op">Op</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#CESyn">CESyn</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;: <span class="id"><a href="Velus.NLustre.IsFree.html#ISFREE">ISFREE</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Ids">Ids</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Op">Op</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#CESyn">CESyn</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Syn">Syn</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF">CEIsF</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Include</span> <span class="id"><a href="Velus.NLustre.IsFree.html#ISFREE">ISFREE</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Ids">Ids</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Op">Op</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#CESyn">CESyn</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#Syn">Syn</a></span> <span class="id"><a href="Velus.NLustre.IsFree.html#CEIsF">CEIsF</a></span>.<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.NLustre.IsFree.html#IsFreeFun">IsFreeFun</a></span>.<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</a></div>
+</body>
+</html>

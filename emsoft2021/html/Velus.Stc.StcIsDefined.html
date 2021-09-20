@@ -1,0 +1,282 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module StcIsDefined</title>
+<meta name="description" content="Documentation of Coq module StcIsDefined" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module StcIsDefined</h1>
+<div class="coq">
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Common.Common.html">Common</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Operators.html">Operators</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.CoreExpr.CESyntax.html">CoreExpr.CESyntax</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Stc.StcSyntax.html">Stc.StcSyntax</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Clocks.html">Clocks</a></span>.<br/>
+<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Stc.StcIsVariable.html">Stc.StcIsVariable</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Stc.StcIsLast.html">Stc.StcIsLast</a></span>.<br/>
+<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<span class="kwd">Import</span> <span class="id">List.ListNotations</span>.<br/>
+<span class="kwd">Open</span> <span class="kwd">Scope</span> <span class="id">list_scope</span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="kwd">Type</span> <span class="id"><a name="STCISDEFINED">STCISDEFINED</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Ids</span>   : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Op</span>    : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">CESyn</span> : <span class="id"><a href="Velus.CoreExpr.CESyntax.html#CESYNTAX">CESYNTAX</a></span>          <span class="id"><a href="Velus.Stc.StcIsDefined.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Syn</span>   : <span class="id"><a href="Velus.Stc.StcSyntax.html#STCSYNTAX">STCSYNTAX</a></span>     <span class="id"><a href="Velus.Stc.StcIsDefined.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#CESyn">CESyn</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Var</span>   : <span class="id"><a href="Velus.Stc.StcIsVariable.html#STCISVARIABLE">STCISVARIABLE</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#CESyn">CESyn</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn">Syn</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Last</span>  : <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST">STCISLAST</a></span>     <span class="id"><a href="Velus.Stc.StcIsDefined.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#CESyn">CESyn</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn">Syn</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="STCISDEFINED.Is_defined_in_tc">Is_defined_in_tc</a></span>: <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.trconstr">trconstr</a></span> -&gt; <span class="kwd">Prop</span> :=<br/>
+&nbsp;&nbsp;| <span class="id"><a name="STCISDEFINED.DefTcDef">DefTcDef</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">ck</span> <span class="id">e</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#Is_defined_in_tc">Is_defined_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.TcDef">TcDef</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#ck">ck</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#e">e</a></span>)<br/>
+&nbsp;&nbsp;| <span class="id"><a name="STCISDEFINED.DefTcNext">DefTcNext</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">ck</span> <span class="id">e</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#Is_defined_in_tc">Is_defined_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.TcNext">TcNext</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#ck">ck</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#e">e</a></span>)<br/>
+&nbsp;&nbsp;| <span class="id"><a name="STCISDEFINED.DefTcCall">DefTcCall</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">i</span> <span class="id">xs</span> <span class="id">ck</span> <span class="id">rst</span> <span class="id">f</span> <span class="id">es</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#xs">xs</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#Is_defined_in_tc">Is_defined_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.TcCall">TcCall</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#i">i</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#xs">xs</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#ck">ck</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#rst">rst</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#f">f</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#es">es</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="STCISDEFINED.Is_defined_in">Is_defined_in</a></span> (<span class="id">x</span>: <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span>) (<span class="id">tcs</span>: <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.trconstr">trconstr</a></span>) : <span class="kwd">Prop</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Exists">Exists</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_tc">Is_defined_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span>) <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.Is_defined_Is_variable_Is_last_in">Is_defined_Is_variable_Is_last_in</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">tcs</span> <span class="id">x</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in">Is_defined_in</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span> &lt;-&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#Var.Is_variable_in">Is_variable_in</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span> \/ <span class="id"><a href="Velus.Stc.StcIsDefined.html#Last.Is_last_in">Is_last_in</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof1')">Proof.</div>
+<div class="proofscript" id="proof1">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">tcs</span>; <span class="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">inversion</span> 1.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">intros</span> [<span class="id">E</span>|<span class="id">E</span>]; <span class="tactic">inversion</span> <span class="id">E</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">inversion_clear</span> 1 <span class="kwd">as</span> [?? <span class="id">Def</span>|?? <span class="id">Defs</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id">inv</span> <span class="id">Def</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">left</span>; <span class="tactic">left</span>; <span class="tactic">constructor</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">right</span>; <span class="tactic">left</span>; <span class="tactic">constructor</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">left</span>; <span class="tactic">left</span>; <span class="tactic">constructor</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">apply</span> <span class="id">IHtcs</span> <span class="kwd">in</span> <span class="id">Defs</span> <span class="kwd">as</span> [].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">left</span>; <span class="tactic">right</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">right</span>; <span class="tactic">right</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">intros</span> [<span class="id">E</span>|<span class="id">E</span>]; <span class="tactic">inversion_clear</span> <span class="id">E</span> <span class="kwd">as</span> [?? <span class="id">E</span>'|].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id">inv</span> <span class="id">E</span>'.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">left</span>; <span class="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">left</span>; <span class="tactic">constructor</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">right</span>; <span class="tactic">apply</span> <span class="id">IHtcs</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id">inv</span> <span class="id">E</span>'; <span class="tactic">left</span>; <span class="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">right</span>; <span class="tactic">apply</span> <span class="id">IHtcs</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.Is_variable_in_tc_Is_defined_in_tc">Is_variable_in_tc_Is_defined_in_tc</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">tc</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#Var.Is_variable_in_tc">Is_variable_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tc">tc</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_tc">Is_defined_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tc">tc</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof2')">Proof.</div>
+<div class="proofscript" id="proof2">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">tc</span>; <span class="tactic">inversion_clear</span> 1; <span class="tactic">auto</span> <span class="kwd">using</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_tc">Is_defined_in_tc</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.Is_variable_in_Is_defined_in">Is_variable_in_Is_defined_in</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">tcs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#Var.Is_variable_in">Is_variable_in</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in">Is_defined_in</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof3')">Proof.</div>
+<div class="proofscript" id="proof3">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">tcs</span>; <span class="tactic">inversion_clear</span> 1 <span class="kwd">as</span> [?? <span class="id">Var</span>|].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id">inv</span> <span class="id">Var</span>; <span class="tactic">left</span>; <span class="tactic">constructor</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">right</span>; <span class="tactic">auto</span>; <span class="tactic">apply</span> <span class="id">IHtcs</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.s_ins_not_def">s_ins_not_def</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">s</span> <span class="id">x</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Common.CommonList.html#InMembers">InMembers</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#s">s</a></span>.(<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_in">s_in</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in">Is_defined_in</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#s">s</a></span>.(<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_tcs">s_tcs</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof4')">Proof.</div>
+<div class="proofscript" id="proof4">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">Hin</span> <span class="id">Hdef</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">pose</span> <span class="id">proof</span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_nodup">s_nodup</a></span> <span class="id">s</span>) <span class="kwd">as</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> (<span class="id"><a href="Velus.Common.CommonList.html#NoDup_app_In">NoDup_app_In</a></span> <span class="id">x</span>) <span class="kwd">in</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_Is_variable_Is_last_in">Is_defined_Is_variable_Is_last_in</a></span> <span class="kwd">in</span> <span class="id">Hdef</span> <span class="kwd">as</span> [<span class="id">Var</span>|<span class="id">Last</span>];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id">Nodup</span>; <span class="tactic">rewrite</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#app_assoc">app_assoc</a></span>, <span class="id"><a href="Velus.Common.CommonList.html#in_app">in_app</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Var.Is_variable_in_variables">Is_variable_in_variables</a></span> <span class="kwd">in</span> <span class="id">Var</span>; <span class="tactic">rewrite</span> &lt;-<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_vars_out_in_tcs">s_vars_out_in_tcs</a></span> <span class="kwd">in</span> <span class="id">Var</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Last.lasts_of_In">lasts_of_In</a></span> <span class="kwd">in</span> <span class="id">Last</span>; <span class="tactic">rewrite</span> &lt;-<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_lasts_in_tcs">s_lasts_in_tcs</a></span> <span class="kwd">in</span> <span class="id">Last</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonList.html#fst_InMembers">fst_InMembers</a></span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.not_Is_defined_in_tc_TcDef">not_Is_defined_in_tc_TcDef</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">y</span> <span class="id">x</span> <span class="id">ck</span> <span class="id">e</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_tc">Is_defined_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#y">y</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.TcDef">TcDef</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#ck">ck</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#e">e</a></span>) -&gt; <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> &lt;&gt; <span class="id"><a href="Velus.Stc.StcIsDefined.html#y">y</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof5')">Proof.</div>
+<div class="proofscript" id="proof5">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">NIsDef</span> <span class="id">E</span>; <span class="tactic">subst</span>; <span class="tactic">apply</span> <span class="id">NIsDef</span>; <span class="tactic">auto</span> <span class="kwd">using</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_tc">Is_defined_in_tc</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.not_Is_defined_in_tc_TcNext">not_Is_defined_in_tc_TcNext</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">y</span> <span class="id">x</span> <span class="id">ck</span> <span class="id">e</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_tc">Is_defined_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#y">y</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.TcNext">TcNext</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#ck">ck</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#e">e</a></span>) -&gt; <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> &lt;&gt; <span class="id"><a href="Velus.Stc.StcIsDefined.html#y">y</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof6')">Proof.</div>
+<div class="proofscript" id="proof6">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">NIsDef</span> <span class="id">E</span>; <span class="tactic">subst</span>; <span class="tactic">apply</span> <span class="id">NIsDef</span>; <span class="tactic">auto</span> <span class="kwd">using</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_tc">Is_defined_in_tc</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.not_Is_defined_in_cons">not_Is_defined_in_cons</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">tc</span> <span class="id">tcs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in">Is_defined_in</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#tc">tc</a></span> :: <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&gt; ~ <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_tc">Is_defined_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tc">tc</a></span> /\ ~ <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in">Is_defined_in</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof7')">Proof.</div>
+<div class="proofscript" id="proof7">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">intro</span> <span class="id">Hndef</span>; <span class="tactic">split</span>; <span class="tactic">intro</span> <span class="id">His_def</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id">Hndef</span>; <span class="id">now</span> <span class="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">intros</span> [<span class="id">Hdef_tc</span> <span class="id">Hdef_tcs</span>] <span class="id">Hdef_all</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inv</span> <span class="id">Hdef_all</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="STCISDEFINED.defined_tc">defined_tc</a></span> (<span class="id">tc</span>: <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.trconstr">trconstr</a></span>): <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tc">tc</a></span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.TcNext">TcNext</a></span> <span class="id">x</span> <span class="id">_</span> <span class="id">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.TcDef">TcDef</a></span> <span class="id">x</span> <span class="id">_</span> <span class="id">_</span> =&gt; [<span class="id">x</span>]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.TcCall">TcCall</a></span> <span class="id">_</span> <span class="id">xs</span> <span class="id">_</span> <span class="id">_</span> <span class="id">_</span> <span class="id">_</span> =&gt; <span class="id">xs</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.TcReset">TcReset</a></span> <span class="id">_</span> <span class="id">_</span> <span class="id">_</span> =&gt; []<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="STCISDEFINED.defined">defined</a></span> := <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#flat_map">flat_map</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.defined_tc">defined_tc</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.Is_defined_in_defined_tc">Is_defined_in_defined_tc</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">tc</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_tc">Is_defined_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tc">tc</a></span> &lt;-&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.defined_tc">defined_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tc">tc</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof8')">Proof.</div>
+<div class="proofscript" id="proof8">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">tc</span>; <span class="tactic">split</span>; <span class="tactic">try</span> <span class="tactic">inversion_clear</span> 1; <span class="tactic">subst</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">simpl</span>; <span class="tactic">auto</span> <span class="kwd">using</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_tc">Is_defined_in_tc</a></span>; <span class="tactic">try</span> <span class="id">contradiction</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.Is_defined_in_defined">Is_defined_in_defined</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">tcs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in">Is_defined_in</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span> &lt;-&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.defined">defined</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof9')">Proof.</div>
+<div class="proofscript" id="proof9">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">unfold</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.defined">defined</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">tcs</span>; <span class="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">split</span>; <span class="tactic">inversion</span> 1.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">split</span>; <span class="tactic">rewrite</span> <span class="id"><a href="Velus.Common.CommonList.html#in_app">in_app</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">inversion_clear</span> 1.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">left</span>; <span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_defined_tc">Is_defined_in_defined_tc</a></span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">right</span>; <span class="tactic">apply</span> <span class="id">IHtcs</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">intros</span> [?|?].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">left</span>; <span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_defined_tc">Is_defined_in_defined_tc</a></span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">right</span>; <span class="tactic">apply</span> <span class="id">IHtcs</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.system_output_defined_in_tcs">system_output_defined_in_tcs</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">s</span> <span class="id">x</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">map</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#fst">fst</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#s">s</a></span>.(<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_out">s_out</a></span>)) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in">Is_defined_in</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#s">s</a></span>.(<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_tcs">s_tcs</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof10')">Proof.</div>
+<div class="proofscript" id="proof10">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">Ho</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">cut</span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id">x</span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">map</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#fst">fst</a></span> <span class="id">s</span>.(<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_vars">s_vars</a></span>) ++ <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#map">map</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#fst">fst</a></span> <span class="id">s</span>.(<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_out">s_out</a></span>))).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">intro</span> <span class="id">Hvo</span>; <span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_variable_in_Is_defined_in">Is_variable_in_Is_defined_in</a></span>, <span class="id"><a href="Velus.Stc.StcIsDefined.html#Var.Is_variable_in_variables">Is_variable_in_variables</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="tactic">rewrite</span> &lt;-<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_vars_out_in_tcs">s_vars_out_in_tcs</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#in_or_app">in_or_app</a></span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.Is_defined_in_In">Is_defined_in_In</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">tcs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in">Is_defined_in</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">exists</span> <span class="id">tc</span>, <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tc">tc</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span> /\ <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_tc">Is_defined_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tc">tc</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof11')">Proof.</div>
+<div class="proofscript" id="proof11">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">tcs</span> <span class="kwd">as</span> [|<span class="id">tc</span>]. <span class="id">now</span> <span class="tactic">inversion</span> 1.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> 1 <span class="kwd">as</span> [? ? <span class="id">Hdef</span>|? ? <span class="id">Hex</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">exists</span> <span class="id">tc</span>; <span class="tactic">split</span>; <span class="tactic">auto</span> <span class="kwd">with</span> <span class="id">datatypes</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Exists_exists">Exists_exists</a></span> <span class="kwd">in</span> <span class="id">Hex</span> <span class="kwd">as</span> (<span class="id">tc</span>' &amp; <span class="id">Hin</span> &amp; <span class="id">Hdef</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">exists</span> <span class="id">tc</span>'; <span class="tactic">split</span>; <span class="tactic">auto</span> <span class="kwd">with</span> <span class="id">datatypes</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.s_defined">s_defined</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">s</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Sorting.Permutation.html#Permutation">Permutation.Permutation</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.defined">defined</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_tcs">s_tcs</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#s">s</a></span>)) (<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.variables">variables</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_tcs">s_tcs</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#s">s</a></span>) ++ <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.lasts_of">lasts_of</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_tcs">s_tcs</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#s">s</a></span>)).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof12')">Proof.</div>
+<div class="proofscript" id="proof12">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">unfold</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.defined">defined</a></span>, <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.variables">variables</a></span>; <span class="tactic">intro</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_tcs">s_tcs</a></span> <span class="id">s</span>) <span class="kwd">as</span> [|[]]; <span class="tactic">simpl</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id">now</span> <span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Sorting.Permutation.html#Permutation_cons_app">Permutation.Permutation_cons_app</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id">now</span> <span class="tactic">rewrite</span> &lt;-<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#app_assoc">app_assoc</a></span>; <span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Sorting.Permutation.html#Permutation_app_head">Permutation.Permutation_app_head</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.s_nodup_defined">s_nodup_defined</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">s</span>, <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#NoDup">NoDup</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.defined">defined</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_tcs">s_tcs</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#s">s</a></span>)).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof13')">Proof.</div>
+<div class="proofscript" id="proof13">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span>; <span class="tactic">eapply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Sorting.Permutation.html#Permutation_NoDup">Permutation.Permutation_NoDup</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Sorting.Permutation.html#Permutation_sym">Permutation.Permutation_sym</a></span>, <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.s_defined">s_defined</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">rewrite</span> &lt;-<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_lasts_in_tcs">s_lasts_in_tcs</a></span>, &lt;-<span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_vars_out_in_tcs">s_vars_out_in_tcs</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> &lt;-<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#app_assoc">app_assoc</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id"><a href="Velus.Common.CommonList.html#NoDup_app_weaken">NoDup_app_weaken</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Sorting.Permutation.html#Permutation_app_comm">Permutation.Permutation_app_comm</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn.s_nodup">s_nodup</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.Is_last_in_not_Is_variable_in">Is_last_in_not_Is_variable_in</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">tcs</span> <span class="id">x</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#NoDup">NoDup</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.defined">defined</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#Last.Is_last_in">Is_last_in</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ <span class="id"><a href="Velus.Stc.StcIsDefined.html#Var.Is_variable_in">Is_variable_in</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof14')">Proof.</div>
+<div class="proofscript" id="proof14">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">tcs</span>; <span class="tactic">intros</span> * <span class="id">Nodup</span> <span class="id">Last</span> <span class="id">Var</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> <span class="id">Last</span> <span class="kwd">as</span> [?? <span class="id">IsLast</span>|];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> <span class="id">Var</span> <span class="kwd">as</span> [?? <span class="id">IsVar</span>|?? <span class="id">IsVar_in</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id">inv</span> <span class="id">IsLast</span>; <span class="id">inv</span> <span class="id">IsVar</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_variable_in_Is_defined_in">Is_variable_in_Is_defined_in</a></span> <span class="kwd">in</span> <span class="id">IsVar_in</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inv</span> <span class="id">IsLast</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">simpl</span> <span class="kwd">in</span> <span class="id">Nodup</span>; <span class="id">inv</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_defined">Is_defined_in_defined</a></span> <span class="kwd">in</span> <span class="id">IsVar_in</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_variable_in_tc_Is_defined_in_tc">Is_variable_in_tc_Is_defined_in_tc</a></span> <span class="kwd">in</span> <span class="id">IsVar</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">assert</span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in">Is_defined_in</a></span> <span class="id">x</span> <span class="id">tcs</span>) <span class="kwd">as</span> <span class="id">Hins</span> <span class="tactic">by</span> (<span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_Is_variable_Is_last_in">Is_defined_Is_variable_Is_last_in</a></span>; <span class="tactic">auto</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_defined">Is_defined_in_defined</a></span> <span class="kwd">in</span> <span class="id">Hins</span>; <span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.Is_defined_in_defined_tc">Is_defined_in_defined_tc</a></span> <span class="kwd">in</span> <span class="id">IsVar</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">simpl</span> <span class="kwd">in</span> <span class="id">Nodup</span>; <span class="tactic">eapply</span> <span class="id"><a href="Velus.Common.CommonList.html#NoDup_app_In">NoDup_app_In</a></span> <span class="kwd">in</span> <span class="id">Nodup</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">simpl</span> <span class="kwd">in</span> <span class="id">Nodup</span>; <span class="tactic">rewrite</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Sorting.Permutation.html#Permutation_app_comm">Permutation.Permutation_app_comm</a></span> <span class="kwd">in</span> <span class="id">Nodup</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonList.html#NoDup_app_weaken">NoDup_app_weaken</a></span> <span class="kwd">in</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id">IHtcs</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISDEFINED.defined_app">defined_app</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">tcs</span> <span class="id">tcs</span>',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.defined">defined</a></span> (<span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span> ++ <span class="id">tcs</span>') = <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.defined">defined</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#tcs">tcs</a></span> ++ <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.defined">defined</a></span> <span class="id">tcs</span>'.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof15')">Proof.</div>
+<div class="proofscript" id="proof15">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">unfold</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED.defined">defined</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">tcs</span> <span class="kwd">as</span> [|[]]; <span class="tactic">simpl</span>; <span class="tactic">intros</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">f_equal</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">f_equal</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">rewrite</span> &lt;-<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#app_assoc">app_assoc</a></span>; <span class="tactic">f_equal</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED">STCISDEFINED</a></span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="id"><a name="StcIsDefinedFun">StcIsDefinedFun</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Ids</span>   : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Op</span>    : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">CESyn</span> : <span class="id"><a href="Velus.CoreExpr.CESyntax.html#CESYNTAX">CESYNTAX</a></span>          <span class="id"><a href="Velus.Stc.StcIsDefined.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Syn</span>   : <span class="id"><a href="Velus.Stc.StcSyntax.html#STCSYNTAX">STCSYNTAX</a></span>     <span class="id"><a href="Velus.Stc.StcIsDefined.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#CESyn">CESyn</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Var</span>   : <span class="id"><a href="Velus.Stc.StcIsVariable.html#STCISVARIABLE">STCISVARIABLE</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#CESyn">CESyn</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn">Syn</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Last</span>  : <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST">STCISLAST</a></span>     <span class="id"><a href="Velus.Stc.StcIsDefined.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#CESyn">CESyn</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn">Syn</a></span>)<br/>
+&lt;: <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED">STCISDEFINED</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#CESyn">CESyn</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn">Syn</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Var">Var</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Last">Last</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Include</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#STCISDEFINED">STCISDEFINED</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#CESyn">CESyn</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Syn">Syn</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Var">Var</a></span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#Last">Last</a></span>.<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.Stc.StcIsDefined.html#StcIsDefinedFun">StcIsDefinedFun</a></span>.<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</a></div>
+</body>
+</html>

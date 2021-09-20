@@ -1,0 +1,139 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module TrOrdered</title>
+<meta name="description" content="Documentation of Coq module TrOrdered" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module TrOrdered</h1>
+<div class="coq">
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Common.Common.html">Common</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Environment.html">Environment</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Operators.html">Operators</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Clocks.html">Clocks</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Lustre.LSyntax.html">Lustre.LSyntax</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.CoreExpr.CESyntax.html">CoreExpr.CESyntax</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.NLustre.NLSyntax.html">NLustre.NLSyntax</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Transcription.Tr.html">Transcription.Tr</a></span>.<br/>
+<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Lustre.LOrdered.html">Lustre.LOrdered</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.NLustre.NLOrdered.html">NLustre.NLOrdered</a></span>.<br/>
+<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.CoindStreams.html">CoindStreams</a></span> <span class="id"><a href="Velus.IndexedStreams.html">IndexedStreams</a></span>.<br/>
+<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<span class="kwd">Import</span> <span class="id">List.ListNotations</span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Sorting.Permutation.html">Permutation</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.omega.Omega.html">Omega</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Setoids.Setoid.html">Setoid</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Classes.Morphisms.html">Morphisms</a></span>.<br/>
+<br/>
+<span class="kwd">Open</span> <span class="kwd">Scope</span> <span class="id">list</span>.<br/>
+<br/>
+<span class="kwd">From</span> <span class="id">compcert</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="../../CompCert/doc/html/compcert.common.Errors.html">common.Errors</a></span>.<br/>
+<span class="kwd">Open</span> <span class="kwd">Scope</span> <span class="id">error_monad_scope</span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="kwd">Type</span> <span class="id"><a name="TRORDERED">TRORDERED</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Ids</span>  : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Op</span>   : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">OpAux</span>: <span class="id"><a href="Velus.Operators.html#OPERATORS_AUX">OPERATORS_AUX</a></span>        <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">L</span>           : <span class="id"><a href="Velus.Lustre.LSyntax.html#LSYNTAX">LSYNTAX</a></span>          <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Lord</span>        : <span class="id"><a href="Velus.Lustre.LOrdered.html#LORDERED">LORDERED</a></span>         <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span>       <span class="id"><a href="Velus.Transcription.TrOrdered.html#L">L</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">CE</span>   : <span class="id"><a href="Velus.CoreExpr.CESyntax.html#CESYNTAX">CESYNTAX</a></span>             <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">NL</span>          : <span class="id"><a href="Velus.NLustre.NLSyntax.html#NLSYNTAX">NLSYNTAX</a></span>         <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span>              <span class="id"><a href="Velus.Transcription.TrOrdered.html#CE">CE</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Ord</span>         : <span class="id"><a href="Velus.NLustre.NLOrdered.html#NLORDERED">NLORDERED</a></span>        <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span>              <span class="id"><a href="Velus.Transcription.TrOrdered.html#CE">CE</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#NL">NL</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">TR</span>   : <span class="id"><a href="Velus.Transcription.Tr.html#TR">TR</a></span>               <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#L">L</a></span>      <span class="id"><a href="Velus.Transcription.TrOrdered.html#CE">CE</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#NL">NL</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="TRORDERED.inin_l_nl">inin_l_nl</a></span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">f</span> <span class="id">n</span> <span class="id">n</span>' <span class="id">Hpref</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Transcription.TrOrdered.html#TR.to_node">to_node</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#n">n</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Hpref">Hpref</a></span> = <span class="id"><a href="../../CompCert/doc/html/compcert.common.Errors.html#OK">OK</a></span> <span class="id">n</span>' -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Transcription.TrOrdered.html#Ord.Is_node_in">Ord.Is_node_in</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#f">f</a></span> (<span class="id"><a href="Velus.Transcription.TrOrdered.html#NL.n_eqs">NL.n_eqs</a></span> <span class="id">n</span>') -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Transcription.TrOrdered.html#Lord.Is_node_in">Lord.Is_node_in</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#f">f</a></span> (<span class="id"><a href="Velus.Transcription.TrOrdered.html#L.n_eqs">L.n_eqs</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#n">n</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof1')">Proof.</div>
+<div class="proofscript" id="proof1">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">Htr</span> <span class="id">Hord</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">n</span>'. <span class="tactic">simpl</span> <span class="kwd">in</span> <span class="id">Hord</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">tonodeInv</span> <span class="id">Htr</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">clear</span> - <span class="id">Hord</span> <span class="id">Hmmap</span>. <span class="id">revert</span> <span class="tactic">dependent</span> <span class="id">n_eqs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> (<span class="id"><a href="Velus.Transcription.TrOrdered.html#L.n_eqs">L.n_eqs</a></span> <span class="id">n</span>); <span class="tactic">intros</span>. <span class="id">inv</span> <span class="id">Hmmap</span>. <span class="id">inv</span> <span class="id">Hord</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#TR.mmap_cons">mmap_cons</a></span> <span class="kwd">in</span> <span class="id">Hmmap</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">Hmmap</span> <span class="kwd">as</span> (<span class="id">eq</span>' &amp; <span class="id">l</span>' &amp; <span class="id">Hneqs</span> &amp; <span class="id">Hteq</span> &amp; <span class="id">Hmmap</span>); <span class="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> <span class="id">Hord</span> <span class="kwd">as</span> [ ? ? <span class="id">Hord</span>' |].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">econstructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">eq</span>' <span class="kwd">as</span> [| <span class="id">i</span> <span class="id">ck</span> <span class="id">x</span> <span class="id">le</span> |]; <span class="id">inv</span> <span class="id">Hord</span>'.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">a</span> <span class="kwd">as</span> [ <span class="id">xs</span> [|]]. <span class="id">inv</span> <span class="id">Hteq</span>. <span class="id">cases</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">l0</span>; [ <span class="tactic">idtac</span> | <span class="id">inv</span> <span class="id">Hteq</span>; <span class="id">cases</span> ].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">e</span>; <span class="id">inv</span> <span class="id">Hteq</span>; <span class="id">cases</span>; <span class="id">monadInv</span> <span class="id">H0</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">econstructor</span>; <span class="tactic">apply</span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Lord.INEapp2">Lord.INEapp2</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Exists_cons_tl">Exists_cons_tl</a></span>. <span class="tactic">eapply</span> <span class="id">IHl</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="TRORDERED.ninin_l_nl">ninin_l_nl</a></span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">f</span> <span class="id">n</span> <span class="id">n</span>' <span class="id">Hpref</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Transcription.TrOrdered.html#TR.to_node">to_node</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#n">n</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Hpref">Hpref</a></span> = <span class="id"><a href="../../CompCert/doc/html/compcert.common.Errors.html#OK">OK</a></span> <span class="id">n</span>' -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ <span class="id"><a href="Velus.Transcription.TrOrdered.html#Lord.Is_node_in">Lord.Is_node_in</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#f">f</a></span> (<span class="id"><a href="Velus.Transcription.TrOrdered.html#L.n_eqs">L.n_eqs</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#n">n</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ord.Is_node_in">Ord.Is_node_in</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#f">f</a></span> (<span class="id"><a href="Velus.Transcription.TrOrdered.html#NL.n_eqs">NL.n_eqs</a></span> <span class="id">n</span>').<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof2')">Proof.</div>
+<div class="proofscript" id="proof2">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span>. <span class="tactic">intro</span>. <span class="tactic">destruct</span> <span class="id">H0</span>. <span class="tactic">eapply</span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#TRORDERED.inin_l_nl">inin_l_nl</a></span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Fact</span> <span class="id"><a name="TRORDERED.to_global_names">to_global_names</a></span> : <span class="kwd">forall</span> <span class="id">name</span> <span class="id">G</span> <span class="id">G</span>' <span class="id">Hprefs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Exists">Exists</a></span> (<span class="kwd">fun</span> <span class="id">n</span> =&gt; (<span class="id"><a href="Velus.Transcription.TrOrdered.html#name">name</a></span> = <span class="id"><a href="Velus.Transcription.TrOrdered.html#L.n_name">L.n_name</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#n">n</a></span>)%<span class="id">type</span>) <span class="id"><a href="Velus.Transcription.TrOrdered.html#G">G</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Transcription.TrOrdered.html#TR.to_global">to_global</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#G">G</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Hprefs">Hprefs</a></span> = <span class="id"><a href="../../CompCert/doc/html/compcert.common.Errors.html#OK">OK</a></span> <span class="id">G</span>' -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Exists">Exists</a></span> (<span class="kwd">fun</span> <span class="id">n</span> =&gt; (<span class="id"><a href="Velus.Transcription.TrOrdered.html#name">name</a></span> = <span class="id"><a href="Velus.Transcription.TrOrdered.html#NL.n_name">NL.n_name</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#n">n</a></span>)%<span class="id">type</span>) <span class="id">G</span>'.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof3')">Proof.</div>
+<div class="proofscript" id="proof3">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">G</span>; <span class="tactic">intros</span> * <span class="id">Hnames</span> <span class="id">Htog</span>; <span class="id">inv</span> <span class="id">Hnames</span>; <span class="id">monadInv</span> <span class="id">Htog</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">left</span>. <span class="tactic">eapply</span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#TR.to_node_name">to_node_name</a></span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="TRORDERED.ord_l_nl">ord_l_nl</a></span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">G</span> <span class="id">P</span> <span class="id">Hprefs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Transcription.TrOrdered.html#TR.to_global">to_global</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#G">G</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Hprefs">Hprefs</a></span> = <span class="id"><a href="../../CompCert/doc/html/compcert.common.Errors.html#OK">OK</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#P">P</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Transcription.TrOrdered.html#Lord.Ordered_nodes">Lord.Ordered_nodes</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#G">G</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Transcription.TrOrdered.html#Ord.Ordered_nodes">Ord.Ordered_nodes</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#P">P</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof4')">Proof.</div>
+<div class="proofscript" id="proof4">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">Htr</span> <span class="id">Hord</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">revert</span> <span class="tactic">dependent</span> <span class="id">P</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">Hord</span>; <span class="tactic">intros</span>; <span class="id">monadInv</span> <span class="id">Htr</span>; <span class="tactic">constructor</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">intros</span> <span class="id">f</span> <span class="id">Hin</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">assert</span> (<span class="id"><a href="Velus.Transcription.TrOrdered.html#Lord.Is_node_in">Lord.Is_node_in</a></span> <span class="id">f</span> (<span class="id"><a href="Velus.Transcription.TrOrdered.html#L.n_eqs">L.n_eqs</a></span> <span class="id">nd</span>)) <span class="kwd">as</span> <span class="id">Hfin</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#TRORDERED.inin_l_nl">inin_l_nl</a></span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id">H</span> <span class="kwd">in</span> <span class="id">Hfin</span>. <span class="tactic">destruct</span> <span class="id">Hfin</span> <span class="kwd">as</span> [ <span class="id">Hf</span> <span class="id">Hnds</span> ].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">apply</span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#TR.to_node_name">to_node_name</a></span> <span class="kwd">in</span> <span class="id">EQ</span>. <span class="id">now</span> <span class="tactic">rewrite</span> &lt;- <span class="id">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">eapply</span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#TRORDERED.to_global_names">to_global_names</a></span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">apply</span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#TR.to_node_name">to_node_name</a></span> <span class="kwd">in</span> <span class="id">EQ</span>. <span class="tactic">rewrite</span> &lt;- <span class="id">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#TR.to_global_names">TR.to_global_names</a></span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#TRORDERED">TRORDERED</a></span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="id"><a name="TrOrderedFun">TrOrderedFun</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Ids</span> : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Op</span> : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">OpAux</span> : <span class="id"><a href="Velus.Operators.html#OPERATORS_AUX">OPERATORS_AUX</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">LSyn</span> : <span class="id"><a href="Velus.Lustre.LSyntax.html#LSYNTAX">LSYNTAX</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">LOrd</span> : <span class="id"><a href="Velus.Lustre.LOrdered.html#LORDERED">LORDERED</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#LSyn">LSyn</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">CE</span> : <span class="id"><a href="Velus.CoreExpr.CESyntax.html#CESYNTAX">CESYNTAX</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">NL</span> : <span class="id"><a href="Velus.NLustre.NLSyntax.html#NLSYNTAX">NLSYNTAX</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#CE">CE</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Ord</span> : <span class="id"><a href="Velus.NLustre.NLOrdered.html#NLORDERED">NLORDERED</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#CE">CE</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#NL">NL</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">TR</span> : <span class="id"><a href="Velus.Transcription.Tr.html#TR">TR</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#LSyn">LSyn</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#CE">CE</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#NL">NL</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;: <span class="id"><a href="Velus.Transcription.TrOrdered.html#TRORDERED">TRORDERED</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#LSyn">LSyn</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#LOrd">LOrd</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#CE">CE</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#NL">NL</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ord">Ord</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#TR">TR</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Include</span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#TRORDERED">TRORDERED</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Op">Op</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#LSyn">LSyn</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#LOrd">LOrd</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#CE">CE</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#NL">NL</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#Ord">Ord</a></span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#TR">TR</a></span>.<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.Transcription.TrOrdered.html#TrOrderedFun">TrOrderedFun</a></span>.<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</a></div>
+</body>
+</html>

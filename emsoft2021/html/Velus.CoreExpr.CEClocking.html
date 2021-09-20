@@ -1,0 +1,173 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module CEClocking</title>
+<meta name="description" content="Documentation of Coq module CEClocking" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module CEClocking</h1>
+<div class="coq">
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.FSets.FMapPositive.html">FSets.FMapPositive</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Common.Common.html">Common</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Operators.html">Operators</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Clocks.html">Clocks</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.CoreExpr.CESyntax.html">CoreExpr.CESyntax</a></span>.<br/>
+<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Classes.Morphisms.html">Morphisms</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Sorting.Permutation.html">Permutation</a></span>.<br/>
+<br/>
+<h1> Well clocked expressions </h1>
+<br/>
+<span class="kwd">Module</span> <span class="kwd">Type</span> <span class="id"><a name="CECLOCKING">CECLOCKING</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Ids</span>  : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Op</span>   : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Syn</span>  : <span class="id"><a href="Velus.CoreExpr.CESyntax.html#CESYNTAX">CESYNTAX</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#Op">Op</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="CECLOCKING.SameVar">SameVar</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn.exp">exp</a></span> -&gt; <span class="kwd">Prop</span> :=<br/>
+&nbsp;&nbsp;| <span class="id"><a name="CECLOCKING.SVNone">SVNone</a></span>: <span class="kwd">forall</span> <span class="id">e</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#SameVar">SameVar</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#e">e</a></span><br/>
+&nbsp;&nbsp;| <span class="id"><a name="CECLOCKING.SVSome">SVSome</a></span>: <span class="kwd">forall</span> <span class="id">x</span> <span class="id">ty</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#SameVar">SameVar</a></span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#x">x</a></span>) (<span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn.Evar">Evar</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#x">x</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ty">ty</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Section</span> <span class="id"><a name="CECLOCKING.WellClocked">WellClocked</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Variable</span> <span class="id"><a name="CECLOCKING.WellClocked.vars">vars</a></span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> (<span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> * <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="CECLOCKING.wc_exp">wc_exp</a></span> : <span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn.exp">exp</a></span> -&gt; <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span> -&gt; <span class="kwd">Prop</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="CECLOCKING.Cconst">Cconst</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">c</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_exp">wc_exp</a></span> (<span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn.Econst">Econst</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#c">c</a></span>) <span class="id"><a href="Velus.ClockDefs.html#Cbase">Cbase</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="CECLOCKING.Cvar">Cvar</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">ck</span> <span class="id">ty</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> (<span class="id"><a href="Velus.CoreExpr.CEClocking.html#x">x</a></span>, <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span>) <span class="id"><a href="Velus.CoreExpr.CEClocking.html#CECLOCKING.WellClocked.vars">vars</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_exp">wc_exp</a></span> (<span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn.Evar">Evar</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#x">x</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ty">ty</a></span>) <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="CECLOCKING.Cwhen">Cwhen</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">e</span> <span class="id">x</span> <span class="id">b</span> <span class="id">ck</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_exp">wc_exp</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#e">e</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> (<span class="id"><a href="Velus.CoreExpr.CEClocking.html#x">x</a></span>, <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span>) <span class="id"><a href="Velus.CoreExpr.CEClocking.html#CECLOCKING.WellClocked.vars">vars</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_exp">wc_exp</a></span> (<span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn.Ewhen">Ewhen</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#e">e</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#x">x</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#b">b</a></span>) (<span class="id"><a href="Velus.ClockDefs.html#Con">Con</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#x">x</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#b">b</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="CECLOCKING.Cunop">Cunop</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">op</span> <span class="id">e</span> <span class="id">ck</span> <span class="id">ty</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_exp">wc_exp</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#e">e</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_exp">wc_exp</a></span> (<span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn.Eunop">Eunop</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#op">op</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#e">e</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ty">ty</a></span>) <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="CECLOCKING.Cbinop">Cbinop</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">op</span> <span class="id">e1</span> <span class="id">e2</span> <span class="id">ck</span> <span class="id">ty</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_exp">wc_exp</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#e1">e1</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_exp">wc_exp</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#e2">e2</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_exp">wc_exp</a></span> (<span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn.Ebinop">Ebinop</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#op">op</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#e1">e1</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#e2">e2</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ty">ty</a></span>) <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="CECLOCKING.wc_cexp">wc_cexp</a></span> : <span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn.cexp">cexp</a></span> -&gt; <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span> -&gt; <span class="kwd">Prop</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="CECLOCKING.Cmerge">Cmerge</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">t</span> <span class="id">f</span> <span class="id">ck</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> (<span class="id"><a href="Velus.CoreExpr.CEClocking.html#x">x</a></span>, <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span>) <span class="id"><a href="Velus.CoreExpr.CEClocking.html#CECLOCKING.WellClocked.vars">vars</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_cexp">wc_cexp</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#t">t</a></span> (<span class="id"><a href="Velus.ClockDefs.html#Con">Con</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#x">x</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#true">true</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_cexp">wc_cexp</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#f">f</a></span> (<span class="id"><a href="Velus.ClockDefs.html#Con">Con</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#x">x</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#false">false</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_cexp">wc_cexp</a></span> (<span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn.Emerge">Emerge</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#x">x</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#t">t</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#f">f</a></span>) <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="CECLOCKING.Cite">Cite</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">b</span> <span class="id">t</span> <span class="id">f</span> <span class="id">ck</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#CECLOCKING.wc_exp">wc_exp</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#b">b</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_cexp">wc_cexp</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#t">t</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_cexp">wc_cexp</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#f">f</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_cexp">wc_cexp</a></span> (<span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn.Eite">Eite</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#b">b</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#t">t</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#f">f</a></span>) <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a name="CECLOCKING.Cexp">Cexp</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">e</span> <span class="id">ck</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#CECLOCKING.wc_exp">wc_exp</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#e">e</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_cexp">wc_cexp</a></span> (<span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn.Eexp">Eexp</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#e">e</a></span>) <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">End</span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#CECLOCKING.WellClocked">WellClocked</a></span>.<br/>
+<br/>
+<h2> Basic properties of clocking </h2>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="CECLOCKING.wc_clock_exp">wc_clock_exp</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">vars</span> <span class="id">le</span> <span class="id">ck</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Clocks.html#wc_env">wc_env</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#vars">vars</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#CECLOCKING.wc_exp">wc_exp</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#vars">vars</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#le">le</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Clocks.html#wc_clock">wc_clock</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#vars">vars</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof1')">Proof.</div>
+<div class="proofscript" id="proof1">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">le</span> <span class="kwd">as</span> [| |<span class="id">le</span> <span class="id">IH</span> | |] <span class="comment">(*&nbsp;using&nbsp;exp_ind2&nbsp;*)</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">inversion_clear</span> 2; <span class="id">now</span> <span class="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">intros</span> <span class="id">ck</span> <span class="id">Hwc</span>; <span class="tactic">inversion_clear</span> 1 <span class="kwd">as</span> [|? ? ? <span class="id">Hcv</span>| | |].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Clocks.html#wc_env_var">wc_env_var</a></span> <span class="kwd">with</span> (1:=<span class="id">Hwc</span>) (2:=<span class="id">Hcv</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">intros</span> <span class="id">ck</span> <span class="id">Hwc</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> 1 <span class="kwd">as</span> [| |? ? ? <span class="id">ck</span>' <span class="id">Hle</span> <span class="id">Hcv</span> | |].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">constructor</span>; [<span class="id">now</span> <span class="tactic">apply</span> <span class="id">IH</span> <span class="kwd">with</span> (1:=<span class="id">Hwc</span>) (2:=<span class="id">Hle</span>)|<span class="tactic">assumption</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">intros</span> <span class="id">ck</span> <span class="id">Hwc</span>; <span class="tactic">inversion_clear</span> 1; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">intros</span> <span class="id">ck</span> <span class="id">Hwc</span>; <span class="tactic">inversion_clear</span> 1; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="CECLOCKING.wc_clock_cexp">wc_clock_cexp</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">vars</span> <span class="id">ce</span> <span class="id">ck</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Clocks.html#wc_env">wc_env</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#vars">vars</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#CECLOCKING.wc_cexp">wc_cexp</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#vars">vars</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ce">ce</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Clocks.html#wc_clock">wc_clock</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#vars">vars</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#ck">ck</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof2')">Proof.</div>
+<div class="proofscript" id="proof2">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">ce</span> <span class="kwd">as</span> [<span class="id">i</span> <span class="id">ce1</span> <span class="id">IH1</span> <span class="id">ce2</span> <span class="id">IH2</span>| |].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">intros</span> <span class="id">ck</span> <span class="id">Hwc</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> 1 <span class="kwd">as</span> [? ? ? ? <span class="id">Hcv</span> <span class="id">Hct</span> <span class="id">Hcf</span>| |].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id">IH1</span> <span class="kwd">with</span> (1:=<span class="id">Hwc</span>) <span class="kwd">in</span> <span class="id">Hct</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> <span class="id">Hct</span>; <span class="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">intros</span> <span class="id">ck</span> <span class="id">Hwc</span>; <span class="tactic">inversion_clear</span> 1 <span class="kwd">as</span> [|? ? ? ? <span class="id">Hl</span> <span class="id">H1</span> <span class="id">H2</span>|].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="tactic">apply</span> <span class="id">IHce1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">intros</span> <span class="id">ck</span> <span class="id">Hwc</span>; <span class="tactic">inversion_clear</span> 1 <span class="kwd">as</span> [| |? ? <span class="id">Hck</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#CECLOCKING.wc_clock_exp">wc_clock_exp</a></span> <span class="kwd">with</span> (1:=<span class="id">Hwc</span>) (2:=<span class="id">Hck</span>).<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Hint</span> <span class="kwd">Constructors</span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_clock">wc_clock</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_exp">wc_exp</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#wc_cexp">wc_cexp</a></span> : <span class="id">nlclocking</span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Hint</span> <span class="kwd">Resolve</span> <span class="id">Forall_nil</span> : <span class="id">nlclocking</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Instance</span> <span class="id"><a name="CECLOCKING.wc_exp_Proper">wc_exp_Proper</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Classes.Morphisms.html#Proper">Proper</a></span> (@<span class="id"><a href="http://coq.inria.fr/library/Coq.Sorting.Permutation.html#Permutation">Permutation</a></span> (<span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> * <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span>) ==&gt; @<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Logic.html#eq">eq</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn.exp">exp</a></span> ==&gt; @<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Logic.html#eq">eq</a></span> <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span> ==&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Logic.html#iff">iff</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#CECLOCKING.wc_exp">wc_exp</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof3')">Proof.</div>
+<div class="proofscript" id="proof3">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> <span class="id">env</span>' <span class="id">env</span> <span class="id">Henv</span> <span class="id">e</span>' <span class="id">e</span> <span class="id">He</span> <span class="id">ck</span>' <span class="id">ck</span> <span class="id">Hck</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> <span class="id">He</span>, <span class="id">Hck</span>; <span class="tactic">clear</span> <span class="id">He</span> <span class="id">Hck</span> <span class="id">e</span>' <span class="id">ck</span>'.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">revert</span> <span class="id">ck</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">e</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">split</span>; <span class="tactic">auto</span> <span class="kwd">with</span> <span class="id">nlclocking</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> 1;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="tactic">rewrite</span> <span class="id">Henv</span> <span class="kwd">in</span> * || <span class="tactic">rewrite</span> &lt;-<span class="id">Henv</span> <span class="kwd">in</span> * || <span class="tactic">idtac</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">try</span> <span class="id">edestruct</span> <span class="id">IHe</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">try</span> <span class="id">edestruct</span> <span class="id">IHe1</span>, <span class="id">IHe2</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">auto</span> <span class="kwd">with</span> <span class="id">nlclocking</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Instance</span> <span class="id"><a name="CECLOCKING.wc_cexp_Proper">wc_cexp_Proper</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Classes.Morphisms.html#Proper">Proper</a></span> (@<span class="id"><a href="http://coq.inria.fr/library/Coq.Sorting.Permutation.html#Permutation">Permutation</a></span> (<span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> * <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span>) ==&gt; @<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Logic.html#eq">eq</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn.cexp">cexp</a></span> ==&gt; @<span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Logic.html#eq">eq</a></span> <span class="id"><a href="Velus.ClockDefs.html#clock">clock</a></span> ==&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Logic.html#iff">iff</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoreExpr.CEClocking.html#CECLOCKING.wc_cexp">wc_cexp</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof4')">Proof.</div>
+<div class="proofscript" id="proof4">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> <span class="id">env</span>' <span class="id">env</span> <span class="id">Henv</span> <span class="id">e</span>' <span class="id">e</span> <span class="id">He</span> <span class="id">ck</span>' <span class="id">ck</span> <span class="id">Hck</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> <span class="id">He</span>, <span class="id">Hck</span>; <span class="tactic">clear</span> <span class="id">He</span> <span class="id">Hck</span> <span class="id">e</span>' <span class="id">ck</span>'.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">revert</span> <span class="id">ck</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">e</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">split</span>; <span class="tactic">inversion_clear</span> 1;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="tactic">rewrite</span> <span class="id">Henv</span> <span class="kwd">in</span> * || <span class="tactic">rewrite</span> &lt;-<span class="id">Henv</span> <span class="kwd">in</span> *);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">constructor</span>; <span class="tactic">auto</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> (<span class="tactic">rewrite</span> &lt;-<span class="id">IHe1</span> || <span class="tactic">rewrite</span> <span class="id">IHe1</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| <span class="tactic">rewrite</span> &lt;-<span class="id">IHe2</span> || <span class="tactic">rewrite</span> <span class="id">IHe2</span>).<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#CECLOCKING">CECLOCKING</a></span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="id"><a name="CEClockingFun">CEClockingFun</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Ids</span>  : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Op</span>   : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Syn</span>  : <span class="id"><a href="Velus.CoreExpr.CESyntax.html#CESYNTAX">CESYNTAX</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&lt;: <span class="id"><a href="Velus.CoreExpr.CEClocking.html#CECLOCKING">CECLOCKING</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#Ids">Ids</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#Op">Op</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn">Syn</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Include</span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#CECLOCKING">CECLOCKING</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#Ids">Ids</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#Op">Op</a></span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#Syn">Syn</a></span>.<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.CoreExpr.CEClocking.html#CEClockingFun">CEClockingFun</a></span>.<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</a></div>
+</body>
+</html>

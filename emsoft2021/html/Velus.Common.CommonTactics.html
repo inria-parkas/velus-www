@@ -1,0 +1,59 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module CommonTactics</title>
+<meta name="description" content="Documentation of Coq module CommonTactics" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module CommonTactics</h1>
+<div class="coq">
+<span class="kwd">Ltac</span> <span class="id">inv</span> <span class="id">H</span> := <span class="tactic">inversion</span> <span class="id">H</span>; <span class="tactic">clear</span> <span class="id">H</span>; <span class="tactic">subst</span>.<br/>
+<br/>
+<span class="kwd">Ltac</span> <span class="id">cases</span> :=<br/>
+&nbsp;&nbsp;<span class="tactic">repeat</span> <span class="kwd">match</span> <span class="id">goal</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">H</span>: <span class="id">context</span> [ <span class="kwd">match</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#negb">negb</a></span> ?<span class="id">x</span> <span class="kwd">with</span> <span class="id">_</span> =&gt; <span class="id">_</span> <span class="kwd">end</span> ] |- <span class="id">_</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">x</span>; <span class="tactic">simpl</span>; <span class="tactic">try</span> <span class="tactic">solve</span> [<span class="id">inv</span> <span class="id">H</span>; <span class="tactic">auto</span>]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">H</span>: <span class="id">context</span> [ <span class="kwd">match</span> ?<span class="id">x</span> <span class="kwd">with</span> <span class="id">_</span> =&gt; <span class="id">_</span> <span class="kwd">end</span> ] |- <span class="id">_</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">x</span>; <span class="tactic">try</span> <span class="tactic">solve</span> [<span class="id">inv</span> <span class="id">H</span>; <span class="tactic">auto</span>]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |- <span class="id">context</span> [ <span class="kwd">match</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#negb">negb</a></span> ?<span class="id">x</span> <span class="kwd">with</span> <span class="id">_</span> =&gt; <span class="id">_</span> <span class="kwd">end</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">x</span>; <span class="tactic">simpl</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |- <span class="id">context</span> [ <span class="kwd">match</span> ?<span class="id">x</span> <span class="kwd">with</span> <span class="id">_</span> =&gt; <span class="id">_</span> <span class="kwd">end</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">x</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>; <span class="tactic">auto</span>.<br/>
+<br/>
+<span class="kwd">Ltac</span> <span class="id">cases_eqn</span> <span class="id">E</span> :=<br/>
+&nbsp;&nbsp;<span class="tactic">repeat</span> <span class="kwd">match</span> <span class="id">goal</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">H</span>: <span class="id">context</span> [ <span class="kwd">match</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#negb">negb</a></span> ?<span class="id">x</span> <span class="kwd">with</span> <span class="id">_</span> =&gt; <span class="id">_</span> <span class="kwd">end</span> ] |- <span class="id">_</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">E</span> := <span class="tactic">fresh</span> <span class="id">E</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">x</span> <span class="id">eqn</span>: <span class="id">E</span>; <span class="tactic">simpl</span>; <span class="tactic">try</span> <span class="tactic">solve</span> [<span class="id">inv</span> <span class="id">H</span>; <span class="tactic">auto</span>]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">H</span>: <span class="id">context</span> [ <span class="kwd">match</span> ?<span class="id">x</span> <span class="kwd">with</span> <span class="id">_</span> =&gt; <span class="id">_</span> <span class="kwd">end</span> ] |- <span class="id">_</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">E</span> := <span class="tactic">fresh</span> <span class="id">E</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">x</span> <span class="id">eqn</span>: <span class="id">E</span>; <span class="tactic">try</span> <span class="tactic">solve</span> [<span class="id">inv</span> <span class="id">H</span>; <span class="tactic">auto</span>]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |- <span class="id">context</span> [ <span class="kwd">match</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#negb">negb</a></span> ?<span class="id">x</span> <span class="kwd">with</span> <span class="id">_</span> =&gt; <span class="id">_</span> <span class="kwd">end</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">E</span> := <span class="tactic">fresh</span> <span class="id">E</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">x</span> <span class="id">eqn</span>: <span class="id">E</span>; <span class="tactic">simpl</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |- <span class="id">context</span> [ <span class="kwd">match</span> ?<span class="id">x</span> <span class="kwd">with</span> <span class="id">_</span> =&gt; <span class="id">_</span> <span class="kwd">end</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">E</span> := <span class="tactic">fresh</span> <span class="id">E</span> <span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">x</span> <span class="id">eqn</span>: <span class="id">E</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>; <span class="tactic">auto</span>.<br/>
+<br/>
+<span class="kwd">Tactic</span> <span class="kwd">Notation</span> "<span class="id">summon</span>" <span class="id">uconstr</span>(<span class="id">ty</span>) "<span class="kwd">as</span>" <span class="id">ident</span>(<span class="id">id</span>) :=<br/>
+&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">goal</span> <span class="kwd">with</span> <span class="id">H</span> : <span class="id">_</span> |- <span class="id">_</span> =&gt; <span class="tactic">pose</span> (<span class="id">id</span> := <span class="id">H</span> : <span class="id">ty</span>); <span class="tactic">clear</span> <span class="id">id</span>; <span class="tactic">rename</span> <span class="id">H</span> <span class="id">into</span> <span class="id">id</span> <span class="kwd">end</span>.<br/>
+<br/>
+<span class="kwd">Tactic</span> <span class="kwd">Notation</span> "<span class="id">take</span>" <span class="id">uconstr</span>(<span class="id">ty</span>) "<span class="id">and</span>" <span class="id">tactic</span>(<span class="id">tac</span>) :=<br/>
+&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">new_it</span> := <span class="tactic">fresh</span> "<span class="id">it</span>"<br/>
+&nbsp;&nbsp;<span class="kwd">in</span> <span class="tactic">try</span> (<span class="tactic">rename</span> <span class="id">it</span> <span class="id">into</span> <span class="id">new_it</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">summon</span> <span class="id">ty</span> <span class="kwd">as</span> <span class="id">it</span>; <span class="id">tac</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">try</span> (<span class="tactic">rename</span> <span class="id">new_it</span> <span class="id">into</span> <span class="id">it</span>).<br/>
+<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</a></div>
+</body>
+</html>

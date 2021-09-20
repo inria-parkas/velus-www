@@ -1,0 +1,122 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module StcIsLast</title>
+<meta name="description" content="Documentation of Coq module StcIsLast" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module StcIsLast</h1>
+<div class="coq">
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Common.Common.html">Common</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Operators.html">Operators</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.CoreExpr.CESyntax.html">CoreExpr.CESyntax</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Stc.StcSyntax.html">Stc.StcSyntax</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Clocks.html">Clocks</a></span>.<br/>
+<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<span class="kwd">Import</span> <span class="id">List.ListNotations</span>.<br/>
+<span class="kwd">Open</span> <span class="kwd">Scope</span> <span class="id">list_scope</span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="kwd">Type</span> <span class="id"><a name="STCISLAST">STCISLAST</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Ids</span>   : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Op</span>    : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">CESyn</span> : <span class="id"><a href="Velus.CoreExpr.CESyntax.html#CESYNTAX">CESYNTAX</a></span>      <span class="id"><a href="Velus.Stc.StcIsLast.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Syn</span>   : <span class="id"><a href="Velus.Stc.StcSyntax.html#STCSYNTAX">STCSYNTAX</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#CESyn">CESyn</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Inductive</span> <span class="id"><a name="STCISLAST.Is_last_in_tc">Is_last_in_tc</a></span>: <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span> -&gt; <span class="id"><a href="Velus.Stc.StcIsLast.html#Syn.trconstr">trconstr</a></span> -&gt; <span class="kwd">Prop</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a name="STCISLAST.LastTcNext">LastTcNext</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">ck</span> <span class="id">e</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsLast.html#Is_last_in_tc">Is_last_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span> (<span class="id"><a href="Velus.Stc.StcIsLast.html#Syn.TcNext">TcNext</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#ck">ck</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#e">e</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="STCISLAST.Is_last_in">Is_last_in</a></span> (<span class="id">x</span>: <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span>) (<span class="id">tcs</span>: <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#Syn.trconstr">trconstr</a></span>) : <span class="kwd">Prop</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Exists">Exists</a></span> (<span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.Is_last_in_tc">Is_last_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span>) <span class="id"><a href="Velus.Stc.StcIsLast.html#tcs">tcs</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISLAST.not_Is_last_in_cons">not_Is_last_in_cons</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">tc</span> <span class="id">tcs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.Is_last_in">Is_last_in</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span> (<span class="id"><a href="Velus.Stc.StcIsLast.html#tc">tc</a></span> :: <span class="id"><a href="Velus.Stc.StcIsLast.html#tcs">tcs</a></span>) &lt;-&gt; ~ <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.Is_last_in_tc">Is_last_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#tc">tc</a></span> /\ ~ <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.Is_last_in">Is_last_in</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#tcs">tcs</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof1')">Proof.</div>
+<div class="proofscript" id="proof1">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">split</span>; <span class="tactic">intros</span> <span class="id">HH</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">split</span>; <span class="tactic">intro</span>; <span class="tactic">apply</span> <span class="id">HH</span>; <span class="tactic">unfold</span> <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.Is_last_in">Is_last_in</a></span>; <span class="tactic">intuition</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">destruct</span> <span class="id">HH</span>; <span class="tactic">inversion_clear</span> 1; <span class="tactic">intuition</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISLAST.lasts_of_In">lasts_of_In</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">tcs</span> <span class="id">x</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.Is_last_in">Is_last_in</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#tcs">tcs</a></span> &lt;-&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span> (<span class="id"><a href="Velus.Stc.StcIsLast.html#Syn.lasts_of">lasts_of</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#tcs">tcs</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof2')">Proof.</div>
+<div class="proofscript" id="proof2">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">tcs</span> <span class="kwd">as</span> [|[]]; <span class="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id">now</span> <span class="tactic">setoid_rewrite</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Exists_nil">Exists_nil</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">setoid_rewrite</span> &lt;-<span class="id">IHtcs</span>; <span class="tactic">split</span>; <span class="tactic">try</span> <span class="tactic">right</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> 1 <span class="kwd">as</span> [?? <span class="id">Last</span>|]; <span class="tactic">try</span> <span class="id">inv</span> <span class="id">Last</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">setoid_rewrite</span> &lt;-<span class="id">IHtcs</span>; <span class="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">inversion_clear</span> 1 <span class="kwd">as</span> [?? <span class="id">Last</span>|]; <span class="tactic">try</span> <span class="id">inv</span> <span class="id">Last</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">intros</span> [<span class="id">E</span>|?].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">subst</span>; <span class="tactic">left</span>; <span class="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">right</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">setoid_rewrite</span> &lt;-<span class="id">IHtcs</span>; <span class="tactic">split</span>; <span class="tactic">try</span> <span class="tactic">right</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> 1 <span class="kwd">as</span> [?? <span class="id">Last</span>|]; <span class="tactic">try</span> <span class="id">inv</span> <span class="id">Last</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">setoid_rewrite</span> &lt;-<span class="id">IHtcs</span>; <span class="tactic">split</span>; <span class="tactic">try</span> <span class="tactic">right</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> 1 <span class="kwd">as</span> [?? <span class="id">Last</span>|]; <span class="tactic">try</span> <span class="id">inv</span> <span class="id">Last</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="STCISLAST.is_last_in_tc_b">is_last_in_tc_b</a></span> (<span class="id">x</span>: <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span>) (<span class="id">tc</span>: <span class="id"><a href="Velus.Stc.StcIsLast.html#Syn.trconstr">trconstr</a></span>) : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#bool">bool</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id"><a href="Velus.Stc.StcIsLast.html#tc">tc</a></span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.Stc.StcIsLast.html#Syn.TcNext">TcNext</a></span> <span class="id">y</span> <span class="id">ck</span> <span class="id">e</span> =&gt; <span class="id"><a href="Velus.Common.CommonPS.html#ident_eqb">ident_eqb</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span> <span class="id">y</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">_</span> =&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#false">false</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="STCISLAST.is_last_in_b">is_last_in_b</a></span> (<span class="id">x</span>: <span class="id"><a href="Velus.ClockDefs.html#ident">ident</a></span>) (<span class="id">tcs</span>: <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#Syn.trconstr">trconstr</a></span>) : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#bool">bool</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#existsb">existsb</a></span> (<span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.is_last_in_tc_b">is_last_in_tc_b</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span>) <span class="id"><a href="Velus.Stc.StcIsLast.html#tcs">tcs</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Fact</span> <span class="id"><a name="STCISLAST.Is_last_in_tc_reflect">Is_last_in_tc_reflect</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">tc</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.Is_last_in_tc">Is_last_in_tc</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#tc">tc</a></span> &lt;-&gt; <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.is_last_in_tc_b">is_last_in_tc_b</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#tc">tc</a></span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#true">true</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof3')">Proof.</div>
+<div class="proofscript" id="proof3">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">tc</span>; <span class="tactic">simpl</span>; <span class="tactic">split</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">try</span> <span class="tactic">discriminate</span>; <span class="tactic">try</span> <span class="id">now</span> <span class="tactic">inversion</span> 1.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">inversion_clear</span> 1; <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.Common.html#ident_eqb_refl">ident_eqb_refl</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">rewrite</span> <span class="id"><a href="Velus.Common.Common.html#ident_eqb_eq">ident_eqb_eq</a></span>; <span class="tactic">intro</span>; <span class="tactic">subst</span>; <span class="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Corollary</span> <span class="id"><a name="STCISLAST.Is_last_in_reflect">Is_last_in_reflect</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">tcs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.Is_last_in">Is_last_in</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#tcs">tcs</a></span> &lt;-&gt; <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.is_last_in_b">is_last_in_b</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#tcs">tcs</a></span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#true">true</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof4')">Proof.</div>
+<div class="proofscript" id="proof4">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">setoid_rewrite</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#existsb_exists">existsb_exists</a></span>; <span class="tactic">setoid_rewrite</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Exists_exists">Exists_exists</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">split</span>; <span class="tactic">intros</span> (?&amp;?&amp; <span class="id">Last</span>); <span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.Is_last_in_tc_reflect">Is_last_in_tc_reflect</a></span> <span class="kwd">in</span> <span class="id">Last</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISLAST.Is_last_in_dec">Is_last_in_dec</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">tcs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.Is_last_in">Is_last_in</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#tcs">tcs</a></span> } + { ~ <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.Is_last_in">Is_last_in</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#x">x</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#tcs">tcs</a></span> }.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof5')">Proof.</div>
+<div class="proofscript" id="proof5">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Bool.Bool.html#reflect_dec">Bool.reflect_dec</a></span>, <span class="id"><a href="http://coq.inria.fr/library/Coq.Bool.Bool.html#iff_reflect">Bool.iff_reflect</a></span>, <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST.Is_last_in_reflect">Is_last_in_reflect</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST">STCISLAST</a></span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="id"><a name="StcIsLastFun">StcIsLastFun</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Ids</span>   : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Op</span>    : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">CESyn</span> : <span class="id"><a href="Velus.CoreExpr.CESyntax.html#CESYNTAX">CESYNTAX</a></span>      <span class="id"><a href="Velus.Stc.StcIsLast.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Syn</span>   : <span class="id"><a href="Velus.Stc.StcSyntax.html#STCSYNTAX">STCSYNTAX</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#CESyn">CESyn</a></span>)<br/>
+&lt;: <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST">STCISLAST</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#CESyn">CESyn</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#Syn">Syn</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Include</span> <span class="id"><a href="Velus.Stc.StcIsLast.html#STCISLAST">STCISLAST</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#CESyn">CESyn</a></span> <span class="id"><a href="Velus.Stc.StcIsLast.html#Syn">Syn</a></span>.<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.Stc.StcIsLast.html#StcIsLastFun">StcIsLastFun</a></span>.<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</a></div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module CoindIndexed</title>
+<meta name="description" content="Documentation of Coq module CoindIndexed" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module CoindIndexed</h1>
+<div class="coq">
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<span class="kwd">Import</span> <span class="id">List.ListNotations</span>.<br/>
+<span class="kwd">Open</span> <span class="kwd">Scope</span> <span class="id">list_scope</span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Setoids.Setoid.html">Setoid</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Classes.Morphisms.html">Morphisms</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Numbers.Natural.Peano.NPeano.html">NPeano</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.omega.Omega.html">Omega</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Program.Tactics.html">Program.Tactics</a></span>.<br/>
+<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Common.Common.html">Common</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Environment.html">Environment</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Operators.html">Operators</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.IndexedStreams.html">IndexedStreams</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.CoindStreams.html">CoindStreams</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.CoindToIndexed.html">CoindToIndexed</a></span> <span class="id"><a href="Velus.IndexedToCoind.html">IndexedToCoind</a></span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="kwd">Type</span> <span class="id"><a name="COINDINDEXED">COINDINDEXED</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Op</span>    : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">OpAux</span> : <span class="id"><a href="Velus.Operators.html#OPERATORS_AUX">OPERATORS_AUX</a></span> <span class="id"><a href="Velus.CoindIndexed.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">CStr</span>  : <span class="id"><a href="Velus.CoindStreams.html#COINDSTREAMS">COINDSTREAMS</a></span> <span class="id"><a href="Velus.CoindIndexed.html#Op">Op</a></span> <span class="id"><a href="Velus.CoindIndexed.html#OpAux">OpAux</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">IStr</span>  : <span class="id"><a href="Velus.IndexedStreams.html#INDEXEDSTREAMS">INDEXEDSTREAMS</a></span> <span class="id"><a href="Velus.CoindIndexed.html#Op">Op</a></span> <span class="id"><a href="Velus.CoindIndexed.html#OpAux">OpAux</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Module</span> <span class="kwd">Export</span> <span class="id"><a name="COINDINDEXED.CIStr">CIStr</a></span> := <span class="id"><a href="Velus.CoindToIndexed.html#CoindToIndexedFun">CoindToIndexedFun</a></span> <span class="id"><a href="Velus.CoindIndexed.html#Op">Op</a></span> <span class="id"><a href="Velus.CoindIndexed.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.CoindIndexed.html#CStr">CStr</a></span> <span class="id"><a href="Velus.CoindIndexed.html#IStr">IStr</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Module</span> <span class="kwd">Export</span> <span class="id"><a name="COINDINDEXED.ICStr">ICStr</a></span> := <span class="id"><a href="Velus.IndexedToCoind.html#IndexedToCoindFun">IndexedToCoindFun</a></span> <span class="id"><a href="Velus.CoindIndexed.html#Op">Op</a></span> <span class="id"><a href="Velus.CoindIndexed.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.CoindIndexed.html#IStr">IStr</a></span> <span class="id"><a href="Velus.CoindIndexed.html#CStr">CStr</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Fact</span> <span class="id"><a name="COINDINDEXED.tr_stream_eqst">tr_stream_eqst</a></span> {<span class="id">A</span>} : <span class="kwd">forall</span> (<span class="id">x</span> : <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.Streams.html#Stream">Stream</a></span> <span class="id"><a href="Velus.CoindIndexed.html#A">A</a></span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_stream">ICStr.tr_stream</a></span> (<span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_Stream">tr_Stream</a></span> <span class="id"><a href="Velus.CoindIndexed.html#x">x</a></span>) ≡ <span class="id"><a href="Velus.CoindIndexed.html#x">x</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof1')">Proof.</div>
+<div class="proofscript" id="proof1">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">unfold</span> <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_stream">ICStr.tr_stream</a></span>, <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_stream_from">ICStr.tr_stream_from</a></span>, <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_Stream">tr_Stream</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> <span class="id">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.Streams.html#ntheq_eqst">ntheq_eqst</a></span>; <span class="tactic">intros</span> <span class="id">n</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.init_from_nth">ICStr.init_from_nth</a></span>, <span class="id"><a href="http://coq.inria.fr/library/Coq.Arith.PeanoNat.html#Nat.add_0_r">Nat.add_0_r</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Fact</span> <span class="id"><a name="COINDINDEXED.tr_history_equiv">tr_history_equiv</a></span>: <span class="kwd">forall</span> <span class="id">H</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Environment.html#Env.Equiv">Env.Equiv</a></span> (@<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.Streams.html#EqSt">EqSt</a></span> <span class="id"><a href="Velus.CoindIndexed.html#OpAux.value">value</a></span>) (<span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_history">ICStr.tr_history</a></span> (<span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_history">CIStr.tr_history</a></span> <span class="id"><a href="Velus.CoindIndexed.html#H">H</a></span>)) <span class="id"><a href="Velus.CoindIndexed.html#H">H</a></span>.<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof2')">Proof.</div>
+<div class="proofscript" id="proof2">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> <span class="id">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">unfold</span> <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_history">CIStr.tr_history</a></span>, <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_history">ICStr.tr_history</a></span>, <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_history_from">ICStr.tr_history_from</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">constructor</span>; <span class="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">rewrite</span> <span class="id"><a href="Velus.Environment.html#Env.Props.P.F.mapi_in_iff">Env.Props.P.F.mapi_in_iff</a></span>, <span class="id"><a href="Velus.Environment.html#Env.Props.P.F.map_in_iff">Env.Props.P.F.map_in_iff</a></span>. <span class="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">unfold</span> <span class="id"><a href="Velus.Environment.html#Env.MapsTo">Env.MapsTo</a></span> <span class="kwd">in</span> <span class="id">H0</span>. <span class="tactic">rewrite</span> <span class="id"><a href="Velus.Environment.html#Env.gmapi">Env.gmapi</a></span> <span class="kwd">in</span> <span class="id">H0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Common.Common.html#option_map_inv_Some">option_map_inv_Some</a></span> <span class="kwd">in</span> <span class="id">H0</span> <span class="kwd">as</span> [<span class="id">v</span> [<span class="id">Hfind</span> <span class="id">Hinit</span>]]; <span class="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.Streams.html#ntheq_eqst">ntheq_eqst</a></span>. <span class="tactic">intros</span> <span class="id">n</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.init_from_nth">ICStr.init_from_nth</a></span>, <span class="id"><a href="http://coq.inria.fr/library/Coq.Arith.PeanoNat.html#Nat.add_0_r">Nat.add_0_r</a></span>, <span class="id"><a href="Velus.Environment.html#Env.Props.P.F.map_o">Env.Props.P.F.map_o</a></span>, <span class="id">H1</span>; <span class="tactic">simpl</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="COINDINDEXED.sem_clock_equiv">sem_clock_equiv</a></span> : <span class="kwd">forall</span> <span class="id">H</span> <span class="id">b</span> <span class="id">ck</span> <span class="id">bs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoindIndexed.html#CStr.sem_clock">CStr.sem_clock</a></span> <span class="id"><a href="Velus.CoindIndexed.html#H">H</a></span> <span class="id"><a href="Velus.CoindIndexed.html#b">b</a></span> <span class="id"><a href="Velus.CoindIndexed.html#ck">ck</a></span> <span class="id"><a href="Velus.CoindIndexed.html#bs">bs</a></span> &lt;-&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.CoindIndexed.html#IStr.sem_clock">IStr.sem_clock</a></span> (<span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_Stream">tr_Stream</a></span> <span class="id"><a href="Velus.CoindIndexed.html#b">b</a></span>) (<span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_history">CIStr.tr_history</a></span> <span class="id"><a href="Velus.CoindIndexed.html#H">H</a></span>) <span class="id"><a href="Velus.CoindIndexed.html#ck">ck</a></span> (<span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_Stream">tr_Stream</a></span> <span class="id"><a href="Velus.CoindIndexed.html#bs">bs</a></span>).<br/>
+<div class="toggleproof" onclick="toggleDisplay('proof3')">Proof.</div>
+<div class="proofscript" id="proof3">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span>; <span class="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">apply</span> <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.sem_clock_impl">CIStr.sem_clock_impl</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">intro</span> <span class="id">Hsem</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.sem_clock_impl">ICStr.sem_clock_impl</a></span> <span class="kwd">in</span> <span class="id">Hsem</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">repeat</span> <span class="tactic">rewrite</span> <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_stream_eqst">tr_stream_eqst</a></span> <span class="kwd">in</span> <span class="id">Hsem</span>. <span class="tactic">rewrite</span> <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED.tr_history_equiv">tr_history_equiv</a></span> <span class="kwd">in</span> <span class="id">Hsem</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED">COINDINDEXED</a></span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="id"><a name="CoindIndexedFun">CoindIndexedFun</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Op</span>      : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">OpAux</span>   : <span class="id"><a href="Velus.Operators.html#OPERATORS_AUX">OPERATORS_AUX</a></span>          <span class="id"><a href="Velus.CoindIndexed.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">CStr</span>    : <span class="id"><a href="Velus.CoindStreams.html#COINDSTREAMS">COINDSTREAMS</a></span>           <span class="id"><a href="Velus.CoindIndexed.html#Op">Op</a></span> <span class="id"><a href="Velus.CoindIndexed.html#OpAux">OpAux</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">IStr</span>    : <span class="id"><a href="Velus.IndexedStreams.html#INDEXEDSTREAMS">INDEXEDSTREAMS</a></span>         <span class="id"><a href="Velus.CoindIndexed.html#Op">Op</a></span> <span class="id"><a href="Velus.CoindIndexed.html#OpAux">OpAux</a></span>)<br/>
+&lt;: <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED">COINDINDEXED</a></span> <span class="id"><a href="Velus.CoindIndexed.html#Op">Op</a></span> <span class="id"><a href="Velus.CoindIndexed.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.CoindIndexed.html#CStr">CStr</a></span> <span class="id"><a href="Velus.CoindIndexed.html#IStr">IStr</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Include</span> <span class="id"><a href="Velus.CoindIndexed.html#COINDINDEXED">COINDINDEXED</a></span> <span class="id"><a href="Velus.CoindIndexed.html#Op">Op</a></span> <span class="id"><a href="Velus.CoindIndexed.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.CoindIndexed.html#CStr">CStr</a></span> <span class="id"><a href="Velus.CoindIndexed.html#IStr">IStr</a></span>.<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.CoindIndexed.html#CoindIndexedFun">CoindIndexedFun</a></span>.<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</a></div>
+</body>
+</html>
