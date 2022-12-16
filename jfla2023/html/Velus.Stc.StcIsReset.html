@@ -1,0 +1,169 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module StcIsReset</title>
+<meta name="description" content="Documentation of Coq module StcIsReset" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module StcIsReset</h1>
+<div class="coq">
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Common.Common.html">Common</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Operators.html">Operators</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.CoreExpr.CESyntax.html">CoreExpr.CESyntax</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Stc.StcSyntax.html">Stc.StcSyntax</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Clocks.html">Clocks</a></span>.<br/>
+<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#ListNotations">List.ListNotations</a></span>.<br/>
+<span class="kwd">Open</span> <span class="kwd">Scope</span> <span class="id">list_scope</span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="kwd">Type</span> <span class="id"><a name="STCISRESET">STCISRESET</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Ids</span>   : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Op</span>    : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">OpAux</span> : <span class="id"><a href="Velus.Operators.html#OPERATORS_AUX">OPERATORS_AUX</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Cks</span>   : <span class="id"><a href="Velus.Clocks.html#CLOCKS">CLOCKS</a></span>        <span class="id"><a href="Velus.Stc.StcIsReset.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#OpAux">OpAux</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">CESyn</span> : <span class="id"><a href="Velus.CoreExpr.CESyntax.html#CESYNTAX">CESYNTAX</a></span>  <span class="id"><a href="Velus.Stc.StcIsReset.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Cks">Cks</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Syn</span>   : <span class="id"><a href="Velus.Stc.StcSyntax.html#STCSYNTAX">STCSYNTAX</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Cks">Cks</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#CESyn">CESyn</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISRESET.not_Is_reset_in_cons">not_Is_reset_in_cons</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tc</span> <span class="id">tcs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in">Is_reset_in</a></span> <span class="id">x</span> <span class="id">ck</span> (<span class="id">tc</span> :: <span class="id">tcs</span>) &lt;-&gt; ~ <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in_tc">Is_reset_in_tc</a></span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tc</span> /\ ~ <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in">Is_reset_in</a></span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tcs</span>.<br/>
+<div>&nbsp;&nbsp;<span class="toggleproof" onclick="toggleDisplay('proof1')">Proof.</span></div>
+<div class="proofscript" id="proof1">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">split</span>; <span class="tactic">intros</span> <span class="id">HH</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">split</span>; <span class="tactic">intro</span>; <span class="tactic">apply</span> <span class="id">HH</span>; <span class="tactic">unfold</span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in">Is_reset_in</a></span>; <span class="tactic">intuition</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">destruct</span> <span class="id">HH</span>; <span class="tactic">inversion_clear</span> 1; <span class="tactic">intuition</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id">not_Is_reset_in_cons</span>':<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">tc</span> <span class="id">tcs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ (<span class="tactic">exists</span> <span class="id">ck</span>, <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in">Is_reset_in</a></span> <span class="id">x</span> <span class="id">ck</span> (<span class="id">tc</span> :: <span class="id">tcs</span>)) &lt;-&gt; ~ (<span class="tactic">exists</span> <span class="id">ck</span>, <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in_tc">Is_reset_in_tc</a></span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tc</span>) /\ ~ (<span class="tactic">exists</span> <span class="id">ck</span>, <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in">Is_reset_in</a></span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tcs</span>).<br/>
+<div>&nbsp;&nbsp;<span class="toggleproof" onclick="toggleDisplay('proof2')">Proof.</span></div>
+<div class="proofscript" id="proof2">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">split</span>; <span class="tactic">intros</span> <span class="id">HH</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">split</span>; <span class="tactic">intros</span> (?&amp;<span class="id">H</span>); <span class="tactic">apply</span> <span class="id">HH</span>; <span class="tactic">unfold</span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in">Is_reset_in</a></span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">destruct</span> <span class="id">HH</span>; <span class="tactic">intros</span> (?&amp;<span class="id">HH</span>); <span class="tactic">inversion_clear</span> <span class="id">HH</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISRESET.reset_of_In">reset_of_In</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">tc</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="tactic">exists</span> <span class="id">ck</span>, <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in_tc">Is_reset_in_tc</a></span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tc</span>) &lt;-&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id">x</span> (<span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.resets_of">resets_of</a></span> [<span class="id">tc</span>]).<br/>
+<div>&nbsp;&nbsp;<span class="toggleproof" onclick="toggleDisplay('proof3')">Proof.</span></div>
+<div class="proofscript" id="proof3">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">tc</span>; <span class="tactic">simpl</span>; (<span class="tactic">split</span>; [<span class="tactic">intros</span> (?&amp;<span class="id">H</span>)|<span class="tactic">intro</span> <span class="id">H</span>]); <span class="id">inv</span> <span class="id">H</span>; <span class="tactic">eauto</span> <span class="kwd">using</span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in_tc">Is_reset_in_tc</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inv</span> <span class="id">H0</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISRESET.resets_of_In">resets_of_In</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">tcs</span> <span class="id">x</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="tactic">exists</span> <span class="id">ck</span>, <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in">Is_reset_in</a></span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tcs</span>) &lt;-&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id">x</span> (<span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.resets_of">resets_of</a></span> <span class="id">tcs</span>).<br/>
+<div>&nbsp;&nbsp;<span class="toggleproof" onclick="toggleDisplay('proof4')">Proof.</span></div>
+<div class="proofscript" id="proof4">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">induction</span> <span class="id">tcs</span> <span class="kwd">as</span> [|[]]; <span class="tactic">simpl</span>; <span class="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">setoid_rewrite</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Exists_nil">Exists_nil</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">split</span>; [<span class="tactic">intros</span> (?&amp;?)|<span class="tactic">intros</span> ?]; <span class="tactic">eauto</span> <span class="kwd">using</span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Cks.Cbase">Cbase</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">setoid_rewrite</span> &lt;-<span class="id">IHtcs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">split</span>; <span class="tactic">intros</span> (<span class="id">ck</span>&amp;?); <span class="tactic">exists</span> <span class="id">ck</span>; <span class="tactic">try</span> <span class="tactic">right</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> <span class="id">H</span> <span class="kwd">as</span> [?? <span class="id">Reset</span>|]; <span class="tactic">try</span> <span class="id">inv</span> <span class="id">Reset</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">setoid_rewrite</span> &lt;-<span class="id">IHtcs</span>; <span class="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">intros</span> (?&amp;<span class="id">H</span>). <span class="tactic">inversion_clear</span> <span class="id">H</span> <span class="kwd">as</span> [?? <span class="id">Reset</span>|]; <span class="tactic">try</span> <span class="id">inv</span> <span class="id">Reset</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="tactic">intros</span> [<span class="id">E</span>|(<span class="id">ck</span>&amp;?)]; <span class="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">exists</span> <span class="id">c</span>; <span class="tactic">left</span>; <span class="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="tactic">exists</span> <span class="id">ck</span>; <span class="tactic">right</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">setoid_rewrite</span> &lt;-<span class="id">IHtcs</span>; <span class="tactic">split</span>; <span class="tactic">intros</span> (<span class="id">ck</span>&amp;?); <span class="tactic">exists</span> <span class="id">ck</span>; <span class="tactic">try</span> <span class="tactic">right</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> <span class="id">H</span> <span class="kwd">as</span> [?? <span class="id">Reset</span>|]; <span class="tactic">try</span> <span class="id">inv</span> <span class="id">Reset</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">setoid_rewrite</span> &lt;-<span class="id">IHtcs</span>; <span class="tactic">split</span>; <span class="tactic">intros</span> (<span class="id">ck</span>&amp;?); <span class="tactic">exists</span> <span class="id">ck</span>; <span class="tactic">try</span> <span class="tactic">right</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> <span class="id">H</span> <span class="kwd">as</span> [?? <span class="id">Reset</span>|]; <span class="tactic">try</span> <span class="id">inv</span> <span class="id">Reset</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">setoid_rewrite</span> &lt;-<span class="id">IHtcs</span>; <span class="tactic">split</span>; <span class="tactic">intros</span> (<span class="id">ck</span>&amp;?); <span class="tactic">exists</span> <span class="id">ck</span>; <span class="tactic">try</span> <span class="tactic">right</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">inversion_clear</span> <span class="id">H</span> <span class="kwd">as</span> [?? <span class="id">Reset</span>|]; <span class="tactic">try</span> <span class="id">inv</span> <span class="id">Reset</span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="STCISRESET.is_reset_in_tc_b">is_reset_in_tc_b</a></span> (<span class="id">x</span>: <span class="id"><a href="Velus.Common.Common.html#ident">ident</a></span>) (<span class="id">ck</span>: <span class="id"><a href="Velus.Stc.StcIsReset.html#Cks.clock">clock</a></span>) (<span class="id">tc</span>: <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.trconstr">trconstr</a></span>) : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#bool">bool</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">tc</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.TcReset">TcReset</a></span> <span class="id">y</span> <span class="id">ck</span>' <span class="id">_</span> <span class="id">_</span> =&gt; <span class="id"><a href="Velus.Common.Common.html#ident_eqb">ident_eqb</a></span> <span class="id">x</span> <span class="id">y</span> &amp;&amp; <span class="id"><a href="Velus.Stc.StcIsReset.html#Cks.clock_eq">clock_eq</a></span> <span class="id">ck</span> <span class="id">ck</span>'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">_</span> =&gt; <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#false">false</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="STCISRESET.is_reset_in_b">is_reset_in_b</a></span> (<span class="id">x</span>: <span class="id"><a href="Velus.Common.Common.html#ident">ident</a></span>) (<span class="id">ck</span>: <span class="id"><a href="Velus.Stc.StcIsReset.html#Cks.clock">clock</a></span>) (<span class="id">tcs</span>: <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#list">list</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.trconstr">trconstr</a></span>) : <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#bool">bool</a></span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#existsb">existsb</a></span> (<span class="id"><a href="Velus.Stc.StcIsReset.html#STCISRESET.is_reset_in_tc_b">is_reset_in_tc_b</a></span> <span class="id">x</span> <span class="id">ck</span>) <span class="id">tcs</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Fact</span> <span class="id"><a name="STCISRESET.Is_reset_in_tc_reflect">Is_reset_in_tc_reflect</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tc</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in_tc">Is_reset_in_tc</a></span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tc</span> &lt;-&gt; <span class="id"><a href="Velus.Stc.StcIsReset.html#STCISRESET.is_reset_in_tc_b">is_reset_in_tc_b</a></span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tc</span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#true">true</a></span>.<br/>
+<div>&nbsp;&nbsp;<span class="toggleproof" onclick="toggleDisplay('proof5')">Proof.</span></div>
+<div class="proofscript" id="proof5">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">destruct</span> <span class="id">tc</span>; <span class="tactic">simpl</span>; <span class="tactic">split</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">try</span> <span class="tactic">discriminate</span>; <span class="tactic">try</span> <span class="id">now</span> <span class="tactic">inversion</span> 1.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">inversion_clear</span> 1.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Bool.Bool.html#andb_true_iff">Bool.andb_true_iff</a></span>; <span class="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Common.Common.html#ident_eqb_refl">ident_eqb_refl</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Cks.clock_eq_spec">clock_eq_spec</a></span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">rewrite</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Bool.Bool.html#andb_true_iff">Bool.andb_true_iff</a></span>, <span class="id"><a href="Velus.Common.Common.html#ident_eqb_eq">ident_eqb_eq</a></span>, <span class="id"><a href="Velus.Stc.StcIsReset.html#Cks.clock_eq_spec">clock_eq_spec</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> (?&amp;?); <span class="tactic">subst</span>; <span class="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Corollary</span> <span class="id"><a name="STCISRESET.Is_reset_in_reflect">Is_reset_in_reflect</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tcs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in">Is_reset_in</a></span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tcs</span> &lt;-&gt; <span class="id"><a href="Velus.Stc.StcIsReset.html#STCISRESET.is_reset_in_b">is_reset_in_b</a></span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tcs</span> = <span class="id"><a href="http://coq.inria.fr/library/Coq.Init.Datatypes.html#true">true</a></span>.<br/>
+<div>&nbsp;&nbsp;<span class="toggleproof" onclick="toggleDisplay('proof6')">Proof.</span></div>
+<div class="proofscript" id="proof6">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">setoid_rewrite</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#existsb_exists">existsb_exists</a></span>; <span class="tactic">setoid_rewrite</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#Exists_exists">Exists_exists</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">split</span>; <span class="tactic">intros</span> (?&amp;?&amp; <span class="id">Reset</span>); <span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsReset.html#STCISRESET.Is_reset_in_tc_reflect">Is_reset_in_tc_reflect</a></span> <span class="kwd">in</span> <span class="id">Reset</span>; <span class="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISRESET.Is_reset_in_dec">Is_reset_in_dec</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tcs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in">Is_reset_in</a></span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tcs</span> } + { ~ <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in">Is_reset_in</a></span> <span class="id">x</span> <span class="id">ck</span> <span class="id">tcs</span> }.<br/>
+<div>&nbsp;&nbsp;<span class="toggleproof" onclick="toggleDisplay('proof7')">Proof.</span></div>
+<div class="proofscript" id="proof7">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Bool.Bool.html#reflect_dec">Bool.reflect_dec</a></span>, <span class="id"><a href="http://coq.inria.fr/library/Coq.Bool.Bool.html#iff_reflect">Bool.iff_reflect</a></span>, <span class="id"><a href="Velus.Stc.StcIsReset.html#STCISRESET.Is_reset_in_reflect">Is_reset_in_reflect</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISRESET.not_Is_reset_in_tc_TcReset">not_Is_reset_in_tc_TcReset</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">y</span> <span class="id">x</span> <span class="id">ck</span> <span class="id">ty</span> <span class="id">ro</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ (<span class="tactic">exists</span> <span class="id">ck</span>', <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in_tc">Is_reset_in_tc</a></span> <span class="id">y</span> <span class="id">ck</span>' (<span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.TcReset">TcReset</a></span> <span class="id">x</span> <span class="id">ck</span> <span class="id">ty</span> <span class="id">ro</span>)) -&gt; <span class="id">x</span> &lt;&gt; <span class="id">y</span>.<br/>
+<div>&nbsp;&nbsp;<span class="toggleproof" onclick="toggleDisplay('proof8')">Proof.</span></div>
+<div class="proofscript" id="proof8">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">NIsReset</span> <span class="id">E</span>; <span class="tactic">subst</span>; <span class="tactic">apply</span> <span class="id">NIsReset</span>; <span class="tactic">eauto</span> <span class="kwd">using</span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in_tc">Is_reset_in_tc</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="STCISRESET.s_ins_not_reset">s_ins_not_reset</a></span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">s</span> <span class="id">x</span> <span class="id">ck</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Common.CommonList.html#InMembers">InMembers</a></span> <span class="id">x</span> <span class="id">s</span>.(<span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.s_in">s_in</a></span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.Is_reset_in">Is_reset_in</a></span> <span class="id">x</span> <span class="id">ck</span> <span class="id">s</span>.(<span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.s_tcs">s_tcs</a></span>).<br/>
+<div>&nbsp;&nbsp;<span class="toggleproof" onclick="toggleDisplay('proof9')">Proof.</span></div>
+<div class="proofscript" id="proof9">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> * <span class="id">Hin</span> <span class="id">Hreset</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">pose</span> <span class="id">proof</span> (<span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.s_nodup">s_nodup</a></span> <span class="id">s</span>) <span class="kwd">as</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> (<span class="id"><a href="Velus.Common.CommonList.html#NoDup_app_In">NoDup_app_In</a></span> <span class="id">x</span>) <span class="kwd">in</span> <span class="id">Nodup</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">assert</span> (<span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#In">In</a></span> <span class="id">x</span> (<span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.resets_of">resets_of</a></span> (<span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.s_tcs">s_tcs</a></span> <span class="id">s</span>))) <span class="kwd">as</span> <span class="id">Hreset</span>' <span class="tactic">by</span> (<span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsReset.html#STCISRESET.resets_of_In">resets_of_In</a></span>; <span class="tactic">eauto</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.s_reset_incl">s_reset_incl</a></span> <span class="kwd">in</span> <span class="id">Hreset</span>'.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">rewrite</span> &lt;-<span class="id"><a href="Velus.Stc.StcIsReset.html#Syn.s_nexts_in_tcs_fst">s_nexts_in_tcs_fst</a></span> <span class="kwd">in</span> <span class="id">Hreset</span>'.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">apply</span> <span class="id">Nodup</span>; <span class="tactic">rewrite</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#app_assoc">app_assoc</a></span>, <span class="id"><a href="Velus.Common.CommonList.html#in_app">in_app</a></span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="tactic">apply</span> <span class="id"><a href="Velus.Common.CommonList.html#fst_InMembers">fst_InMembers</a></span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.Stc.StcIsReset.html#STCISRESET">STCISRESET</a></span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="id"><a name="StcIsResetFun">StcIsResetFun</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Ids</span>   : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Op</span>    : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">OpAux</span> : <span class="id"><a href="Velus.Operators.html#OPERATORS_AUX">OPERATORS_AUX</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Cks</span>   : <span class="id"><a href="Velus.Clocks.html#CLOCKS">CLOCKS</a></span>        <span class="id"><a href="Velus.Stc.StcIsReset.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#OpAux">OpAux</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">CESyn</span> : <span class="id"><a href="Velus.CoreExpr.CESyntax.html#CESYNTAX">CESYNTAX</a></span>  <span class="id"><a href="Velus.Stc.StcIsReset.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Cks">Cks</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Syn</span>   : <span class="id"><a href="Velus.Stc.StcSyntax.html#STCSYNTAX">STCSYNTAX</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Cks">Cks</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#CESyn">CESyn</a></span>)<br/>
+&lt;: <span class="id"><a href="Velus.Stc.StcIsReset.html#STCISRESET">STCISRESET</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Cks">Cks</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#CESyn">CESyn</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn">Syn</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Include</span> <span class="id"><a href="Velus.Stc.StcIsReset.html#STCISRESET">STCISRESET</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Op">Op</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Cks">Cks</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#CESyn">CESyn</a></span> <span class="id"><a href="Velus.Stc.StcIsReset.html#Syn">Syn</a></span>.<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.Stc.StcIsReset.html#StcIsResetFun">StcIsResetFun</a></span>.<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</a></div>
+</body>
+</html>

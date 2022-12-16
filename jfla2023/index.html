@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta content="ie=edge" http-equiv="x-ua-compatible"/><link href="../velus.css" rel="stylesheet"/><title>EMSOFT 2021: References to the Coq development</title><meta description="Link the EMSOFT 2021 article to the Coq development"/><link href="icons/apple-icon-512x512.png" rel="apple-touch-icon" sizes="512x512"/><link href="icons/apple-icon-196x196.png" rel="apple-touch-icon" sizes="196x196"/><link href="icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/><link href="icons/apple-icon-172x172.png" rel="apple-touch-icon" sizes="172x172"/><link href="icons/apple-icon-167x167.png" rel="apple-touch-icon" sizes="167x167"/><link href="icons/apple-icon-152x152.png" rel="apple-touch-icon" sizes="152x152"/><link href="icons/apple-icon-144x144.png" rel="apple-touch-icon" sizes="144x144"/><link href="icons/apple-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/><link href="icons/apple-icon-114x114.png" rel="apple-touch-icon" sizes="114x114"/><link href="icons/apple-icon-100x100.png" rel="apple-touch-icon" sizes="100x100"/><link href="icons/apple-icon-88x88.png" rel="apple-touch-icon" sizes="88x88"/><link href="icons/apple-icon-87x87.png" rel="apple-touch-icon" sizes="87x87"/><link href="icons/apple-icon-80x80.png" rel="apple-touch-icon" sizes="80x80"/><link href="icons/apple-icon-76x76.png" rel="apple-touch-icon" sizes="76x76"/><link href="icons/apple-icon-72x72.png" rel="apple-touch-icon" sizes="72x72"/><link href="icons/apple-icon-60x60.png" rel="apple-touch-icon" sizes="60x60"/><link href="icons/apple-icon-58x58.png" rel="apple-touch-icon" sizes="58x58"/><link href="icons/apple-icon-57x57.png" rel="apple-touch-icon" sizes="57x57"/><link href="icons/apple-icon-55x55.png" rel="apple-touch-icon" sizes="55x55"/><link href="icons/apple-icon-50x50.png" rel="apple-touch-icon" sizes="50x50"/><link href="icons/apple-icon-48x48.png" rel="apple-touch-icon" sizes="48x48"/><link href="icons/apple-icon-40x40.png" rel="apple-touch-icon" sizes="40x40"/><link href="icons/apple-icon-29x29.png" rel="apple-touch-icon" sizes="29x29"/><link href="icons/apple-icon-20x20.png" rel="apple-touch-icon" sizes="20x20"/><link href="icons/icon-256x256.png" type="image/png" rel="icon" sizes="256x256"/><link href="icons/icon-128x128.png" type="image/png" rel="icon" sizes="128x128"/><link href="icons/icon-96x96.png" type="image/png" rel="icon" sizes="96x96"/><link href="icons/icon-64x64.png" type="image/png" rel="icon" sizes="64x64"/><link href="icons/icon-48x48.png" type="image/png" rel="icon" sizes="48x48"/><link href="icons/icon-32x32.png" type="image/png" rel="icon" sizes="32x32"/><link href="icons/icon-24x24.png" type="image/png" rel="icon" sizes="24x24"/><link href="icons/icon-16x16.png" type="image/png" rel="icon" sizes="16x16"/><link href="/icons/manifest.json" rel="manifest"/><meta name="msapplication-TileColor" content="#ffffff"/><meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png"/><meta name="theme-color" content="#ffffff"/></head><body><div class="velus-all"><div class="velus-content" data-spy="scroll" data-target="#velus-side-bar"><div class="container-fluid"><div class="row"><div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
+
+<h2>JFLA 2023 : Références au développement Coq</h2>
+
+<p>
+Cette page présente le développement Coq associé à l'article "Analyse de dépendance vérifiée pour un langage synchrone
+à flot de données" de T. Bourke, B. Pesin et M. Pouzet, soumis aux JFLA 2023.
+Les liens suivants permettent de retrouver les définitions formelles Coq présentées dans les différentes parties de l'article.
+</p>
+
+<h3>1 Introduction</h3>
+
+<p>
+Nous proposons une démonstration <a href="./try-velus/index.html">en ligne</a> du compilateur et d'un interpréteur pour le langage Vélus.
+Le programme est extrait de Coq et compilé en Javascript par <a href="https://ocsigen.org/js_of_ocaml/latest/manual/overview">js_of_ocaml</a>.
+Il est accompagné d'un simulateur permettant de tester l'exemple présenté dans l'article.
+</p>
+
+<h3>2 Sémantique à flots de donnés de Vélus</h3>
+<ul>
+    <li> <a href="html/Velus.Lustre.LSyntax.html">LSyntax</a>: Syntaxe abstraite de Lustre</li>
+    <li> <a href="html/Velus.Lustre.LSyntax.html#LSYNTAX.exp">exp</a>: expressions</li>
+    <li> <a href="html/Velus.Lustre.LSyntax.html#LSYNTAX.block">block</a>: blocs</li>
+    <li> <a href="html/Velus.Lustre.LSyntax.html#LSYNTAX.node">node</a>: noeuds</li>
+    <li> <a href="html/Velus.Lustre.LSyntax.html#LSYNTAX.global">global</a>: programmes</li>
+</ul>
+
+<h3>2.1 Noyau du langage</h3>
+<ul>
+  <li> <a href="html/Velus.Lustre.LSemantics.html">LSemantics</a>: Règles sémantiques pour Lustre</li>
+  <li> <a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Svar">Svar</a>: Sémantique d'une variable</li>
+  <li> <a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sconst">Sconst</a>: Sémantique d'une constante</li>
+  <li> <a href="html/Velus.CoindStreams.html#COINDSTREAMS.const">const</a>: Flot constant échantillonné</li>
+  <li> <a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.sem_equation">sem_equation</a>: Sémantique d'une équation</li>
+  <li> <a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.sem_node">sem_node</a>: Sémantique d'un noeud</li>
+  <li> <a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.fby">fby</a>: opérateur co-inductif pour le <code>fby</code></li>
+  <li> <a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.fby1">fby1</a>: opérateur co-inductif auxiliaire pour le <code>fby</code></li>
+  <li> <a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sfby">Sfby</a>: Sémantique du <code>fby</code></li>
+</ul>
+
+<h3>2.2 Structure de contrôle switch</h3>
+<ul>
+    <li> <a href="html/Velus.CoindStreams.html#COINDSTREAMS.when">when</a>: opérateur co-inductif pour le <code>when</code></li>
+  <li> <a href="html/Velus.CoindStreams.html#COINDSTREAMS.when_hist">when_hist</a>: when appliqué à un historique</li>
+  <li> <a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sswitch">Sswitch</a>: Sémantique d'un <code>switch</code></li>
+</ul>
+
+<h3>2.3 Déclarations locales</h3>
+<ul>
+  <li> <a href="html/Velus.FunctionalEnvironment.html#FEnv.union">union</a>: opérateur d'union d'historiques</li>
+  <li> <a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sscope">Sscope</a>: Sémantique d'une déclaration locale</li>
+  <li> <a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Slast">Slast</a>: Sémantique de l'expression <code>last</code></li>
+</ul>
+
+<h3>3.1.1 Variables utilisées instantanément</h3>
+<ul>
+  <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.Is_free_left">Is_free_left</a>: Variables utilisée instantanément dans une expression</li>
+  <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.Is_free_left_list">Is_free_left_list</a>: Variables utilisée instantanément dans une liste d'expressions</li>
+</ul>
+
+<h3>3.1.2 Variables définies et dépendances</h3>
+<ul>
+  <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.DefEq">DefEq</a>: Etiquettes définies par une équation</li>
+  <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.DepOnEq">DepOnEq</a>: Dépendances induites par une équation</li>
+  <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.DefScope1">DefScope</a>: Etiquettes définies par une déclaration locale</li>
+  <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.DepOnScope1">DepOnScope1</a>: Dépendances des sous-blocs d'une déclaration locale</li>
+  <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.DepOnScope2">DepOnScope2</a>: Dépendances des déclarations <code>last</code></li>
+  <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.DefBranch1">DefBranch1</a>: Etiquettes définie par les sous-blocs d'un <code>switch</code></li>
+  <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.DepOnBranch1">DepOnBranch1</a>: Dépendances des sous-blocs d'un <code>switch</code></li>
+  <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.DefBranch2">DefBranch2</a>: Etiquettes renommée par les substitutions d'un <code>switch</code></li>
+  <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.DepOnSwitch2">DepOnSwitch2</a>: Dépendances de contrôle d'un <code>switch</code></li>
+  <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.DepOnBranch2">DepOnBranch2</a>: Dépendances induites par les substitutions d'étiquettes d'un <code>switch</code></li>
+</ul>
+
+<h3>3.2 Analyse du graphe de dépendance</h3>
+<ul>
+    <li> <a href="html/Velus.AcyGraph.html#AcyGraph">AcyGraph</a>: formalisation d'un graphe acyclique</li>
+    <li> <a href="html/Velus.AcyGraph.html#dfs">dfs</a>: fonction de recherche en profondeur dans un graphe</li>
+    <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.node_causal">node_causal</a>: définition d'un noeud "causal"</li>
+</ul>
+
+<h3>4.1 Principe d'induction sur les étiquettes</h3>
+<ul>
+    <li> <a href="html/Velus.AcyGraph.html#TopoOrder">TopoOrder</a>: ordre topologique sur les étiquettes</li>
+    <li> <a href="html/Velus.AcyGraph.html#has_TopoOrder">has_TopoOrder</a>: existence d'un ordre topologique</li>
+    <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.node_causal_ind">node_causal_ind</a>: principe d'induction sur les étiquettes</li>
+</ul>
+
+<h3>4.2 Principe d'induction sur les expressions</h3>
+<ul>
+    <li> <a href="html/Velus.Lustre.LCausality.html#LCAUSALITY.exp_causal_ind">exp_causal_ind</a>: principe d'induction sur les expressions</li>
+</ul>
+
+<h3>4.3 Application: déterminisme de la sémantique</h3>
+<ul>
+    <li> <a href="html/Velus.Lustre.LSemDeterminism.html#LSEMDETERMINISM.det_global">det_global</a>: déterminisme de la sémantique</li>
+    <li> <a href="html/Velus.CoindStreams.html#COINDSTREAMS.EqStN">EqStN</a>: équivalence jusqu'à n</li>
+    <li> <a href="html/Velus.Lustre.LSemDeterminism.html#LSEMDETERMINISM.det_exp_S">det_exp_S</a>: équivalence jusqu'à n + 1 pour les expressions</li>
+    <li> <a href="html/Velus.Lustre.LSemDeterminism.html#LSEMDETERMINISM.fby_det_Sn">fby_det_Sn</a>: équivalence jusqu'à n + 1 pour <code>fby</code></li>
+    <li> <a href="html/Velus.Lustre.LSemDeterminism.html#LSEMDETERMINISM.sem_scope_det">sem_scope_det</a>: sémantique instrumentée, cas de la déclaration locale</li>
+    <li> <a href="html/Velus.Lustre.LSemDeterminism.html#LSEMDETERMINISM.det_block_S">det_block_S</a>: Sémantique instrumentée, passage de n à n + 1</li>
+</ul>
+<!-- <h3>3.1 Correctness of the Clock System</h3> -->
+<!-- <UL> -->
+<!--     <li>Correctness <A HREF="html/Velus.Lustre.LClockSemantics.html#LCLOCKSEMANTICS.l_sem_node_clock">theorem</A>.</li> -->
+<!-- </UL> -->
+<!--
+
+     <br>
+     <h2>Outline of the compiler (figure 14)</h2>
+
+     <h3>Lustre</h3>
+     <ul>
+     <li><a href="html/Velus.Lustre.LSyntax.html">LSyntax</a>: Syntax of Lustre</li>
+     <li><a href="html/Velus.Lustre.LSemantics.html">LSemantics</a>: Coinductive semantics of Lustre</li>
+     <li><a href="html/Velus.Lustre.LTyping.html">LTyping</a>: Typing rules of Lustre</li>
+     <li><a href="html/Velus.Lustre.LClocking.html">LClocking</a>: Clocking rules of Lustre</li>
+     <li><a href="html/Velus.Lustre.LCausality.html">LCausality</a>: Dependency rules of Lustre</li>
+     <li> <a href="html/Velus.Lustre.LClockedSemantics.html">LClockedSemantics</a>: Instrumented semantic model</li>
+     <li> <a href="html/Velus.Lustre.LClockCorrectness.html">LClockCorrectness</a>: Correctness of the clock type system</li>
+     <li> <a href="html/Velus.Lustre.LSemDeterminism.html">LSemDeterminism</a>: Determinism of the semantic model</li>
+
+     <h4>Shared Variables</h4>
+     <ul>
+     <li><a href="html/Velus.Lustre.DeLast.DeLast.html">DeLast</a>: Compilation of Shared Variables</li>
+     <li><a href="html/Velus.Lustre.DeLast.DLCorrectness.html">DLCorrectness</a>: Correctness of the compilation of Shared Variables</li>
+     </ul>
+     <h4>State Machines</h4>
+     <ul>
+     <li><a href="html/Velus.Lustre.CompAuto.CompAuto.html">CompAuto</a>: Compilation of State Machines</li>
+     <li><a href="html/Velus.Lustre.CompAuto.CACorrectness.html">CACorrectness</a>: Correctness of the compilation of State Machines</li>
+     </ul>
+     <h4>Switch Blocks</h4>
+     <ul>
+     <li><a href="html/Velus.Lustre.ClockSwitch.ClockSwitch.html">ClockSwitch</a>: Compilation of Switch Blocks</li>
+     <li><a href="html/Velus.Lustre.ClockSwitch.CSCorrectness.html">CSCorrectness</a>: Correctness of the compilation of Switch Blocks</li>
+     </ul>
+     <h4>Local Scopes</h4>
+     <ul>
+     <li><a href="html/Velus.Lustre.InlineLocal.InlineLocal.html">InlineLocal</a>: Inlining of Local Scopes</li>
+     <li><a href="html/Velus.Lustre.InlineLocal.ILCorrectness.html">ILCorrectness</a>: Correctness of inlining of Local Scopes</a>
+     </ul>
+     <h4>Normalization</h4>
+     <ul>
+     <li><a href="html/Velus.Lustre.Normalization.Unnesting.html">Unnesting</a> and Distributivity transformation</li>
+     <li><a href="html/Velus.Lustre.Normalization.NormFby.html">Expression Initialization</a> algorithms</li>
+     <li><a href="html/Velus.Lustre.Normalization.Correctness.html">Correctness</a> of the normalization</li>
+     </ul>
+     </ul>
+
+     <h3>Transcription</h3>
+     <ul>
+     <li><a href="html/Velus.Transcription.Tr.html">Transcription</a> algorithm</li>
+     <li><a href="html/Velus.Transcription.Correctness.html">Correctness</a> of the transcription algorithm</li>
+     </ul>
+
+     <h3>CoreExpr</h3>
+     Core expressions, used in NLustre and Stc
+     <ul>
+     <li><a href="html/Velus.CoreExpr.CESyntax.html">CESyntax</a>: Syntax of core expressions</li>
+     <li><a href="html/Velus.CoreExpr.CESemantics.html">CESemantics</a>: Semantics of core expressions</li>
+     <li><a href="html/Velus.CoreExpr.CETyping.html">CETyping</a>: Typing rules of core expressions</li>
+     <li><a href="html/Velus.CoreExpr.CEClocking.html">CEClocking</a>: Clocking rules of core expressions</li>
+     </ul>
+
+     <h3>NLustre</h3>
+     <ul>
+     <li><a href="html/Velus.NLustre.NLSyntax.html">NLSyntax</a>: Syntax of NLustre</li>
+     <li><a href="html/Velus.NLustre.NLCoindSemantics.html">NLCoindSemantics</a>: Coinductive semantics of NLustre</li>
+     <li><a href="html/Velus.NLustre.NLIndexedSemantics.html">NLIndexedSemantics</a>: Indexed semantics of NLustre</li>
+     <li><a href="html/Velus.NLustre.NLMemSemantics.html">NLMemSemantics</a>: Indexed semantics of NLustre with explicit memory</li>
+     <li><a href="html/Velus.NLustre.NLTyping.html">NLTyping</a>: Typing rules of NLustre</li>
+     <li><a href="html/Velus.NLustre.NLClocking.html">NLClocking</a>: Clocking rules of NLustre</li>
+     <li><a href="html/Velus.NLustre.NLNormalArgs.html">NLNormalArgs</a>: Normalized arguments in NLustre</li>
+     </ul>
+
+     <h3>NLustreToStc</h3>
+     <ul>
+     <li><a href="html/Velus.NLustreToStc.Translation.html">Translation</a> from NLustre to Stc</li>
+     <li><a href="html/Velus.NLustreToStc.Correctness.html">Correctness</a> of the translation from NLustre to Stc</li>
+     </ul>
+
+     <h3>Stc</h3>
+     <ul>
+     <li><a href="html/Velus.Stc.StcSyntax.html">StcSyntax</a>: Syntax of Stc</li>
+     <li><a href="html/Velus.Stc.StcSemantics.html">StcSemantics</a>: Semantics of Stc</li>
+     <li><a href="html/Velus.Stc.StcTyping.html">StcTyping</a>: Typing rules of Stc</li>
+     <li><a href="html/Velus.Stc.StcClocking.html">StcClocking</a>: Clocking rules of Stc</li>
+     <li><a href="html/Velus.Stc.StcSchedule.html">StcSchedule</a>: Stc scheduler</li>
+     </ul>
+
+     <h3>StcToObc</h3>
+     <ul>
+     <li><a href="html/Velus.StcToObc.Translation.html">Translation</a> from Stc to Obc</li>
+     <li><a href="html/Velus.StcToObc.Correctness.html">Correctness</a> of the translation from Stc to Obc</li>
+     </ul>
+
+     <h3>Obc</h3>
+     <ul>
+     <li><a href="html/Velus.Obc.ObcSyntax.html">ObcSyntax</a>: Syntax of Obc</li>
+     <li><a href="html/Velus.Obc.ObcSemantics.html">ObcSemantics</a>: Semantics of Obc</li>
+     <li><a href="html/Velus.Obc.ObcTyping.html">ObcTyping</a>: Typing rules of Obc</li>
+     <li><a href="html/Velus.Obc.ObcInvariants.html">ObcInvariants</a>: Useful invariants for Obc</li>
+     <li><a href="html/Velus.Obc.ObcAddDefaults.html">ObcAddDefaults</a>: Add default initializations</li>
+     <li><a href="html/Velus.Obc.Fusion.html">Fusion</a>: Fusion optimization</li>
+     </ul>
+
+     <h3>ObcToClight</h3>
+     <ul>
+     <li><a href="html/Velus.ObcToClight.Generation.html">Generation</a> of Clight code</li>
+     <li><a href="html/Velus.ObcToClight.Correctness.html">Correctness</a> of the generation of Clight code</li>
+     </ul>
+-->
+</div></div></div></div><div class="navbar navbar-expand-md fixed-top navbar-dark bg-primary velus-navbar"><a class="navbar-brand" href="../index.html">Vélus</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar" aria-expanded="false" aria-label="Toggle navigation">•••</button><div class="collapse navbar-collapse" id="collapsingNavbar"><ul class="navbar-nav mr-auto"><li class="nav-item"><a class="nav-link" href="../compiler.html">compiler</a></li><li class="nav-item"><a class="nav-link" href="../publications.html">publications</a></li><li class="nav-item"><a class="nav-link" href="../tryvelus/index.html">demo</a></li><li class="nav-item active"><a class="nav-link" href="../emsoft2021/index.html">EMSOFT2021</a></li></ul></div></div><script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script><script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script><script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script></div></body></html>
