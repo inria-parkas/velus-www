@@ -264,4 +264,43 @@
 }
 </pre>
 
+<a name="JFLA23"></a><pre>
+@inproceedings{JFLA23,
+  title = {Analyse de d{\'{e}}pendance v{\'{e}}rifi{\'{e}}e pour
+		 un langage synchrone {\`{a}} flot de donn{\'{e}}es},
+  author = {Timothy Bourke
+		 and Basile Pesin
+		 and Marc Pouzet},
+  pages = {101--120},
+  booktitle = {{JFLA 2023 - Les trente-quatri{\`e}mes Journ{\'e}es
+		 Francophones des Langages Applicatifs}},
+  year = 2023,
+  month = jan # {/} # feb,
+  editor = {Timothy Bourke
+		 and Delphine Demange},
+  address = {Praz-sur-Arly, France},
+  url = {jfla2023/index.html},
+  pdf = {https://hal.inria.fr/hal-03936656/file/jfla23_paper_6388.pdf},
+  hal_id = {hal-03936656},
+  hal_version = {v1},
+  abstract = {
+    Vélus is a formalisation of a synchronous dataflow language and 
+    compiler in the Coq proof assistant.
+    It includes a definition of the source language's dynamic semantics,
+    a compiler that produces imperative code,
+    and an end-to-end proof that the compiler preserves the semantics of
+    programs.
+
+    In this article, we extend Vélus with the semantics of two activation
+    structures that are provided by modern compilers:
+    switchs and local declarations.
+    These new constructions require adapting the static dependency analysis
+    of Vélus, which produces an acyclic graph as a witness that a program is
+    well formed.
+    We use this witness to construct an induction schema and apply it to
+    show, in Coq, that the semantic model is deterministic.
+  }
+}
+</pre>
+
 </div></body></html>
