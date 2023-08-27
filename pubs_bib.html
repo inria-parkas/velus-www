@@ -128,6 +128,44 @@
 }
 </pre>
 
+<a name="Brun20"></a><pre>
+@phdthesis{Brun20,
+  author = {L{\'{e}}lio Brun},
+  title = {Mechanized Semantics and Verified Compilation for a
+		 Dataflow Synchronous Language with Reset},
+  school = {PSL Research University},
+  year = 2020,
+  month = jun,
+  pdf = {https://theses.hal.science/tel-03068862/file/Brun-2020-These.pdf},
+  abstract = {
+    Specifications based on block diagrams and state machines are used to
+    design control software, especially in the certified development of
+    safety-critical applications. Tools like Scade and Simulink/Stateflow
+    are equipped with compilers that translate such specifications into
+    executable code. They provide programming languages for composing
+    functions over streams as typified by dataflow synchronous languages
+    like Lustre.
+
+    In this thesis we present Vélus, a Lustre compiler verified in the
+    interactive theorem prover Coq. We develop semantic models for the
+    various languages in the compilation chain, and build on the verified
+    CompCert C compiler to generate executable code and give an end-to-end
+    correctness proof. The main challenge is to show semantic preservation
+    between the dataflow paradigm and the imperative paradigm, and to reason
+    about byte-level representations of program states.
+
+    We treat, in particular, the modular reset construct, a primitive for
+    resetting subsystems. This necessitates the design of suitable semantic
+    models, compilation algorithms and corresponding correctness proofs. We
+    introduce a novel intermediate language into the usual clock-directed
+    modular compilation scheme of Lustre. This permits the implementation of
+    compilation passes that generate better sequential code, and facilitates
+    reasoning about the correctness of the successive transformations of the
+    modular reset construct.
+  }
+}
+</pre>
+
 <a name="POPL20"></a><pre>
 @article{POPL20,
   title = {{Mechanized semantics and verified compilation for a dataflow synchronous language with reset}},
@@ -299,6 +337,36 @@
     well formed.
     We use this witness to construct an induction schema and apply it to
     show, in Coq, that the semantic model is deterministic.
+  }
+}
+</pre>
+
+<a name="EMSOFT23"></a><pre>
+@article{EMSOFT23,
+  title = {Verified Compilation of Synchronous Dataflow with State
+		 Machines},
+  author = {Timothy Bourke
+		 and Basile Pesin
+		 and Marc Pouzet},
+  journal = {ACM Transactions on Embedded Computing Systems},
+  year = 2023,
+  month = sep,
+  pages = {TBA},
+  volume = {TBA},
+  number = {TBA},
+  doi = {10.1145/3608102},
+  abstract = {
+    Safety-critical embedded software is routinely programmed in
+    block-diagram languages. Recent work in the Vélus project specifies such
+    a language and its compiler in the Coq proof assistant. It builds on the
+    CompCert verified C compiler to give an end-to-end proof linking the
+    dataflow semantics of source programs to traces of the generated
+    assembly code. We extend this work with switched blocks, shared
+    variables, reset blocks, and state machines; define a relational
+    semantics to integrate these block- and mode-based constructions into
+    the existing stream-based model; adapt the standard source-to-source
+    rewriting scheme to compile the new constructions; and reestablish the
+    correctness theorem.
   }
 }
 </pre>
