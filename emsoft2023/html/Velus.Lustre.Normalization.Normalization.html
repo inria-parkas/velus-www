@@ -1,0 +1,82 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module Normalization</title>
+<meta name="description" content="Documentation of Coq module Normalization" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module Normalization</h1>
+<div class="coq">
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Strings.String.html">String</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html">List</a></span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Sorting.Permutation.html">Sorting.Permutation</a></span>.<br/>
+<span class="kwd">Import</span> <span class="id"><a href="http://coq.inria.fr/library/Coq.Lists.List.html#ListNotations">List.ListNotations</a></span>.<br/>
+<span class="kwd">Open</span> <span class="kwd">Scope</span> <span class="id">list_scope</span>.<br/>
+<br/>
+<span class="kwd">From</span> <span class="id">compcert</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="../../CompCert/doc/html/compcert.common.Errors.html">common.Errors</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Common.Common.html">Common</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Operators.html">Operators</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Clocks.html">Clocks</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Lustre.StaticEnv.html">StaticEnv</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Lustre.LSyntax.html">Lustre.LSyntax</a></span>.<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Lustre.Normalization.Unnesting.html">Lustre.Normalization.Unnesting</a></span> <span class="id"><a href="Velus.Lustre.Normalization.NormFby.html">Lustre.Normalization.NormFby</a></span>.<br/>
+<br/>
+<h1> Complete Normalization </h1>
+<br/>
+<span class="kwd">Module</span> <span class="kwd">Type</span> <span class="id"><a name="NORMALIZATION">NORMALIZATION</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Ids</span> : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Op</span> : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">OpAux</span> : <span class="id"><a href="Velus.Operators.html#OPERATORS_AUX">OPERATORS_AUX</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Cks</span> : <span class="id"><a href="Velus.Clocks.html#CLOCKS">CLOCKS</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Op">Op</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#OpAux">OpAux</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Senv</span> : <span class="id"><a href="Velus.Lustre.StaticEnv.html#STATICENV">STATICENV</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Op">Op</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Cks">Cks</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">Import</span> <span class="id">Syn</span> : <span class="id"><a href="Velus.Lustre.LSyntax.html#LSYNTAX">LSYNTAX</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Op">Op</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Cks">Cks</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Senv">Senv</a></span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Module</span> <span class="kwd">Export</span> <span class="id"><a name="NORMALIZATION.Unnesting">Unnesting</a></span> := <span class="id"><a href="Velus.Lustre.Normalization.Unnesting.html#UnnestingFun">UnnestingFun</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Op">Op</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Cks">Cks</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Senv">Senv</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Syn">Syn</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Module</span> <span class="kwd">Export</span> <span class="id"><a name="NORMALIZATION.NormFby">NormFby</a></span> := <span class="id"><a href="Velus.Lustre.Normalization.NormFby.html#NormFbyFun">NormFbyFun</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Op">Op</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Cks">Cks</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Senv">Senv</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Syn">Syn</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NORMALIZATION.Unnesting">Unnesting</a></span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Definition</span> <span class="id"><a name="NORMALIZATION.normalize_global">normalize_global</a></span> <span class="id">G</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NORMALIZATION.normfby_global">normfby_global</a></span> (<span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NORMALIZATION.unnest_global">unnest_global</a></span> <span class="id">G</span>).<br/>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Lemma</span> <span class="id"><a name="NORMALIZATION.normalize_global_iface_eq">normalize_global_iface_eq</a></span> : <span class="kwd">forall</span> <span class="id">G</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Syn.global_iface_eq">global_iface_eq</a></span> <span class="id">G</span> (<span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NORMALIZATION.normalize_global">normalize_global</a></span> <span class="id">G</span>).<br/>
+<div>&nbsp;&nbsp;<span class="toggleproof" onclick="toggleDisplay('proof1')">Proof.</span></div>
+<div class="proofscript" id="proof1">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">unfold</span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NORMALIZATION.normalize_global">normalize_global</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Syn.global_iface_eq_trans">global_iface_eq_trans</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NORMALIZATION.unnest_global_eq">unnest_global_eq</a></span>. <span class="tactic">eapply</span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NORMALIZATION.normfby_global_eq">normfby_global_eq</a></span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+&nbsp;&nbsp;<span class="kwd">Theorem</span> <span class="id"><a name="NORMALIZATION.normalize_global_normalized_global">normalize_global_normalized_global</a></span> : <span class="kwd">forall</span> <span class="id">G</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Syn.wl_global">wl_global</a></span> <span class="id">G</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Syn.wx_global">wx_global</a></span> <span class="id">G</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NORMALIZATION.normalized_global">normalized_global</a></span> (<span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NORMALIZATION.normalize_global">normalize_global</a></span> <span class="id">G</span>).<br/>
+<div>&nbsp;&nbsp;<span class="toggleproof" onclick="toggleDisplay('proof2')">Proof.</span></div>
+<div class="proofscript" id="proof2">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">intros</span> <span class="id">G</span> * <span class="id">Hwl</span> <span class="id">Hwx</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NORMALIZATION.normfby_global_normalized_global">normfby_global_normalized_global</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="tactic">eapply</span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NORMALIZATION.unnest_global_unnested_global">unnest_global_unnested_global</a></span>; <span class="tactic">auto</span>.<br/>
+&nbsp;&nbsp;Qed.</div>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NORMALIZATION">NORMALIZATION</a></span>.<br/>
+<br/>
+<span class="kwd">Module</span> <span class="id"><a name="NormalizationFun">NormalizationFun</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Ids</span> : <span class="id"><a href="Velus.Common.Common.html#IDS">IDS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Op</span> : <span class="id"><a href="Velus.Operators.html#OPERATORS">OPERATORS</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">OpAux</span> : <span class="id"><a href="Velus.Operators.html#OPERATORS_AUX">OPERATORS_AUX</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Op">Op</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Cks</span> : <span class="id"><a href="Velus.Clocks.html#CLOCKS">CLOCKS</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Op">Op</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#OpAux">OpAux</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Senv</span> : <span class="id"><a href="Velus.Lustre.StaticEnv.html#STATICENV">STATICENV</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Op">Op</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Cks">Cks</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Syn</span> : <span class="id"><a href="Velus.Lustre.LSyntax.html#LSYNTAX">LSYNTAX</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Op">Op</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Cks">Cks</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Senv">Senv</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;: <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NORMALIZATION">NORMALIZATION</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Op">Op</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Cks">Cks</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Senv">Senv</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Syn">Syn</a></span>.<br/>
+&nbsp;&nbsp;<span class="kwd">Include</span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NORMALIZATION">NORMALIZATION</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Ids">Ids</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Op">Op</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#OpAux">OpAux</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Cks">Cks</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Senv">Senv</a></span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#Syn">Syn</a></span>.<br/>
+<span class="kwd">End</span> <span class="id"><a href="Velus.Lustre.Normalization.Normalization.html#NormalizationFun">NormalizationFun</a></span>.<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</a></div>
+</body>
+</html>
