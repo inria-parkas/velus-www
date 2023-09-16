@@ -1,65 +1,157 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta content="ie=edge" http-equiv="x-ua-compatible"/><link href="../velus.css" rel="stylesheet"/><title>EMSOFT 2023: References to the Coq development</title><meta description="Link the EMSOFT 2023 article to the Coq development"/><link href="icons/apple-icon-512x512.png" rel="apple-touch-icon" sizes="512x512"/><link href="icons/apple-icon-196x196.png" rel="apple-touch-icon" sizes="196x196"/><link href="icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/><link href="icons/apple-icon-172x172.png" rel="apple-touch-icon" sizes="172x172"/><link href="icons/apple-icon-167x167.png" rel="apple-touch-icon" sizes="167x167"/><link href="icons/apple-icon-152x152.png" rel="apple-touch-icon" sizes="152x152"/><link href="icons/apple-icon-144x144.png" rel="apple-touch-icon" sizes="144x144"/><link href="icons/apple-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/><link href="icons/apple-icon-114x114.png" rel="apple-touch-icon" sizes="114x114"/><link href="icons/apple-icon-100x100.png" rel="apple-touch-icon" sizes="100x100"/><link href="icons/apple-icon-88x88.png" rel="apple-touch-icon" sizes="88x88"/><link href="icons/apple-icon-87x87.png" rel="apple-touch-icon" sizes="87x87"/><link href="icons/apple-icon-80x80.png" rel="apple-touch-icon" sizes="80x80"/><link href="icons/apple-icon-76x76.png" rel="apple-touch-icon" sizes="76x76"/><link href="icons/apple-icon-72x72.png" rel="apple-touch-icon" sizes="72x72"/><link href="icons/apple-icon-60x60.png" rel="apple-touch-icon" sizes="60x60"/><link href="icons/apple-icon-58x58.png" rel="apple-touch-icon" sizes="58x58"/><link href="icons/apple-icon-57x57.png" rel="apple-touch-icon" sizes="57x57"/><link href="icons/apple-icon-55x55.png" rel="apple-touch-icon" sizes="55x55"/><link href="icons/apple-icon-50x50.png" rel="apple-touch-icon" sizes="50x50"/><link href="icons/apple-icon-48x48.png" rel="apple-touch-icon" sizes="48x48"/><link href="icons/apple-icon-40x40.png" rel="apple-touch-icon" sizes="40x40"/><link href="icons/apple-icon-29x29.png" rel="apple-touch-icon" sizes="29x29"/><link href="icons/apple-icon-20x20.png" rel="apple-touch-icon" sizes="20x20"/><link href="icons/icon-256x256.png" type="image/png" rel="icon" sizes="256x256"/><link href="icons/icon-128x128.png" type="image/png" rel="icon" sizes="128x128"/><link href="icons/icon-96x96.png" type="image/png" rel="icon" sizes="96x96"/><link href="icons/icon-64x64.png" type="image/png" rel="icon" sizes="64x64"/><link href="icons/icon-48x48.png" type="image/png" rel="icon" sizes="48x48"/><link href="icons/icon-32x32.png" type="image/png" rel="icon" sizes="32x32"/><link href="icons/icon-24x24.png" type="image/png" rel="icon" sizes="24x24"/><link href="icons/icon-16x16.png" type="image/png" rel="icon" sizes="16x16"/><link href="/icons/manifest.json" rel="manifest"/><meta name="msapplication-TileColor" content="#ffffff"/><meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png"/><meta name="theme-color" content="#ffffff"/></head><body><div class="velus-all"><div class="velus-content" data-spy="scroll" data-target="#velus-side-bar"><div class="container-fluid"><div class="row"><div class="col-xl-8 col-lg-8 col-md-32 col-sm-32"><h2 id="EMSOFT-2023-References-to-the-Coq-development">EMSOFT 2023: References to the Coq development</h2>
-
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta content="ie=edge" http-equiv="x-ua-compatible"/><link href="../velus.css" rel="stylesheet"/><title>EMSOFT 2023: References to the Coq development</title><meta description="Link the EMSOFT 2023 article to the Coq development"/><link href="icons/apple-icon-512x512.png" rel="apple-touch-icon" sizes="512x512"/><link href="icons/apple-icon-196x196.png" rel="apple-touch-icon" sizes="196x196"/><link href="icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/><link href="icons/apple-icon-172x172.png" rel="apple-touch-icon" sizes="172x172"/><link href="icons/apple-icon-167x167.png" rel="apple-touch-icon" sizes="167x167"/><link href="icons/apple-icon-152x152.png" rel="apple-touch-icon" sizes="152x152"/><link href="icons/apple-icon-144x144.png" rel="apple-touch-icon" sizes="144x144"/><link href="icons/apple-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/><link href="icons/apple-icon-114x114.png" rel="apple-touch-icon" sizes="114x114"/><link href="icons/apple-icon-100x100.png" rel="apple-touch-icon" sizes="100x100"/><link href="icons/apple-icon-88x88.png" rel="apple-touch-icon" sizes="88x88"/><link href="icons/apple-icon-87x87.png" rel="apple-touch-icon" sizes="87x87"/><link href="icons/apple-icon-80x80.png" rel="apple-touch-icon" sizes="80x80"/><link href="icons/apple-icon-76x76.png" rel="apple-touch-icon" sizes="76x76"/><link href="icons/apple-icon-72x72.png" rel="apple-touch-icon" sizes="72x72"/><link href="icons/apple-icon-60x60.png" rel="apple-touch-icon" sizes="60x60"/><link href="icons/apple-icon-58x58.png" rel="apple-touch-icon" sizes="58x58"/><link href="icons/apple-icon-57x57.png" rel="apple-touch-icon" sizes="57x57"/><link href="icons/apple-icon-55x55.png" rel="apple-touch-icon" sizes="55x55"/><link href="icons/apple-icon-50x50.png" rel="apple-touch-icon" sizes="50x50"/><link href="icons/apple-icon-48x48.png" rel="apple-touch-icon" sizes="48x48"/><link href="icons/apple-icon-40x40.png" rel="apple-touch-icon" sizes="40x40"/><link href="icons/apple-icon-29x29.png" rel="apple-touch-icon" sizes="29x29"/><link href="icons/apple-icon-20x20.png" rel="apple-touch-icon" sizes="20x20"/><link href="icons/icon-256x256.png" type="image/png" rel="icon" sizes="256x256"/><link href="icons/icon-128x128.png" type="image/png" rel="icon" sizes="128x128"/><link href="icons/icon-96x96.png" type="image/png" rel="icon" sizes="96x96"/><link href="icons/icon-64x64.png" type="image/png" rel="icon" sizes="64x64"/><link href="icons/icon-48x48.png" type="image/png" rel="icon" sizes="48x48"/><link href="icons/icon-32x32.png" type="image/png" rel="icon" sizes="32x32"/><link href="icons/icon-24x24.png" type="image/png" rel="icon" sizes="24x24"/><link href="icons/icon-16x16.png" type="image/png" rel="icon" sizes="16x16"/><link href="/icons/manifest.json" rel="manifest"/><meta name="msapplication-TileColor" content="#ffffff"/><meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png"/><meta name="theme-color" content="#ffffff"/></head><body><div class="velus-all"><div class="velus-content" data-spy="scroll" data-target="#velus-side-bar"><div class="container-fluid"><div class="row"><div class="col-xl-8 col-lg-8 col-md-32 col-sm-32"><h2>EMSOFT 2023: References to the Coq development</h2>
 <p>This page presents the artifact associated with the EMSOFT 2023 article
 <a href="https://velus.inria.fr/publications.html#EMSOFT23">Verified Compilation of Synchronous Dataflow with State Machines</a>, by
 T. Bourke, B. Pesin, and M. Pouzet.
-The following links relate the sections of the article to relevant 
+The following links relate the sections of the article to relevant
 definitions of the Coq development.
 The full Coq
-<a href="https://github.com/INRIA/velus/tree/emsoft23-artifact">source code</a> is 
+<a href="https://github.com/INRIA/velus/tree/emsoft23-artifact">source code</a> is
 available on github.</p>
-<p>The <a href="tryvelus/index.html">online version</a> of the compiler was extracted from 
-<a href="https://coq.inria.fr">Coq</a> and compiled to Javascript with 
+<p>The <a href="tryvelus/index.html">online version</a> of the compiler was extracted from
+<a href="https://coq.inria.fr">Coq</a> and compiled to Javascript with
 <a href="https://ocsigen.org/js_of_ocaml/">js_of_ocaml</a>.</p>
-<h3 id="1-Introduction">1 Introduction</h3>
-
+<h3>1 Introduction</h3>
 <p>The example given in the introduction can be found at <code>examples/stepper-motor.lus</code>.</p>
-<h3 id="2-1-Abstract-Syntax">2.1 Abstract Syntax</h3>
-
-<ul><li><a href="html/Velus.Lustre.LSyntax.html">LSyntax</a>: Lustre syntax</li><li><a href="html/Velus.Lustre.LSyntax.html#LSYNTAX.exp">exp</a>: expressions</li><li><a href="html/Velus.Lustre.LSyntax.html#LSYNTAX.block">block</a>: blocks</li><li><a href="html/Velus.Lustre.LSyntax.html#LSYNTAX.node">node</a>: nodes</li><li><a href="html/Velus.Lustre.LSyntax.html#LSYNTAX.global">global</a>: programs</li></ul>
-
-<h3 id="2-2-Synchronous-Core">2.2 Synchronous Core</h3>
-
-<ul><li><a href="html/Velus.Lustre.LSemantics.html">LSemantics</a>: Lustre semantic rules</li><li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.sem_node">sem_node</a>: Semantics of a Lustre node</li><li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.sem_equation">sem_equation</a>: Semantics of a Lustre equation</li><li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Svar">Svar</a>: Semantics of a Lustre variable</li><li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sconst">Sconst</a>: Semantics of a Lustre constant</li><li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.const">const</a>: Sampled constant stream</li><li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.when">when</a> coinductive operator</li><li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.merge">merge</a> coinductive operator</li><li><a href="html/Velus.Lustre.LClocking.html#LCLOCKING.wc_Ewhen">wc_Ewhen</a>: Clock-typing rule for a Lustre when</li><li><a href="html/Velus.Lustre.LClocking.html#LCLOCKING.wc_Emerge">wc_Emerge</a>: Clock-typing rule for a Lustre merge</li><li><a href="html/Velus.Lustre.ClockSwitch.CSCorrectness.html#CSCORRECTNESS.merge_when">merge_when</a>: correspondence of when and merge</li><li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.fby">fby</a> coinductive operator</li><li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.fby1">fby1</a> coinductive operator</li><li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sfby">Sfby</a>: Semantics of a Lustre fby</li></ul>
-
-<h3 id="2-3-Switch-Blocks">2.3 Switch Blocks</h3>
-
-<ul><li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.when_hist">when_hist</a>: when lifted to histories</li><li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sswitch">Sswitch</a>: Semantics of a switch block</li><li><a href="html/Velus.Lustre.LClocking.html#LCLOCKING.wc_Bswitch">wc_Bswitch</a>: Clock-typing rule for a switch block</li></ul>
-
-<h3 id="2-4-Local-Scopes-and-Shared-Variables">2.4 Local Scopes and Shared Variables</h3>
-
-<ul><li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sscope">Sscope</a>: Semantics of a local scope</li><li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Slast">Slast</a>: Semantics of a last expression</li><li><a href="html/Velus.FunctionalEnvironment.html#FEnv.union">union</a> operator on histories</li></ul>
-
-<h3 id="2-5-Reset-Blocks">2.5 Reset Blocks</h3>
-
-<ul><li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.mask">mask</a> coinductive operator
- </li><li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sreset">Sreset</a>: Semantics of a reset block</li></ul>
-
-<h3 id="2-6-State-Machines">2.6 State Machines</h3>
-
-<ul><li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.select">select</a> coinductive operator</li><li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.SautoWeak">SautoWeak</a>: Semantics of a state machine with weak transitions</li><li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.SautoStrong">SautoStrong</a>: Semantics of a state machine with strong transitions</li><li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.sem_transitions">sem_transitions</a>: Semantics of state machines transitions and initializations</li><li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.choose_first">choose_first</a> (first-of) coinductive operator</li></ul>
-
-<h3 id="3-1-Dependency-Analysis-and-Instrumented-Semantic-Model">3.1 Dependency Analysis and Instrumented Semantic Model</h3>
-
-<ul><li><a href="html/Velus.Lustre.LClockedSemantics.html">LClockedSemantics</a>: Instrumented semantic model</li><li><a href="html/Velus.Lustre.LClockedSemantics.html#LCLOCKEDSEMANTICS.sc_vars">sc_vars</a>: Clock correctness property</li><li><a href="html/Velus.Lustre.LCausality.html">LCausality</a>: dependency definitions</li><li><a href="html/Velus.Lustre.LClockCorrectness.html">LClockCorrectness</a>: Proof of clock correctness</li></ul>
-
-<h3 id="3-2-Shared-Variables">3.2 Shared Variables</h3>
-
-<ul><li><a href="html/Velus.Lustre.DeLast.DeLast.html#DELAST.delast_scope">delast_scope</a>: compiling last declarations</li><li><a href="html/Velus.Lustre.DeLast.DLCorrectness.html#DLCORRECTNESS.delast_block_sem">delast_block_sem</a>: correctness of compilation of last</li></ul>
-
-<h3 id="3-3-State-Machines">3.3 State Machines</h3>
-
-<ul><li><a href="html/Velus.Lustre.CompAuto.CompAuto.html#COMPAUTO.auto_block">auto_block</a>: compiling state machines</li><li><a href="html/Velus.Lustre.CompAuto.CompAuto.html#COMPAUTO.trans_exp">trans_exp</a>: compiling transitions</li><li><a href="html/Velus.Lustre.CompAuto.CACorrectness.html#CACORRECTNESS.auto_block_sem">auto_block_sem</a>: correctness of compilation of state machines</li></ul>
-
-<h3 id="3-4-Switch-Blocks">3.4 Switch Blocks</h3>
-
-<ul><li><a href="html/Velus.Lustre.ClockSwitch.ClockSwitch.html#CLOCKSWITCH.switch_block">switch_block</a>: compiling switch blocks</li><li><a href="html/Velus.Lustre.SubClock.SubClock.html#SUBCLOCK.subclock_exp">subclock_exp</a>: renaming/resampling expressions</li><li><a href="html/Velus.Lustre.ClockSwitch.CSCorrectness.html#CSCORRECTNESS.switch_block_sem">switch_block_sem</a>: correctness of compilation of state machines</li></ul>
-
-<h3 id="3-5-Local-Scopes">3.5 Local Scopes</h3>
-
-<ul><li><a href="html/Velus.Lustre.InlineLocal.InlineLocal.html#INLINELOCAL.inlinelocal_block">inlinelocal_block</a>: inlining of local scopes</li><li><a href="html/Velus.Lustre.InlineLocal.ILCorrectness.html#ILCORRECTNESS.inlinelocal_block_sem">inlinelocal_block_sem</a>: correctness of inlining of local scopes</li></ul>
-
-<h3 id="3-6-Reset-Blocks">3.6 Reset Blocks</h3>
-
-<ul><li><a href="html/Velus.NLustre.NLCoindSemantics.html#NLCOINDSEMANTICS.reset1">reset1</a> coinductive operator for NLustre</li><li><a href="html/Velus.Lustre.Normalization.Unnesting.html#UNNESTING.unnest_block">unnest_block</a>: normalization of reset blocks</li><li><a href="html/Velus.Transcription.Tr.html#TR.block_to_equation">block_to_equation</a>: transcription of blocks</li><li><a href="html/Velus.Transcription.Tr.html#TR.to_equation">to_equation</a>: transcription of equations</li><li><a href="html/Velus.Transcription.Correctness.html#CORRECTNESS.sem_blocktoeq">sem_blocktoeq</a>: correctness of the transcription of blocks</li></ul></div></div></div></div><div class="navbar navbar-expand-md fixed-top navbar-dark bg-primary velus-navbar"><a class="navbar-brand" href="../index.html">Vélus</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar" aria-expanded="false" aria-label="Toggle navigation">•••</button><div class="collapse navbar-collapse" id="collapsingNavbar"><ul class="navbar-nav mr-auto"><li class="nav-item"><a class="nav-link" href="../compiler.html">compiler</a></li><li class="nav-item"><a class="nav-link" href="../publications.html">publications</a></li><li class="nav-item"><a class="nav-link" href="../tryvelus/index.html">demo</a></li><li class="nav-item"><a class="nav-link" href="../emsoft2021/index.html">EMSOFT2021</a></li><li class="nav-item active"><a class="nav-link" href="../emsoft2023/index.html">EMSOFT2023</a></li></ul></div></div><script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script><script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script></div></body></html>
+<h3>2.1 Abstract Syntax</h3>
+<ul>
+<li><a href="html/Velus.Lustre.LSyntax.html">LSyntax</a>: Lustre syntax
+</li>
+<li><a href="html/Velus.Lustre.LSyntax.html#LSYNTAX.exp">exp</a>: expressions
+</li>
+<li><a href="html/Velus.Lustre.LSyntax.html#LSYNTAX.block">block</a>: blocks
+</li>
+<li><a href="html/Velus.Lustre.LSyntax.html#LSYNTAX.node">node</a>: nodes
+</li>
+<li><a href="html/Velus.Lustre.LSyntax.html#LSYNTAX.global">global</a>: programs
+</li>
+</ul>
+<h3>2.2 Synchronous Core</h3>
+<ul>
+<li><a href="html/Velus.Lustre.LSemantics.html">LSemantics</a>: Lustre semantic rules
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.sem_node">sem_node</a>: Semantics of a Lustre node
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.sem_equation">sem_equation</a>: Semantics of a Lustre equation
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Svar">Svar</a>: Semantics of a Lustre variable
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sconst">Sconst</a>: Semantics of a Lustre constant
+</li>
+<li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.const">const</a>: Sampled constant stream
+</li>
+<li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.when">when</a> coinductive operator
+</li>
+<li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.merge">merge</a> coinductive operator
+</li>
+<li><a href="html/Velus.Lustre.LClocking.html#LCLOCKING.wc_Ewhen">wc_Ewhen</a>: Clock-typing rule for a Lustre when
+</li>
+<li><a href="html/Velus.Lustre.LClocking.html#LCLOCKING.wc_Emerge">wc_Emerge</a>: Clock-typing rule for a Lustre merge
+</li>
+<li><a href="html/Velus.Lustre.ClockSwitch.CSCorrectness.html#CSCORRECTNESS.merge_when">merge_when</a>: correspondence of when and merge
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.fby">fby</a> coinductive operator
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.fby1">fby1</a> coinductive operator
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sfby">Sfby</a>: Semantics of a Lustre fby
+</li>
+</ul>
+<h3>2.3 Switch Blocks</h3>
+<ul>
+<li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.when_hist">when_hist</a>: when lifted to histories
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sswitch">Sswitch</a>: Semantics of a switch block
+</li>
+<li><a href="html/Velus.Lustre.LClocking.html#LCLOCKING.wc_Bswitch">wc_Bswitch</a>: Clock-typing rule for a switch block
+</li>
+</ul>
+<h3>2.4 Local Scopes and Shared Variables</h3>
+<ul>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sscope">Sscope</a>: Semantics of a local scope
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Slast">Slast</a>: Semantics of a last expression
+</li>
+<li><a href="html/Velus.FunctionalEnvironment.html#FEnv.union">union</a> operator on histories
+</li>
+</ul>
+<h3>2.5 Reset Blocks</h3>
+<ul>
+<li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.mask">mask</a> coinductive operator
+</li>
+</ul>
+  
+<ul>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sreset">Sreset</a>: Semantics of a reset block
+</li>
+</ul>
+<h3>2.6 State Machines</h3>
+<ul>
+<li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.select">select</a> coinductive operator
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.SautoWeak">SautoWeak</a>: Semantics of a state machine with weak transitions
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.SautoStrong">SautoStrong</a>: Semantics of a state machine with strong transitions
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.sem_transitions">sem_transitions</a>: Semantics of state machines transitions and initializations
+</li>
+<li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.choose_first">choose_first</a> (first-of) coinductive operator
+</li>
+</ul>
+<h3>3.1 Dependency Analysis and Instrumented Semantic Model</h3>
+<ul>
+<li><a href="html/Velus.Lustre.LClockedSemantics.html">LClockedSemantics</a>: Instrumented semantic model
+</li>
+<li><a href="html/Velus.Lustre.LClockedSemantics.html#LCLOCKEDSEMANTICS.sc_vars">sc_vars</a>: Clock correctness property
+</li>
+<li><a href="html/Velus.Lustre.LCausality.html">LCausality</a>: dependency definitions
+</li>
+<li><a href="html/Velus.Lustre.LClockCorrectness.html">LClockCorrectness</a>: Proof of clock correctness
+</li>
+</ul>
+<h3>3.2 Shared Variables</h3>
+<ul>
+<li><a href="html/Velus.Lustre.DeLast.DeLast.html#DELAST.delast_scope">delast_scope</a>: compiling last declarations
+</li>
+<li><a href="html/Velus.Lustre.DeLast.DLCorrectness.html#DLCORRECTNESS.delast_block_sem">delast_block_sem</a>: correctness of compilation of last
+</li>
+</ul>
+<h3>3.3 State Machines</h3>
+<ul>
+<li><a href="html/Velus.Lustre.CompAuto.CompAuto.html#COMPAUTO.auto_block">auto_block</a>: compiling state machines
+</li>
+<li><a href="html/Velus.Lustre.CompAuto.CompAuto.html#COMPAUTO.trans_exp">trans_exp</a>: compiling transitions
+</li>
+<li><a href="html/Velus.Lustre.CompAuto.CACorrectness.html#CACORRECTNESS.auto_block_sem">auto_block_sem</a>: correctness of compilation of state machines
+</li>
+</ul>
+<h3>3.4 Switch Blocks</h3>
+<ul>
+<li><a href="html/Velus.Lustre.ClockSwitch.ClockSwitch.html#CLOCKSWITCH.switch_block">switch_block</a>: compiling switch blocks
+</li>
+<li><a href="html/Velus.Lustre.SubClock.SubClock.html#SUBCLOCK.subclock_exp">subclock_exp</a>: renaming/resampling expressions
+</li>
+<li><a href="html/Velus.Lustre.ClockSwitch.CSCorrectness.html#CSCORRECTNESS.switch_block_sem">switch_block_sem</a>: correctness of compilation of state machines
+</li>
+</ul>
+<h3>3.5 Local Scopes</h3>
+<ul>
+<li><a href="html/Velus.Lustre.InlineLocal.InlineLocal.html#INLINELOCAL.inlinelocal_block">inlinelocal_block</a>: inlining of local scopes
+</li>
+<li><a href="html/Velus.Lustre.InlineLocal.ILCorrectness.html#ILCORRECTNESS.inlinelocal_block_sem">inlinelocal_block_sem</a>: correctness of inlining of local scopes
+</li>
+</ul>
+<h3>3.6 Reset Blocks</h3>
+<ul>
+<li><a href="html/Velus.NLustre.NLCoindSemantics.html#NLCOINDSEMANTICS.reset1">reset1</a> coinductive operator for NLustre
+</li>
+<li><a href="html/Velus.Lustre.Normalization.Unnesting.html#UNNESTING.unnest_block">unnest_block</a>: normalization of reset blocks
+</li>
+<li><a href="html/Velus.Transcription.Tr.html#TR.block_to_equation">block_to_equation</a>: transcription of blocks
+</li>
+<li><a href="html/Velus.Transcription.Tr.html#TR.to_equation">to_equation</a>: transcription of equations
+</li>
+<li><a href="html/Velus.Transcription.Correctness.html#CORRECTNESS.sem_blocktoeq">sem_blocktoeq</a>: correctness of the transcription of blocks
+</li>
+</ul>
+</div></div></div></div><div class="navbar navbar-expand-md fixed-top navbar-dark bg-primary velus-navbar"><a class="navbar-brand" href="../index.html">Vélus</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar" aria-expanded="false" aria-label="Toggle navigation">•••</button><div class="collapse navbar-collapse" id="collapsingNavbar"><ul class="navbar-nav mr-auto"><li class="nav-item"><a class="nav-link" href="../compiler.html">compiler</a></li><li class="nav-item"><a class="nav-link" href="../publications.html">publications</a></li><li class="nav-item"><a class="nav-link" href="../tryvelus/index.html">demo</a></li><li class="nav-item active"><a class="nav-link" href="../emsoft2023/index.html">EMSOFT2023</a></li></ul></div></div><script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script><script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script><script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script></div></body></html>
