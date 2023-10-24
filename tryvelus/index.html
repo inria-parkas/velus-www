@@ -10,7 +10,8 @@
       <nav class="navbar">
         <ul>
           <li>
-            <button>File</button>
+            <form action="https://velus.inria.fr/"><button>Vélus</button></form></li>
+          <li><button>File</button>
             <ul id="examples">
               <li><button id="clear-button">Clear</button></li>
             </ul>
@@ -19,13 +20,21 @@
             <button>Targets</button>
             <ul>
               <li><button id="lustre-button">+Elaborate</button></li>
+              <li><button id="complete-button">+Complete</button></li>
+              <li><button id="noauto-button">+No Automaton</button></li>
+              <li><button id="noswitch-button">+No Switch</button></li>
+              <li><button id="nolocal-button">+No Locals</button></li>
+              <li><button id="unnested-button">+Unnested</button></li>
+              <li><button id="normlast-button">+Normalized Lasts</button></li>
+              <li><button id="normfby-button">+Normalized Fbys</button></li>
               <li><button id="nlustre-button">+NLustre</button></li>
               <li><button id="stc-button">+Stc</button></li>
               <li><button id="obc-button">+Obc</button></li>
               <li><button id="clight-button">+Clight</button></li>
+              <li><button id="interp-button">+Interpreter</button></li>
             </ul>
           </li>
-          <li><button id="compile-button">Compile</button></li>
+          <!-- <li><button id="compile-button">Compile</button></li> -->
         </ul>
       </nav>
       <div id="body"></div>

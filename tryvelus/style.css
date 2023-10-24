@@ -153,3 +153,7 @@ ul#console .console-error {
 #fusion-label {
     line-height:35px;
 }
+
+#interpreter-hist td input {
+    width: 30px;
+}

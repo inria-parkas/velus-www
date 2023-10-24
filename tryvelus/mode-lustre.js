@@ -7,7 +7,7 @@ ace.define("ace/mode/lustre_highlight_rules",["require","exports","module","ace/
     var LustreHighlightRules = function() {
         var keywords = "type|node|returns|var|let|tel" +
             "|if|then|else|fby|when|merge|switch|do|end|reset|every|" +
-            "automaton|state|until|unless|continue|last|" +
+            "automaton|state|until|unless|continue|last|initially|otherwise|" +
             "system|init|sub|transition|next|" + // stc coloring
             "class|instance|step|case|of|in|default|skip|" + // obc coloring
             "break|while|return"; // C coloring
@@ -29,6 +29,10 @@ ace.define("ace/mode/lustre_highlight_rules",["require","exports","module","ace/
             "start" : [ {
                 token : "comment",
                 regex : "--.*$"
+            }, {
+                token : "comment", // multi line comment
+                regex : "\\(\\*",
+                next : "comment"
             }, {
                 token : "string",           // " string
                 regex : '".*?"'
@@ -53,7 +57,16 @@ ace.define("ace/mode/lustre_highlight_rules",["require","exports","module","ace/
             }, {
                 token : "text",
                 regex : "\\s+"
-            } ]
+            } ],
+            "comment" : [
+                {
+                    token : "comment", // closing comment
+                    regex : "\\*\\)",
+                    next : "start"
+                }, {
+                    defaultToken : "comment"
+                }
+            ],
         };
     };
 
