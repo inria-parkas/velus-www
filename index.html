@@ -9,7 +9,7 @@ The main concrete result of our project is the <strong>Vélus</strong> verified 
 compiler.
 This compiler can be seen as an extension of
 <a href="http://compcert.inria.fr/">CompCert</a> for compiling Lustre.</p>
-<h2>Model-Based Development</h2>
+<h2 id="model-based-development">Model-Based Development</h2>
 <p><em>Embedded control software</em> defines the interactions of specialized hardware
 with the physical world.
 It normally ticks away unnoticed inside systems like medical devices,
@@ -21,7 +21,7 @@ machines to represent the underlying mathematical models.
 The key idea of Model-Based Development is that such models can be
 executable and serve as the base for simulation, validation, and automatic
 code generation.</p>
-<h2>Interactive Theorem Provers</h2>
+<h2 id="interactive-theorem-provers">Interactive Theorem Provers</h2>
 <p>Interactive theorem provers, also sometimes called as proof assistants, are
 software tools for functional programming, formal specification, and
 machine-checked proof.
@@ -40,7 +40,7 @@ model are implemented by the code generated for it.</p>
 with results guaranteed down to the code that executes.</p>
 </li>
 </ol>
-<h2>The Team</h2>
+<h2 id="the-team">The Team</h2>
 <p>Active development is concentrated at the <a href="http://parkas.di.ens.fr/">PARKAS</a>
 research team at <a href="http://www.inria.fr/en/centre/paris-rocquencourt">Inria
 Paris</a>.</p>
@@ -54,12 +54,17 @@ Paris</a>.</p>
 <a href="https://www.di.ens.fr/~pouzet/">Marc Pouzet</a>,
 and
 <a href="http://www-verimag.imag.fr/~riegl/">Lionel Rieg</a>.</p>
-<h2>Source Code</h2>
+<h2 id="source-code">Source Code</h2>
 <p>The <a href="https://github.com/INRIA/velus">source code</a> is available under an
 <a href="https://github.com/INRIA/velus/blob/popl20-artifact/LICENSE">Inria Non-Commercial
 License</a>.</p>
-<div class="sponsors"><img class="logo" src="img/inria.png"/><img class="logo" src="img/ens-psl.png"/><img class="logo small" src="img/anr.png"/></div></div><div class="col-md-5 col-xl-6"><h1>News</h1><dl class="velus-news"><dt><dt>2023-09-18</dt></dt><dd><dd><p><a href="https://vertmo.org/">Basile Pesin</a> presents our paper <a href="publications.html#EMSOFT23">Verified compilation
-of synchronous dataflow with state machines</a> and
+<div class="sponsors"><img class="logo" src="img/inria.png"/><img class="logo" src="img/ens-psl.png"/><img class="logo small" src="img/anr.png"/></div></div><div class="col-md-5 col-xl-6"><h1>News</h1><dl class="velus-news"><dt><dt>2023-10-13</dt></dt><dd><dd><p><a href="https://vertmo.org">Basile</a>'s <a href="https://parkas.di.ens.fr/seminars.html#2023-10-13_Pesin">thesis
+defense</a> with
+<a href="phd-pesin/">links</a> to the <a href="phd-pesin/thesis.pdf">dissertation</a>,
+<a href="phd-pesin/slides.pdf">slides</a>, and <a href="phd-pesin/try-velus/index.html">online
+compiler</a>.</p>
+</dd></dd><dt><dt>2023-09-18</dt></dt><dd><dd><p><a href="https://vertmo.org/">Basile Pesin</a> presents our paper <a href="publications.html#EMSOFT23">Verified Compilation
+of Synchronous Dataflow with State Machines</a> and
 <a href="emsoft2023/emsoft2023-poster.pdf">poster</a> at <a href="https://esweek.org/emsoft/">EMSOFT 2023</a>
 (<a href="emsoft2023/emsoft2023-slides.pdf">slides</a>).
 There is a <a href="emsoft2023/index.html">table</a> that links the main definitions
@@ -97,7 +102,4 @@ a PhD student.</p>
 defense</a>.</p>
 </dd></dd><dt><dt>2020-01-24</dt></dt><dd><dd><p>Lélio presented his <a href="files/popl2020-velus.pdf">slides</a> at POPL 2020.
 A <a href="https://youtu.be/DaPzcXwW9Kk">video</a> is available.</p>
-</dd></dd><dt><dt>2019-10-11</dt></dt><dd><dd><p>Our paper on extending Vélus with a reset operator has been
-<a href="https://popl20.sigplan.org/track/POPL-2020-Research-Papers#event-overview">accepted</a>
-at <a href="https://popl20.sigplan.org">POPL 2020</a>.</p>
 </dd></dd></dl><div class="under-news"></div></div></div></div><div class="navbar navbar-expand-md fixed-top navbar-dark bg-primary velus-navbar"><a class="navbar-brand" href="index.html">Vélus</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar" aria-expanded="false" aria-label="Toggle navigation">•••</button><div class="collapse navbar-collapse" id="collapsingNavbar"><ul class="navbar-nav mr-auto"><li class="nav-item"><a class="nav-link" href="compiler.html">compiler</a></li><li class="nav-item"><a class="nav-link" href="publications.html">publications</a></li><li class="nav-item"><a class="nav-link" href="tryvelus/index.html">demo</a></li><li class="nav-item"><a class="nav-link" href="emsoft2023/index.html">EMSOFT2023</a></li></ul></div></div><script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script><script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script><script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script></div></body></html>
