@@ -382,4 +382,91 @@
 }
 </pre>
 
+<a name="Pesin23"></a><pre>
+@phdthesis{Pesin23,
+  author = {Basile Pesin},
+  title = {Verified Compilation of a Synchronous Dataflow Language
+		 with State Machines},
+  school = {PSL University},
+  year = 2023,
+  month = oct,
+  pdf = {https://inria.hal.science/tel-04830529v1/file/pesin_phd.pdf},
+  abstract = {
+    Safety-critical embedded systems are often specified using block-diagram
+    formalisms. SCADE Suite is a development environment for such systems
+    which has been used industrially in avionics, nuclear plants, automotive
+    and other safety-critical contexts for twenty years. Its graphical
+    formalism translates to a textual representation based on the Lustre
+    synchronous dataflow language, with extensions from later languages like
+    Lucid Synchrone. In Lustre, a program is defined as a set of equations
+    that relate inputs and outputs of the program at each discrete time
+    step. The language of expressions at right of equations includes
+    arithmetic and logic operators, delay operators that access the previous
+    value of an expression, and sampling operators that allow some values to
+    be calculated less often than others.
+
+    The Vélus project aims at formalizing a subset of the Scade 6 language
+    in the Coq Proof Assistant. It proposes a specification of the dynamic
+    semantics of the language as a relation between infinite streams of
+    inputs and outputs. It also includes a compiler that uses CompCert, a
+    verified compiler for C, as its back end to produce assembly code, and
+    an end-to-end proof that compilation preserves the semantics of dataflow
+    programs.
+
+    In this thesis, we extend Vélus to support control blocks present in
+    Scade 6 and Lucid Synchrone, which includes a construction that controls
+    the activation of equations based on a condition (switch), a
+    construction that accesses the previous value of a named variable
+    (last), a construction that re-initializes delay operators (reset), and
+    finally, hierarchical state machines, which allow for the definition of
+    complex modal behaviors. All of these constructions may be arbitrarily
+    nested in a program. We extend the existing semantics of Vélus with a
+    novel specification for these constructs that encodes their behavior
+    using sampling. We propose a generic induction principle for well-formed
+    programs, which is used to prove properties of the semantic model such
+    as determinism and type system correctness. Finally, we describe the
+    extension of the Vélus compiler to handle these new constructs. We show
+    that the existing compilation scheme that lowers these constructs into
+    the core dataflow language can be implemented, specified and verified in
+    Coq. Compiling the reset and last constructs requires deeper changes in
+    the intermediate languages of Vélus.
+  }
+}
+</pre>
+
+<a name="Jeanmaire24"></a><pre>
+@phdthesis{Jeanmaire24,
+  author = {Paul Jeanmaire},
+  title = {Une sémantique dénotationnelle pour un compilateur
+		 synchrone v{\'{e}}rifi{\'{e}}},
+  school = {PSL University},
+  year = 2024,
+  month = dec,
+  abstract = {
+    Lustre is a synchronous dataflow language. Its discrete temporal
+    structure and clocking system guarantee statically bounded execution
+    time and memory consumption, favoring its adoption in mission-critical
+    systems, notably within the Scade industrial tool. Vélus, developed at
+    Inria, is a verified Lustre compiler. Based on the definition of formal
+    semantics for each intermediate language, it provides a proof that a
+    Lustre program and its translation into Clight (the language supported
+    by CompCert) exhibit identical behaviors.
+
+    In this thesis, we develop a new model of the input language's dataflow
+    kernel, based on synchronous denotational semantics, and give the exact
+    conditions for its equivalence with the existing relational model in
+    Vélus. This constructive approach results in an executable semantics,
+    reinforcing the main correctness theorem of the compilation. Thanks to
+    Scott's induction principle, specific to denotational semantics, we are
+    able to conduct very natural reasoning on program dynamics, but with
+    explicit treatment of errors that may occur at runtime. Finally, we
+    explore the possibility of freeing ourselves from language
+    synchronization constraints by proposing a formal correspondence between
+    our model and that of Kahn's networks. We outline the principles of the
+    infrastructure required for an end-to-end verified reasoning on
+    compilable programs.
+  }
+}
+</pre>
+
 </div></body></html>
