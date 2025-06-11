@@ -1,0 +1,463 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module examples</title>
+<meta name="description" content="Documentation of Coq module examples" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="coq2html.js"> </script>
+</head>
+
+<body onload="hideAll('proofscript')">
+<h1 class="title">Module examples</h1>
+<div class="coq">
+<br/>
+<span class="kwd">Set</span> <span class="kwd">Implicit</span> <span class="kwd">Arguments</span>.<br/>
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Export</span> <span class="id"><a href="lucid_ops.html">lucid_ops</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Export</span> <span class="id"><a href="sp_rec.html">sp_rec</a></span>.<br/>
+<br/>
+<span class="kwd">Require</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Arith.Arith.html">Arith</a></span>.<br/>
+<br/>
+<span class="kwd">Hint</span> <span class="id">Resolve</span> <span class="id">rec0_wf</span>: <span class="id">sp_rec0</span>.<br/>
+<span class="kwd">Hint</span> <span class="id">Extern</span> 4 (<span class="id"><a href="sampled_streams.html#sp_eq">sp_eq</a></span> <span class="id">_</span> <span class="id">_</span>) =&gt; <span class="id">refine</span> (<span class="id"><a href="sp_rec.html#rec0_inv">rec0_inv</a></span> <span class="id">_</span> <span class="id">_</span> <span class="id">_</span>) : <span class="id">sp_rec0</span>.<br/>
+<span class="kwd">Hint</span> <span class="id">Resolve</span> <span class="id">sp_inf_refl</span> : <span class="id">sp_rec0</span>.<br/>
+<span class="kwd">Hint</span> <span class="id">Resolve</span> <span class="id">glob_nfstwf_S_n_n</span> : <span class="id">sp_rec0</span>'.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="Nat">Nat</a></span> <span class="id">c</span> :=<br/>
+&nbsp;&nbsp;&lt;<span class="id">c</span>&gt;<span class="id">rec0</span> (<span class="kwd">fun</span> <span class="id">N</span> =&gt; `0` <span class="id">fby</span> (<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (`<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#S">S</a></span>`) <span class="id">N</span>)).<br/>
+<br/>
+<span class="kwd">Check</span> <span class="id"><a href="examples.html#Nat">Nat</a></span>.<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="Nat_inv">Nat_inv</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">c</span>: <span class="id"><a href="sampled_streams.html#clock">clock</a></span>), <span class="id"><a href="sampled_streams.html#sp_eq">sp_eq</a></span> (<span class="id"><a href="examples.html#Nat">Nat</a></span> <span class="id">c</span>) (`<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#O">O</a></span>` <span class="id">fby</span> (<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (`<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#S">S</a></span>`) (<span class="id"><a href="examples.html#Nat">Nat</a></span> <span class="id">c</span>))).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof1')">Proof.</span></div>
+<div class="proofscript" id="proof1">
+&nbsp;&nbsp;<span class="id">auto</span> <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="Nat_on">Nat_on</a></span> <span class="id">c</span> <span class="id">lc</span> :=<br/>
+&nbsp;&nbsp;&lt;<span class="id">c</span>&gt;<span class="id">rec0</span> (<span class="kwd">fun</span> <span class="id">N</span> =&gt; <span class="id"><a href="lucid_ops.html#merge">merge</a></span> <span class="id">lc</span> (`0` <span class="id">fby</span> ((<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (`<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#S">S</a></span>`) <span class="id">N</span>) <span class="id">when</span> <span class="id">lc</span>)) (`0`)).<br/>
+<br/>
+<span class="kwd">Check</span> <span class="id"><a href="examples.html#Nat_on">Nat_on</a></span>.<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="Nat_on_inv">Nat_on_inv</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">c</span>: <span class="id"><a href="sampled_streams.html#clock">clock</a></span>) (<span class="id">lc</span>: <span class="id"><a href="sampled_streams.html#samplStr">samplStr</a></span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#bool">bool</a></span> <span class="id">c</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="sampled_streams.html#sp_wf">sp_wf</a></span> <span class="id">lc</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="sampled_streams.html#sp_eq">sp_eq</a></span> (<span class="id"><a href="examples.html#Nat_on">Nat_on</a></span> <span class="id">lc</span>) (<span class="id"><a href="lucid_ops.html#merge">merge</a></span> <span class="id">lc</span> (`0` <span class="id">fby</span> ((<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (`<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#S">S</a></span>`) (<span class="id"><a href="examples.html#Nat_on">Nat_on</a></span> <span class="id">lc</span>)) <span class="id">when</span> <span class="id">lc</span>)) (`0`)).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof2')">Proof.</span></div>
+<div class="proofscript" id="proof2">
+&nbsp;&nbsp;<span class="id">auto</span> 10 <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="Nat_mod">Nat_mod</a></span> <span class="id">c</span> <span class="id">lc</span> :=<br/>
+&nbsp;&nbsp;&lt;<span class="id">c</span>&gt;<span class="id">rec0</span> (<span class="kwd">fun</span> <span class="id">N</span> =&gt; <span class="id"><a href="lucid_ops.html#merge">merge</a></span> <span class="id">lc</span> ((`0` <span class="id">fby</span> (<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (`<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#S">S</a></span>`) <span class="id">N</span>)) <span class="id">when</span> <span class="id">lc</span>) (`0`)).<br/>
+<br/>
+<span class="kwd">Check</span> <span class="id"><a href="examples.html#Nat_mod">Nat_mod</a></span>.<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="Nat_mod_inv">Nat_mod_inv</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">c</span>: <span class="id"><a href="sampled_streams.html#clock">clock</a></span>) (<span class="id">lc</span>: <span class="id"><a href="sampled_streams.html#samplStr">samplStr</a></span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#bool">bool</a></span> <span class="id">c</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="sampled_streams.html#sp_wf">sp_wf</a></span> <span class="id">lc</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="sampled_streams.html#sp_eq">sp_eq</a></span> (<span class="id"><a href="examples.html#Nat_mod">Nat_mod</a></span> <span class="id">lc</span>) (<span class="id"><a href="lucid_ops.html#merge">merge</a></span> <span class="id">lc</span> ((`0` <span class="id">fby</span> (<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (`<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#S">S</a></span>`) (<span class="id"><a href="examples.html#Nat_mod">Nat_mod</a></span> <span class="id">lc</span>))) <span class="id">when</span> <span class="id">lc</span>) (`0`)).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof3')">Proof.</span></div>
+<div class="proofscript" id="proof3">
+&nbsp;&nbsp;<span class="id">auto</span> 10 <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="Fib">Fib</a></span> <span class="id">c</span> :=<br/>
+&nbsp;&nbsp;&lt;<span class="id">c</span>&gt;<span class="id">rec0</span> (<span class="kwd">fun</span> <span class="id">fib</span> =&gt; `1` <span class="id">fby</span> (<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (`<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Peano.html#plus">plus</a></span>`) <span class="id">fib</span>) (`0` <span class="id">fby</span> <span class="id">fib</span>))).<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="Fib_inv">Fib_inv</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">c</span>: <span class="id"><a href="sampled_streams.html#clock">clock</a></span>),<br/>
+&nbsp;&nbsp;&nbsp;<span class="id"><a href="sampled_streams.html#sp_eq">sp_eq</a></span>  (<span class="id"><a href="examples.html#Fib">Fib</a></span> <span class="id">c</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(`1` <span class="id">fby</span> (<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (`<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Peano.html#plus">plus</a></span>`) (<span class="id"><a href="examples.html#Fib">Fib</a></span> <span class="id">c</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(`0` <span class="id">fby</span> (<span class="id"><a href="examples.html#Fib">Fib</a></span> <span class="id">c</span>)))).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof4')">Proof.</span></div>
+<div class="proofscript" id="proof4">
+&nbsp;&nbsp;<span class="id">intros</span>; <span class="id">refine</span> (<span class="id"><a href="sp_rec.html#rec0_inv">rec0_inv</a></span> <span class="id">_</span> <span class="id">_</span> <span class="id">_</span>); <span class="id">auto</span> 10 <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+&nbsp;&nbsp;<span class="id">intros</span>; <span class="id">apply</span> <span class="id"><a href="lucid_ops.html#sp_fby_glob_nfstwf">sp_fby_glob_nfstwf</a></span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="lucid_ops.html#sp_extend_glob_nfstwf">sp_extend_glob_nfstwf</a></span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="sampled_streams.html#glob_nfstwf_S_n_n">glob_nfstwf_S_n_n</a></span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="half">half</a></span> <span class="id">c</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="id">c</span>&gt;<span class="id">rec0</span> (<span class="kwd">fun</span> <span class="id">half</span> =&gt; `<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#true">true</a></span>` <span class="id">fby</span> (<span class="id"><a href="lucid_ops.html#sp_not">sp_not</a></span> <span class="id">half</span>)).<br/>
+<br/>
+<span class="kwd">Check</span> <span class="id"><a href="examples.html#half">half</a></span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="hold">hold</a></span> <span class="id">A</span> <span class="id">c</span> (<span class="id">ydef</span>: <span class="id"><a href="sampled_streams.html#samplStr">samplStr</a></span> <span class="id">A</span> <span class="id">c</span>) <span class="id">lc</span> <span class="id">x</span> :=<br/>
+&nbsp;&nbsp;<span class="id"><a href="sp_rec.html#rec0">rec0</a></span> (<span class="kwd">fun</span> <span class="id">y</span> =&gt; <span class="id"><a href="lucid_ops.html#merge">merge</a></span> <span class="id">lc</span> <span class="id">x</span> ((<span class="id">ydef</span> <span class="id">fby</span> <span class="id">y</span>) <span class="id">when</span> (<span class="id"><a href="lucid_ops.html#sp_not">sp_not</a></span> <span class="id">lc</span>))).<br/>
+<br/>
+<span class="kwd">Check</span> <span class="id"><a href="examples.html#hold">hold</a></span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="over">over</a></span> <span class="id">c</span> <span class="id">x</span> := <span class="id"><a href="examples.html#hold">hold</a></span> (`1`) (<span class="id"><a href="examples.html#half">half</a></span> <span class="id">c</span>) <span class="id">x</span>.<br/>
+<br/>
+<span class="kwd">Check</span> <span class="id"><a href="examples.html#over">over</a></span>.<br/>
+<br/>
+<br/>
+<br/>
+<span class="kwd">Require</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Arith.EqNat.html">EqNat</a></span>.<br/>
+<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id"><a name="Counter">Counter</a></span>.<br/>
+<br/>
+<span class="kwd">Variable</span> <span class="id"><a name="Counter.c">c</a></span>: <span class="id"><a href="sampled_streams.html#clock">clock</a></span>.<br/>
+<br/>
+<span class="kwd">Variable</span> <span class="id"><a name="Counter.n">n</a></span>: <span class="id"><a href="sampled_streams.html#samplStr">samplStr</a></span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#nat">nat</a></span> <span class="id"><a href="examples.html#Counter.c">c</a></span>.<br/>
+<br/>
+<span class="kwd">Hypothesis</span> <span class="id"><a name="Counter.n_wf">n_wf</a></span>: <span class="id"><a href="sampled_streams.html#sp_wf">sp_wf</a></span> <span class="id"><a href="examples.html#Counter.n">n</a></span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="acc_aux">acc_aux</a></span> <span class="id">count</span> :=<br/>
+&nbsp;&nbsp;&lt;<span class="id"><a href="examples.html#Counter.c">c</a></span>&gt;<span class="id">rec0</span> (<span class="kwd">fun</span> <span class="id">acc</span> =&gt; `1` <span class="id">fby</span> (<span class="id"><a href="lucid_ops.html#sp_if">sp_if</a></span> <span class="id">count</span> (`1`) (<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (`<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#S">S</a></span>`) <span class="id">acc</span>))).<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="acc_lfp">acc_lfp</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">m</span>: <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#nat">nat</a></span>) (<span class="id">count1</span> <span class="id">count2</span>: <span class="id"><a href="sampled_streams.html#samplStr">samplStr</a></span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#bool">bool</a></span> <span class="id"><a href="examples.html#Counter.c">c</a></span>),<br/>
+&nbsp;&nbsp;<span class="id"><a href="sampled_streams.html#sp_inf">sp_inf</a></span> <span class="id">m</span> <span class="id">count1</span> <span class="id">count2</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;-&gt; <span class="id"><a href="sampled_streams.html#sp_inf">sp_inf</a></span> <span class="id">m</span> (<span class="id"><a href="examples.html#acc_aux">acc_aux</a></span> <span class="id">count1</span>) (<span class="id"><a href="examples.html#acc_aux">acc_aux</a></span> <span class="id">count2</span>).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof5')">Proof.</span></div>
+<div class="proofscript" id="proof5">
+&nbsp;&nbsp;<span class="id">intros</span>; <span class="id">unfold</span> <span class="id"><a href="examples.html#acc_aux">acc_aux</a></span>; <span class="id">apply</span> <span class="id"><a href="sp_rec.html#rec0_lfp">rec0_lfp</a></span>.<br/>
+&nbsp;&nbsp;<span class="id">auto</span> <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Hint</span> <span class="id">Resolve</span> <span class="id">glob_nfstwf_n_le</span> : <span class="id">sp_rec0</span>.<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="acc_glob_nfstwf">acc_glob_nfstwf</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">m</span>: <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#nat">nat</a></span>) (<span class="id">count</span>: <span class="id"><a href="sampled_streams.html#samplStr">samplStr</a></span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#bool">bool</a></span> <span class="id"><a href="examples.html#Counter.c">c</a></span>),<br/>
+&nbsp;&nbsp;<span class="id"><a href="sampled_streams.html#glob_nfstwf">glob_nfstwf</a></span> <span class="id">m</span> <span class="id">count</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;-&gt; <span class="id"><a href="sampled_streams.html#glob_nfstwf">glob_nfstwf</a></span> (<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#S">S</a></span> <span class="id">m</span>) (<span class="id"><a href="examples.html#acc_aux">acc_aux</a></span> <span class="id">count</span>).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof6')">Proof.</span></div>
+<div class="proofscript" id="proof6">
+&nbsp;&nbsp;<span class="id">intros</span>; <span class="id">unfold</span> <span class="id"><a href="examples.html#acc_aux">acc_aux</a></span>; <span class="id">apply</span> <span class="id"><a href="sp_rec.html#rec0_glob_nfstwf">rec0_glob_nfstwf</a></span>.<br/>
+&nbsp;&nbsp;<span class="id">intros</span>; <span class="id">apply</span> <span class="id"><a href="lucid_ops.html#sp_fby_glob_nfstwf">sp_fby_glob_nfstwf</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">auto</span> <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="lucid_ops.html#sp_if_glob_nfstwf">sp_if_glob_nfstwf</a></span>; <span class="id">eauto</span> <span class="kwd">with</span> <span class="id">arith</span> <span class="id">sp_rec0</span>.<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">auto</span> <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Hint</span> <span class="id">Resolve</span> <span class="id">acc_lfp</span> <span class="id">acc_glob_nfstwf</span> : <span class="id">sp_rec0</span>.<br/>
+<br/>
+<span class="kwd">Require</span> <span class="kwd">Export</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Arith.EqNat.html">EqNat</a></span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="counter">counter</a></span> :=<br/>
+&nbsp;&nbsp;<span class="id"><a href="sp_rec.html#rec0">rec0</a></span> (<span class="kwd">fun</span> <span class="id">count</span> =&gt; <span class="id"><a href="lucid_ops.html#ext">ext</a></span> (<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (`<span class="id"><a href="https://coq.inria.fr/library/Coq.Arith.EqNat.html#beq_nat">beq_nat</a></span>`) <span class="id"><a href="examples.html#Counter.n">n</a></span>) (<span class="id"><a href="examples.html#acc_aux">acc_aux</a></span> <span class="id">count</span>)).<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="counter_wf">counter_wf</a></span> : <span class="id"><a href="sampled_streams.html#sp_wf">sp_wf</a></span> <span class="id"><a href="examples.html#counter">counter</a></span>.<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof7')">Proof.</span></div>
+<div class="proofscript" id="proof7">
+&nbsp;<span class="id">unfold</span> <span class="id"><a href="examples.html#counter">counter</a></span>; <span class="id">auto</span> 10 <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Hint</span> <span class="id">Resolve</span> <span class="id">counter_wf</span> : <span class="id">sp_rec0</span>.<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="counter_inv">counter_inv</a></span> :<br/>
+&nbsp;&nbsp;<span class="id"><a href="sampled_streams.html#sp_eq">sp_eq</a></span> <span class="id"><a href="examples.html#counter">counter</a></span> (<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (`<span class="id"><a href="https://coq.inria.fr/library/Coq.Arith.EqNat.html#beq_nat">beq_nat</a></span>`) <span class="id"><a href="examples.html#Counter.n">n</a></span>) (<span class="id"><a href="examples.html#acc_aux">acc_aux</a></span> <span class="id"><a href="examples.html#counter">counter</a></span>)).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof8')">Proof.</span></div>
+<div class="proofscript" id="proof8">
+&nbsp;&nbsp;<span class="id">auto</span> 10 <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="acc_aux_count_inv">acc_aux_count_inv</a></span> :<br/>
+&nbsp;&nbsp;<span class="id"><a href="sampled_streams.html#sp_eq">sp_eq</a></span> (<span class="id"><a href="examples.html#acc_aux">acc_aux</a></span> <span class="id"><a href="examples.html#counter">counter</a></span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((`1`) <span class="id">fby</span> (<span class="id"><a href="lucid_ops.html#sp_if">sp_if</a></span> <span class="id"><a href="examples.html#counter">counter</a></span> (`1`) (<span class="id"><a href="lucid_ops.html#ext">ext</a></span> (`<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#S">S</a></span>`) (<span class="id"><a href="examples.html#acc_aux">acc_aux</a></span> <span class="id"><a href="examples.html#counter">counter</a></span>)))).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof9')">Proof.</span></div>
+<div class="proofscript" id="proof9">
+&nbsp;&nbsp;<span class="id">auto</span> 10 <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">End</span> <span class="id"><a href="examples.html#Counter">Counter</a></span>.<br/>
+<br/>
+<span class="kwd">Check</span> <span class="id"><a href="examples.html#counter">counter</a></span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="filter1">filter1</a></span> <span class="id">A</span> <span class="id">c</span> <span class="id">n</span> (<span class="id">top</span>: <span class="id"><a href="sampled_streams.html#samplStr">samplStr</a></span> <span class="id">A</span> <span class="id">c</span>) := <span class="id">top</span> <span class="id">when</span> (<span class="id"><a href="examples.html#counter">counter</a></span> <span class="id">n</span>).<br/>
+<br/>
+<span class="kwd">Check</span> <span class="id"><a href="examples.html#filter1">filter1</a></span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="minute">minute</a></span> <span class="id">A</span> <span class="id">c</span> (<span class="id">sec</span>: <span class="id"><a href="sampled_streams.html#samplStr">samplStr</a></span> <span class="id">A</span> <span class="id">c</span>) := <span class="id"><a href="examples.html#filter1">filter1</a></span> (`60`) <span class="id">sec</span>.<br/>
+<br/>
+<span class="kwd">Check</span> <span class="id"><a href="examples.html#minute">minute</a></span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="hour">hour</a></span> <span class="id">A</span> <span class="id">c</span> (<span class="id">sec</span>: <span class="id"><a href="sampled_streams.html#samplStr">samplStr</a></span> <span class="id">A</span> <span class="id">c</span>) := <span class="id"><a href="examples.html#filter1">filter1</a></span> (`60`) (<span class="id"><a href="examples.html#minute">minute</a></span> <span class="id">sec</span>).<br/>
+<br/>
+<span class="kwd">Check</span> <span class="id"><a href="examples.html#hour">hour</a></span>.<br/>
+<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id"><a name="MachineACafe">MachineACafe</a></span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="sumbool2bool">sumbool2bool</a></span> (<span class="id">A</span> <span class="id">B</span>: <span class="kwd">Prop</span>) (<span class="id">x</span>: {<span class="id">A</span>}+{<span class="id">B</span>}) :=<br/>
+&nbsp;&nbsp;<span class="kwd">match</span> <span class="id">x</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Specif.html#left">left</a></span> <span class="id">_</span> =&gt; <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#true">true</a></span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Specif.html#right">right</a></span> <span class="id">_</span> =&gt; <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#false">false</a></span><br/>
+&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<br/>
+<span class="kwd">Require</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Arith.Compare_dec.html">Compare_dec</a></span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="nat_le">nat_le</a></span> <span class="id">n</span> <span class="id">m</span> := <span class="id"><a href="examples.html#sumbool2bool">sumbool2bool</a></span> (<span class="id">le_lt_dec</span> <span class="id">n</span> <span class="id">m</span>).<br/>
+<br/>
+<span class="kwd">Variable</span> <span class="id">c</span>: <span class="id">clock</span>.<br/>
+<br/>
+<span class="kwd">Variable</span> <span class="id">piece_ins</span>: <span class="id">samplStr</span> <span class="id">nat</span> <span class="id">c</span>.<br/>
+<br/>
+<span class="kwd">Variable</span> <span class="id">appui_bouton</span>: <span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>.<br/>
+<br/>
+<span class="kwd">Hypothesis</span> <span class="id">piece_ins_wf</span>: <span class="id">sp_wf</span> <span class="id">piece_ins</span>.<br/>
+<br/>
+<span class="kwd">Hypothesis</span> <span class="id">appui_bouton_wf</span>: <span class="id">sp_wf</span> <span class="id">appui_bouton</span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id">servir_cafe_aux</span> <span class="id">pnbp</span> :=<br/>
+&nbsp;&nbsp;<span class="id">ext</span> (<span class="id">ext</span> (`<span class="id">andb</span>`) <span class="id">appui_bouton</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">ext</span> (<span class="id">ext</span> (`<span class="id">nat_le</span>`) (`2`)) <span class="id">pnbp</span>).<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id">nombre_pieces</span> <span class="id">pnbp</span> := <br/>
+&nbsp;&nbsp;<span class="id">ext</span> (<span class="id">ext</span> (`<span class="id">minus</span>`) (<span class="id">ext</span> (<span class="id">ext</span> (`<span class="id">plus</span>`) <span class="id">piece_ins</span>) <span class="id">pnbp</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">sp_if</span> (<span class="id">servir_cafe_aux</span> <span class="id">pnbp</span>)  (`2`) (`0`)).<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id">prec_nombre_pieces</span> :=<br/>
+&nbsp;&nbsp;<span class="id">rec0</span> (<span class="kwd">fun</span> <span class="id">np</span> =&gt; `0` <span class="id">fby</span> (<span class="id">nombre_pieces</span> <span class="id">np</span>)).<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id">pnp_inv</span> :<br/>
+&nbsp;&nbsp;<span class="id">sp_eq</span> <span class="id">prec_nombre_pieces</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(`0` <span class="id">fby</span> (<span class="id">nombre_pieces</span> <span class="id">prec_nombre_pieces</span>)).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof10')">Proof.</span></div>
+<div class="proofscript" id="proof10">
+&nbsp;&nbsp;<span class="id">refine</span> (<span class="id">rec0_inv</span> <span class="id">_</span> <span class="id">_</span> <span class="id">_</span>); <span class="id">unfold</span> <span class="id">nombre_pieces</span>; <span class="id">unfold</span> <span class="id">servir_cafe_aux</span>;<br/>
+&nbsp;&nbsp;<span class="id">auto</span> 10 <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Definition</span> <span class="id">servir_cafe</span> :=<br/>
+&nbsp;&nbsp;<span class="id">servir_cafe_aux</span> <span class="id">prec_nombre_pieces</span>.<br/>
+<br/>
+<span class="kwd">End</span> <span class="id">MachineACafe</span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id">first</span> <span class="id">A</span> <span class="id">c</span> (<span class="id">x</span>: <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">rec0</span> (<span class="kwd">fun</span> <span class="id">fst</span> =&gt; <span class="id">x</span> <span class="id">fby</span> <span class="id">fst</span>).<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id">first_wf</span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">A</span>: <span class="kwd">Set</span>) (<span class="id">c</span>: <span class="id">clock</span>) (<span class="id">x</span>: <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">sp_wf</span> <span class="id">x</span> -&gt; <span class="id">sp_wf</span> (<span class="id">first</span> <span class="id">x</span>).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof11')">Proof.</span></div>
+<div class="proofscript" id="proof11">
+&nbsp;&nbsp;<span class="id">unfold</span> <span class="id">first</span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Hint</span> <span class="id">Resolve</span> <span class="id">first_wf</span> : <span class="id">sp_rec0</span>.<br/>
+<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id">counter1_aux</span> (<span class="id">c</span>: <span class="id">clock</span>) <span class="id">n</span> :=<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">rec1</span> (<span class="kwd">fun</span> <span class="id">_</span> =&gt; <span class="id">c</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> (<span class="id">count</span>: <span class="id">samplStr</span> <span class="id">_</span> <span class="id">c</span> -&gt; <span class="id">samplStr</span> <span class="id">_</span> <span class="id">c</span>) <span class="id">acc</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">sp_if</span> (<span class="id">ext</span> (<span class="id">ext</span> (`<span class="id">beq_nat</span>`) <span class="id">acc</span>) <span class="id">n</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(`<span class="id">true</span>` <span class="id">fby</span> (<span class="id">count</span> (`1`)))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(`<span class="id">false</span>` <span class="id">fby</span> (<span class="id">count</span> (<span class="id">ext</span> (`<span class="id">S</span>`) <span class="id">acc</span>)))).<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id">counter1_aux_inv</span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">c</span>: <span class="id">clock</span>) (<span class="id">n</span> <span class="id">acc</span>: <span class="id">samplStr</span> <span class="id">nat</span> <span class="id">c</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">sp_wf</span> <span class="id">n</span> -&gt; <span class="id">sp_wf</span> <span class="id">acc</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">sp_eq</span> (<span class="id">counter1_aux</span> <span class="id">n</span> <span class="id">acc</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">sp_if</span> (<span class="id">ext</span> (<span class="id">ext</span> (`<span class="id">beq_nat</span>`) <span class="id">acc</span>) <span class="id">n</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(`<span class="id">true</span>` <span class="id">fby</span> (<span class="id">counter1_aux</span> <span class="id">n</span> (`1`)))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(`<span class="id">false</span>` <span class="id">fby</span> (<span class="id">counter1_aux</span> <span class="id">n</span> (<span class="id">ext</span> (`<span class="id">S</span>`) <span class="id">acc</span>)))).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof12')">Proof.</span></div>
+<div class="proofscript" id="proof12">
+<span class="kwd">Check</span> <span class="id">rec1_inv</span>.<br/>
+&nbsp;&nbsp;<span class="id">intros</span> <span class="id">c</span> <span class="id">n</span> <span class="id">acc</span> <span class="id">H1</span> <span class="id">H2</span>;<br/>
+&nbsp;&nbsp;<span class="id">refine</span> (<span class="id">rec1_inv</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> (<span class="id">_</span>: <span class="id">samplStr</span> <span class="id">nat</span> <span class="id">c</span>) =&gt; <span class="id">c</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> (<span class="id">x</span>: <span class="id">samplStr</span> <span class="id">nat</span> <span class="id">c</span>) =&gt; <span class="id">sp_wf</span> <span class="id">x</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">_</span> <span class="id">_</span> <span class="id">_</span> <span class="id">_</span>);<br/>
+&nbsp;&nbsp;<span class="id">auto</span> <span class="kwd">with</span> <span class="id">sampled_str</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Definition</span> <span class="id">counter1</span> (<span class="id">c</span>: <span class="id">clock</span>) (<span class="id">n</span>: <span class="id">samplStr</span> <span class="id">nat</span> <span class="id">c</span>) : <span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span> :=<br/>
+&nbsp;&nbsp;<span class="id">counter1_aux</span> <span class="id">n</span> (`1`).<br/>
+<br/>
+<span class="kwd">Check</span> <span class="id">counter1</span>.<br/>
+<br/>
+<br/>
+<span class="kwd">Notation</span> <span class="id">Dpair</span> := (<span class="kwd">fun</span> <span class="id">P</span> =&gt; <span class="id">existT</span> <span class="id">P</span> <span class="id">_</span>).<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id">Generic_sieve</span>.<br/>
+<br/>
+<span class="kwd">Variable</span> <span class="id">A</span>: <span class="kwd">Set</span>.<br/>
+<br/>
+<span class="kwd">Variable</span> <span class="id">filter</span>: <span class="kwd">forall</span> (<span class="id">c</span>: <span class="id">clock</span>), <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span> -&gt; <span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>.<br/>
+<br/>
+<span class="kwd">Hypothesis</span> <span class="id">filter_wf</span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">c</span>: <span class="id">clock</span>) (<span class="id">x</span>: <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>), <span class="id">sp_wf</span> <span class="id">x</span> -&gt; <span class="id">sp_wf</span> (<span class="id">filter</span> <span class="id">x</span>).<br/>
+<br/>
+<span class="kwd">Hypothesis</span> <span class="id">filter_is_fst_true</span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">c</span>: <span class="id">clock</span>) (<span class="id">x</span>: <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>), <span class="id">is_fst_value</span> <span class="id">true</span> (<span class="id">filter</span> <span class="id">x</span>).<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id">sieve</span>' <span class="id">c</span> (<span class="id">x</span>: <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) :=<br/>
+&nbsp;&nbsp;(<span class="id">rec1</span> (<span class="id">projT1</span> (<span class="id">A</span>:=<span class="id">clock</span>) (<span class="id">P</span>:=<span class="kwd">fun</span> <span class="id">c</span> =&gt; <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>))<br/>
+&nbsp;(<span class="kwd">fun</span> <span class="id">sieve</span> (<span class="id">p</span>: {<span class="id">c</span>:<span class="id">clock</span> &amp; (<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>)}) =&gt; <span class="kwd">let</span> <span class="id">x</span> := (<span class="id">projT2</span> (<span class="id">A</span>:=<span class="id">clock</span>) (<span class="id">P</span>:=<span class="kwd">fun</span> <span class="id">c</span> =&gt; <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) <span class="id">p</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">merge</span> (<span class="id">filter</span> <span class="id">x</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(`<span class="id">true</span>` <span class="id">fby</span> `<span class="id">false</span>`)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">sieve</span> (<span class="id">Dpair</span> (<span class="kwd">fun</span> <span class="id">c</span> =&gt; <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) (<span class="id">x</span> <span class="id">when</span> (<span class="id">sp_not</span> (<span class="id">filter</span> <span class="id">x</span>))))))))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Dpair</span> (<span class="kwd">fun</span> <span class="id">c</span> =&gt; <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) <span class="id">x</span>).<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id">sieve</span>'<span class="id">_inv</span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">c</span>: <span class="id">clock</span>) (<span class="id">x</span>: <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>),<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">sp_wf</span> <span class="id">x</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">sp_eq</span> (<span class="id">sieve</span>' <span class="id">x</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">merge</span> (<span class="id">filter</span> <span class="id">x</span>) (`<span class="id">true</span>` <span class="id">fby</span> `<span class="id">false</span>`)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">sieve</span>' (<span class="id">x</span> <span class="id">when</span> (<span class="id">sp_not</span> (<span class="id">filter</span> <span class="id">x</span>))))).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof13')">Proof.</span></div>
+<div class="proofscript" id="proof13">
+&nbsp;&nbsp;<span class="id">Print</span> <span class="id">rec1_inv</span>.<br/>
+&nbsp;&nbsp;<span class="id">unfold</span> <span class="id">sieve</span>'; <span class="id">intros</span> <span class="id">c</span> <span class="id">x</span> <span class="id">H1</span>;<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">refine</span> (<span class="id">rec1_inv</span> <span class="id">_</span> <span class="id">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> (<span class="id">p</span>: {<span class="id">c</span>: <span class="id">clock</span> &amp; <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>}) =&gt; <span class="id">sp_wf</span> (<span class="id">projT2</span> <span class="id">p</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">_</span> <span class="id">_</span> <span class="id">_</span> <span class="id">_</span>); <span class="id">try</span> (<span class="id">simpl</span>; <span class="id">auto</span>; <span class="id">fail</span>); <span class="id">clear</span> <span class="id">H1</span> <span class="id">x</span> <span class="id">c</span>.<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">intros</span> <span class="id">s1</span> <span class="id">s2</span> <span class="id">n</span> <span class="id">H1</span> <span class="id">p</span>; <span class="id">case</span> <span class="id">p</span>; <span class="id">simpl</span>; <span class="id">intros</span> <span class="id">c</span> <span class="id">x</span>  <span class="id">H2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">apply</span> <span class="id">sp_merge_lfp</span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sampled_str</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">apply</span> <span class="id">H1</span> <span class="kwd">with</span> (<span class="id">x</span> := <span class="id">Dpair</span> (<span class="kwd">fun</span> (<span class="id">c</span>: <span class="id">clock</span>) =&gt; <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) (<span class="id">x</span> <span class="id">when</span> (<span class="id">sp_not</span> (<span class="id">filter</span> <span class="id">x</span>))));<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">simpl</span>; <span class="id">unfold</span> <span class="id">sp_not</span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sampled_str</span>.<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">intros</span> <span class="id">n</span> <span class="id">s</span> <span class="id">H1</span> <span class="id">p</span>; <span class="id">case</span> <span class="id">p</span>; <span class="id">simpl</span>; <span class="id">intros</span> <span class="id">c</span> <span class="id">x</span> <span class="id">H2</span>;<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">apply</span> <span class="id">sp_merge_true_loc_nfstwf</span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sampled_str</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">apply</span> <span class="id">H1</span> <span class="kwd">with</span> (<span class="id">x</span> := <span class="id">Dpair</span> (<span class="kwd">fun</span> (<span class="id">c</span>: <span class="id">clock</span>) =&gt; <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) (<span class="id">x</span> <span class="id">when</span> (<span class="id">sp_not</span> (<span class="id">filter</span> <span class="id">x</span>))));<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">simpl</span>; <span class="id">unfold</span> <span class="id">sp_not</span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sampled_str</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Definition</span> <span class="id">sieve</span> : <span class="kwd">forall</span> (<span class="id">c</span>: <span class="id">clock</span>), <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span> -&gt; <span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span><br/>
+&nbsp;:=<span class="id">sieve</span>'.<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id">sieve_inv</span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">c</span>: <span class="id">clock</span>) (<span class="id">x</span>: <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>),<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">sp_wf</span> <span class="id">x</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">sp_eq</span> (<span class="id">sieve</span> <span class="id">x</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">merge</span> (<span class="id">filter</span> <span class="id">x</span>) (`<span class="id">true</span>` <span class="id">fby</span> `<span class="id">false</span>`)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">sieve</span> (<span class="id">x</span> <span class="id">when</span> (<span class="id">sp_not</span> (<span class="id">filter</span> <span class="id">x</span>))))).<br/>
+<span class="kwd">Proof</span> <span class="id">sieve</span>'<span class="id">_inv</span>.<br/>
+<br/>
+<span class="kwd">End</span> <span class="id">Generic_sieve</span>.<br/>
+<br/>
+<span class="kwd">Section</span> <span class="id">My_Reset</span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id">arrow</span> <span class="id">A</span> <span class="id">c</span> (<span class="id">x</span> <span class="id">y</span>: <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) := <span class="id">sp_if</span> (`<span class="id">true</span>` <span class="id">fby</span> `<span class="id">false</span>`) <span class="id">x</span> <span class="id">y</span>.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id">o_repeat_until</span> <span class="id">c</span> <span class="id">lc</span> :=<br/>
+&nbsp;&nbsp;&lt;<span class="id">c</span>&gt;<span class="id">rec0</span> (<span class="kwd">fun</span> <span class="id">rpu</span> =&gt; <span class="id">arrow</span> (`<span class="id">true</span>`) (<span class="id">ext</span> (<span class="id">ext</span> (`<span class="id">andb</span>`) (<span class="id">sp_not</span> <span class="id">lc</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(`<span class="id">true</span>` <span class="id">fby</span> <span class="id">rpu</span>))).<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id">repeat_until</span> <span class="id">c</span> <span class="id">lc</span> :=<br/>
+&nbsp;&nbsp;&lt;<span class="id">c</span>&gt;<span class="id">rec0</span> (<span class="kwd">fun</span> <span class="id">rpu</span> =&gt; `<span class="id">true</span>` --&gt; (<span class="id">ext</span> (<span class="id">ext</span> (`<span class="id">andb</span>`) (<span class="id">sp_not</span> <span class="id">lc</span>)) (<span class="id">pre</span> <span class="id">rpu</span>))).<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id">repeat_until_wf</span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">c</span>: <span class="id">clock</span>) (<span class="id">lc</span>: <span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>),<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">sp_wf</span> <span class="id">lc</span> -&gt; <span class="id">sp_wf</span> (<span class="id">repeat_until</span> <span class="id">lc</span>).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof14')">Proof.</span></div>
+<div class="proofscript" id="proof14">
+&nbsp;&nbsp;<span class="id">unfold</span> <span class="id">repeat_until</span>; <span class="id">intros</span> <span class="id">c</span> <span class="id">lc</span> <span class="id">H</span>; <span class="id">apply</span> <span class="id">rec0_wf</span>.<br/>
+&nbsp;&nbsp;<span class="id">intros</span>; <span class="id">unfold</span> <span class="id">sp_not</span>; <span class="id">apply</span> <span class="id">sp_arrow_extend2_pre_glob_nfstwf</span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Lemma</span> <span class="id">repeat_until_inv</span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">c</span>: <span class="id">clock</span>) (<span class="id">lc</span>: <span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>),<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">sp_wf</span> <span class="id">lc</span> -&gt; <span class="id">sp_eq</span> (<span class="id">repeat_until</span> <span class="id">lc</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(`<span class="id">true</span>` --&gt; (<span class="id">ext</span> (<span class="id">ext</span> (`<span class="id">andb</span>`) (<span class="id">sp_not</span> <span class="id">lc</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">pre</span> (<span class="id">repeat_until</span> <span class="id">lc</span>)))).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof15')">Proof.</span></div>
+<div class="proofscript" id="proof15">
+&nbsp;&nbsp;<span class="id">unfold</span> <span class="id">repeat_until</span>; <span class="id">intros</span> <span class="id">c</span> <span class="id">lc</span> <span class="id">H</span>; <span class="id">refine</span> (<span class="id">rec0_inv</span> <span class="id">_</span> <span class="id">_</span> <span class="id">_</span>); <span class="id">intros</span>;<br/>
+&nbsp;&nbsp;<span class="id">unfold</span> <span class="id">sp_not</span>.<br/>
+&nbsp;&nbsp;<span class="id">apply</span> <span class="id">sp_arrow_extend2_pre_lfp</span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+&nbsp;&nbsp;<span class="id">apply</span> <span class="id">sp_arrow_extend2_pre_glob_nfstwf</span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Hint</span> <span class="id">Resolve</span> <span class="id">repeat_until_wf</span> <span class="id">repeat_until_inv</span> : <span class="id">sp_rec0</span>.<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id">repeat_is_fst_value_true</span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">c</span>: <span class="id">clock</span>) (<span class="id">lc</span>: <span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>),<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">sp_wf</span> <span class="id">lc</span> -&gt; <span class="id">is_fst_value</span> <span class="id">true</span> (<span class="id">repeat_until</span> <span class="id">lc</span>).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof16')">Proof.</span></div>
+<div class="proofscript" id="proof16">
+&nbsp;&nbsp;<span class="id">intros</span> <span class="id">c</span> <span class="id">lc</span> <span class="id">H</span>; <span class="id">apply</span> <span class="id">is_fst_value_sp_eq</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">s1</span> := `<span class="id">true</span>` --&gt; (<span class="id">ext</span> (<span class="id">ext</span> (`<span class="id">andb</span>`) (<span class="id">sp_not</span> <span class="id">lc</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">pre</span> (<span class="id">repeat_until</span> <span class="id">lc</span>))));<br/>
+&nbsp;&nbsp;<span class="id">auto</span> <span class="kwd">with</span> <span class="id">sampled_str</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">Variable</span> <span class="id">A</span> <span class="id">B</span>: <span class="kwd">Set</span>.<br/>
+<br/>
+<span class="kwd">Variable</span> <span class="id">f</span>: <span class="kwd">forall</span> (<span class="id">c</span>: <span class="id">clock</span>), <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span> -&gt; <span class="id">samplStr</span> <span class="id">B</span> <span class="id">c</span>.<br/>
+<br/>
+<span class="kwd">Hypothesis</span> <span class="id">f_wf</span>: <span class="kwd">forall</span> (<span class="id">c</span>: <span class="id">clock</span>) (<span class="id">x</span>: <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>), <span class="id">sp_wf</span> <span class="id">x</span> -&gt; <span class="id">sp_wf</span> (<span class="id">f</span> <span class="id">x</span>).<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id">reset</span>' (<span class="id">c</span>: <span class="id">clock</span>) (<span class="id">x</span>: <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) (<span class="id">lc</span>: <span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>) :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">samplStr</span> <span class="id">B</span> <span class="id">c</span> :=<br/>
+&nbsp;&nbsp;&nbsp;(<span class="id">rec1</span> (<span class="id">projT1</span> (<span class="id">A</span>:=<span class="id">clock</span>) (<span class="id">P</span>:=<span class="kwd">fun</span> <span class="id">c</span> =&gt; ((<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) * (<span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>))%<span class="id">type</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">reset</span> (<span class="id">p</span>: {<span class="id">c</span>: <span class="id">clock</span> &amp; ((<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) * (<span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>))%<span class="id">type</span>}) =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> (<span class="id">x</span>,<span class="id">lc</span>) := (<span class="id">projT2</span> (<span class="id">A</span>:=<span class="id">clock</span>) (<span class="id">P</span>:=<span class="kwd">fun</span> <span class="id">c</span> =&gt; ((<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) * (<span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>))%<span class="id">type</span>) <span class="id">p</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">c0</span> := (<span class="id">repeat_until</span> <span class="id">lc</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">merge</span> <span class="id">c0</span> (<span class="id">f</span> (<span class="id">x</span> <span class="id">when</span> <span class="id">c0</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">reset</span> (<span class="id">Dpair</span> (<span class="kwd">fun</span> (<span class="id">c</span>: <span class="id">clock</span>) =&gt; ((<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>)*(<span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>))%<span class="id">type</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<span class="id">x</span> <span class="id">when</span> (<span class="id">sp_not</span> <span class="id">c0</span>)),(<span class="id">lc</span> <span class="id">when</span> (<span class="id">sp_not</span> <span class="id">c0</span>))))))))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Dpair</span> (<span class="kwd">fun</span> (<span class="id">c</span>: <span class="id">clock</span>) =&gt; ((<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>)*(<span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>))%<span class="id">type</span>) (<span class="id">x</span>,<span class="id">lc</span>)).<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id">reset</span> <span class="id">c</span> (<span class="id">x</span>: <span class="id">samplStr</span> <span class="id">_</span> <span class="id">c</span>) <span class="id">lc</span> :=<br/>
+&nbsp;&nbsp;&nbsp;(<span class="id">rec1</span> (<span class="id">projT1</span> (<span class="id">A</span>:=<span class="id">clock</span>) (<span class="id">P</span>:=<span class="kwd">fun</span> <span class="id">c</span> =&gt; ((<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) * (<span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>))%<span class="id">type</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> <span class="id">reset</span> (<span class="id">p</span>: {<span class="id">c</span>: <span class="id">clock</span> &amp; ((<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) * (<span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>))%<span class="id">type</span>}) =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> (<span class="id">x</span>,<span class="id">lc</span>) := (<span class="id">projT2</span> (<span class="id">A</span>:=<span class="id">clock</span>) (<span class="id">P</span>:=<span class="kwd">fun</span> <span class="id">c</span> =&gt; ((<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) * (<span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>))%<span class="id">type</span>) <span class="id">p</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">c0</span> := (<span class="id">repeat_until</span> <span class="id">lc</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">merge</span> <span class="id">c0</span> (<span class="id">f</span> (<span class="id">x</span> <span class="id">when</span> <span class="id">c0</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">reset</span> (<span class="id">Dpair</span> (<span class="kwd">fun</span> (<span class="id">c</span>: <span class="id">clock</span>) =&gt; ((<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>)*(<span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>))%<span class="id">type</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<span class="id">x</span> <span class="id">when</span> (<span class="id">sp_not</span> <span class="id">c0</span>)),(<span class="id">lc</span> <span class="id">when</span> (<span class="id">sp_not</span> <span class="id">c0</span>))))))))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">Dpair</span> (<span class="kwd">fun</span> (<span class="id">c</span>: <span class="id">clock</span>) =&gt; ((<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>)*(<span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>))%<span class="id">type</span>) (<span class="id">x</span>,<span class="id">lc</span>)).<br/>
+<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id">reset_inv</span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> (<span class="id">c</span>: <span class="id">clock</span>) (<span class="id">x</span>: <span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) (<span class="id">lc</span>: <span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>),<br/>
+&nbsp;&nbsp;<span class="kwd">let</span> <span class="id">c0</span> := (<span class="id">repeat_until</span> <span class="id">lc</span>)<br/>
+&nbsp;&nbsp;<span class="kwd">in</span><br/>
+&nbsp;&nbsp;&nbsp;<span class="id">sp_wf</span> <span class="id">x</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">sp_wf</span> <span class="id">lc</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">sp_eq</span> (<span class="id">reset</span> <span class="id">x</span> <span class="id">lc</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">merge</span> <span class="id">c0</span> (<span class="id">f</span> (<span class="id">x</span> <span class="id">when</span> <span class="id">c0</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">reset</span> (<span class="id">x</span> <span class="id">when</span> (<span class="id">sp_not</span> <span class="id">c0</span>)) (<span class="id">lc</span> <span class="id">when</span> (<span class="id">sp_not</span> <span class="id">c0</span>)))).<br/>
+<div><span class="toggleproof" onclick="toggleDisplay('proof17')">Proof.</span></div>
+<div class="proofscript" id="proof17">
+&nbsp;&nbsp;<span class="id">unfold</span> <span class="id">reset</span>; <span class="id">intros</span> <span class="id">c</span> <span class="id">x</span> <span class="id">lc</span> <span class="id">H1</span> <span class="id">H2</span>;<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">refine</span> (<span class="id">rec1_inv</span> <span class="id">_</span> <span class="id">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">fun</span> (<span class="id">p</span>: {<span class="id">c</span>: <span class="id">clock</span> &amp; ((<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) * (<span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>))%<span class="id">type</span>}) =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">let</span> (<span class="id">x</span>,<span class="id">lc</span>) := (<span class="id">projT2</span> (<span class="id">A</span>:=<span class="id">clock</span>) (<span class="id">P</span>:=<span class="kwd">fun</span> <span class="id">c</span> =&gt; ((<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>) * (<span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>))%<span class="id">type</span>) <span class="id">p</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">in</span> (<span class="id">sp_wf</span> <span class="id">x</span>)/\(<span class="id">sp_wf</span> <span class="id">lc</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">_</span> <span class="id">_</span> <span class="id">_</span> <span class="id">_</span>); <span class="id">try</span> (<span class="id">simpl</span>; <span class="id">auto</span>; <span class="id">fail</span>); <span class="id">clear</span> <span class="id">H2</span> <span class="id">H1</span> <span class="id">lc</span> <span class="id">x</span> <span class="id">c</span>.<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">intros</span> <span class="id">s1</span> <span class="id">s2</span> <span class="id">n</span> <span class="id">H1</span> <span class="id">p</span>; <span class="id">case</span> <span class="id">p</span>; <span class="id">simpl</span>; <span class="id">intros</span> <span class="id">c</span> <span class="id">p</span>'; <span class="id">case</span> <span class="id">p</span>'; <span class="id">simpl</span>; <span class="id">clear</span> <span class="id">p</span> <span class="id">p</span>';<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">intros</span> <span class="id">x</span> <span class="id">lc</span> <span class="id">H2</span>; <span class="id">case</span> <span class="id">H2</span>; <span class="id">intros</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">apply</span> <span class="id">sp_merge_lfp</span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sampled_str</span> <span class="id">sp_rec0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">apply</span> <span class="id">H1</span> <span class="kwd">with</span> (<span class="id">x</span> := <span class="id">Dpair</span> (<span class="kwd">fun</span> (<span class="id">c</span>: <span class="id">clock</span>) =&gt; ((<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>)*(<span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>))%<span class="id">type</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<span class="id">x</span> <span class="id">when</span> (<span class="id">sp_not</span> (<span class="id">repeat_until</span> <span class="id">lc</span>))), (<span class="id">lc</span> <span class="id">when</span> (<span class="id">sp_not</span> (<span class="id">repeat_until</span> <span class="id">lc</span>)))));<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">simpl</span>; <span class="id">unfold</span> <span class="id">sp_not</span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sampled_str</span> <span class="id">sp_rec0</span>.<br/>
+&nbsp;&nbsp;&nbsp;<span class="id">intros</span> <span class="id">n</span> <span class="id">s</span> <span class="id">H1</span> <span class="id">p</span>; <span class="id">case</span> <span class="id">p</span>; <span class="id">intros</span> <span class="id">c</span> <span class="id">p</span>'; <span class="id">case</span> <span class="id">p</span>'; <span class="id">simpl</span>; <span class="id">clear</span> <span class="id">p</span> <span class="id">p</span>';<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">intros</span> <span class="id">x</span> <span class="id">lc</span> <span class="id">H2</span>; <span class="id">case</span> <span class="id">H2</span>; <span class="id">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">apply</span> <span class="id">sp_merge_true_loc_nfstwf</span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sampled_str</span> <span class="id">sp_rec0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">apply</span> <span class="id">repeat_is_fst_value_true</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">apply</span> <span class="id">H1</span> <span class="kwd">with</span> (<span class="id">x</span> := <span class="id">Dpair</span> (<span class="kwd">fun</span> (<span class="id">c</span>: <span class="id">clock</span>) =&gt; ((<span class="id">samplStr</span> <span class="id">A</span> <span class="id">c</span>)*(<span class="id">samplStr</span> <span class="id">bool</span> <span class="id">c</span>))%<span class="id">type</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<span class="id">x</span> <span class="id">when</span> (<span class="id">sp_not</span> (<span class="id">repeat_until</span> <span class="id">lc</span>))), (<span class="id">lc</span> <span class="id">when</span> (<span class="id">sp_not</span> (<span class="id">repeat_until</span> <span class="id">lc</span>)))));<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">simpl</span>; <span class="id">unfold</span> <span class="id">sp_not</span>; <span class="id">auto</span> <span class="kwd">with</span> <span class="id">sampled_str</span> <span class="id">sp_rec0</span>.<br/>
+Qed.</div>
+<br/>
+<span class="kwd">End</span> <span class="id">My_Reset</span>.<br/>
+<br/>
+<span class="kwd">Check</span> <span class="id">reset</span>'.<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id">expb</span> <span class="id">c</span> :=<br/>
+&nbsp;&nbsp;&lt;<span class="id">c</span>&gt;<span class="id">rec0</span> (<span class="kwd">fun</span> <span class="id">expb</span> =&gt; `<span class="id">true</span>` <span class="id">fby</span> (<span class="id">merge</span> <span class="id">expb</span> (`<span class="id">false</span>` <span class="id">fby</span> `<span class="id">true</span>`)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(`<span class="id">true</span>` <span class="id">fby</span> `<span class="id">false</span>`))).<br/>
+<br/>
+<br/>
+<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</a></div>
+</body>
+</html>
