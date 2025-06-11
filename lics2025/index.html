@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta content="ie=edge" http-equiv="x-ua-compatible"/><link href="../velus.css" rel="stylesheet"/><title>LICS 2025: References to the Rocq development</title><meta description="Link the LICS 2025 article to the Rocq development"/><link href="icons/apple-icon-512x512.png" rel="apple-touch-icon" sizes="512x512"/><link href="icons/apple-icon-196x196.png" rel="apple-touch-icon" sizes="196x196"/><link href="icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/><link href="icons/apple-icon-172x172.png" rel="apple-touch-icon" sizes="172x172"/><link href="icons/apple-icon-167x167.png" rel="apple-touch-icon" sizes="167x167"/><link href="icons/apple-icon-152x152.png" rel="apple-touch-icon" sizes="152x152"/><link href="icons/apple-icon-144x144.png" rel="apple-touch-icon" sizes="144x144"/><link href="icons/apple-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/><link href="icons/apple-icon-114x114.png" rel="apple-touch-icon" sizes="114x114"/><link href="icons/apple-icon-100x100.png" rel="apple-touch-icon" sizes="100x100"/><link href="icons/apple-icon-88x88.png" rel="apple-touch-icon" sizes="88x88"/><link href="icons/apple-icon-87x87.png" rel="apple-touch-icon" sizes="87x87"/><link href="icons/apple-icon-80x80.png" rel="apple-touch-icon" sizes="80x80"/><link href="icons/apple-icon-76x76.png" rel="apple-touch-icon" sizes="76x76"/><link href="icons/apple-icon-72x72.png" rel="apple-touch-icon" sizes="72x72"/><link href="icons/apple-icon-60x60.png" rel="apple-touch-icon" sizes="60x60"/><link href="icons/apple-icon-58x58.png" rel="apple-touch-icon" sizes="58x58"/><link href="icons/apple-icon-57x57.png" rel="apple-touch-icon" sizes="57x57"/><link href="icons/apple-icon-55x55.png" rel="apple-touch-icon" sizes="55x55"/><link href="icons/apple-icon-50x50.png" rel="apple-touch-icon" sizes="50x50"/><link href="icons/apple-icon-48x48.png" rel="apple-touch-icon" sizes="48x48"/><link href="icons/apple-icon-40x40.png" rel="apple-touch-icon" sizes="40x40"/><link href="icons/apple-icon-29x29.png" rel="apple-touch-icon" sizes="29x29"/><link href="icons/apple-icon-20x20.png" rel="apple-touch-icon" sizes="20x20"/><link href="icons/icon-256x256.png" type="image/png" rel="icon" sizes="256x256"/><link href="icons/icon-128x128.png" type="image/png" rel="icon" sizes="128x128"/><link href="icons/icon-96x96.png" type="image/png" rel="icon" sizes="96x96"/><link href="icons/icon-64x64.png" type="image/png" rel="icon" sizes="64x64"/><link href="icons/icon-48x48.png" type="image/png" rel="icon" sizes="48x48"/><link href="icons/icon-32x32.png" type="image/png" rel="icon" sizes="32x32"/><link href="icons/icon-24x24.png" type="image/png" rel="icon" sizes="24x24"/><link href="icons/icon-16x16.png" type="image/png" rel="icon" sizes="16x16"/><link href="/icons/manifest.json" rel="manifest"/><meta name="msapplication-TileColor" content="#ffffff"/><meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png"/><meta name="theme-color" content="#ffffff"/></head><body><div class="velus-all"><div class="velus-content" data-spy="scroll" data-target="#velus-side-bar"><div class="container-fluid"><div class="row"><div class="col-xl-8 col-lg-8 col-md-32 col-sm-32"><h2 id="lics-2025-references-to-the-rocq-development">LICS 2025: References to the Rocq development</h2>
+<p>This page presents the artifact associated with the LICS 2025 article
+<a href="https://velus.inria.fr/publications.html#LICS25">Functional Stream Semantics for a Synchronous Block-Diagram
+Compiler</a>, by T. Bourke,
+P. Jeanmaire, and M. Pouzet.
+The following links relate the sections of the article to relevant
+definitions of the Coq development.
+The full Coq
+<a href="https://github.com/INRIA/velus/tree/lics2025-artifact">source code</a> is
+available on github.</p>
+<p><em>Some names differ between the article and the Rocq source. The links refer
+to names from the article and Rocq names are given in parentheses.</em></p>
+<h3 id="i.b-compiler-correctness">I.B Compiler correctness</h3>
+<ul>
+<li><a href="html/Velus.VelusCorrectness.html#behavior_asm">behavior_asm</a>: compiler correctness, original
+</li>
+</ul>
+<h3 id="ii.a-abstract-syntax">II.A Abstract Syntax</h3>
+<p>We define a subset of the <a href="html/Velus.Lustre.LSyntax.html">full Lustre syntax</a> of Vélus using the following predicates:</p>
+<ul>
+<li><a href="html/Velus.Lustre.Denot.Restr.html#LRESTR.restr_exp">restr_exp</a>: expressions
+</li>
+<li><a href="html/Velus.Lustre.Denot.Restr.html#LRESTR.restr_block">restr_block</a>: equations
+</li>
+<li><a href="html/Velus.Lustre.Denot.Restr.html#LRESTR.restr_block">restr_node</a>: nodes
+</li>
+<li><a href="html/Velus.Lustre.Denot.Restr.html#LRESTR.restr_global">restr_global</a>: global programs
+</li>
+</ul>
+<p>The type of <a href="html/Velus.Clocks.html#CLOCKS.clock">clocks</a>.</p>
+<h3 id="ii.b-relational-semantics">II.B Relational Semantics</h3>
+<ul>
+<li><a href="html/Velus.Operators.html#OPERATORS.value">value</a>: the abstract type of values and its CompCert <a href="html/Velus.ObcToClight.Interface.html#Op.value">instance</a>
+</li>
+<li><a href="html/Velus.Operators.html#OPERATORS_AUX.svalue">svalue</a>: the type of synchronous values
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html">LSemantics</a>: Lustre semantic rules
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.sem_node">sem_node</a>: semantics of a Lustre node, and the <a href="html/Velus.CoindStreams.html#COINDSTREAMS.clocks_of">base-of (clocks_of)</a> function
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.sem_equation">sem_equation</a>: semantics of a Lustre equation
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sconst">Sconst</a>: semantics of a Lustre constant, and the <a href="html/Velus.CoindStreams.html#COINDSTREAMS.const">const</a> function
+</li>
+</ul>
+<h3 id="ii.c-the-cpo-library">II.C The CPO library</h3>
+<p>Imported from <a href="https://www.lri.fr/~paulin/KahnNetworks/">C. Paulin-Mohring</a>.</p>
+<h4 id="generic-definitions">Generic definitions</h4>
+<ul>
+<li><a href="html/Velus.Lustre.Denot.Cpo.Cpo_def.html#ord">ord</a>: ordered type
+</li>
+<li><a href="html/Velus.Lustre.Denot.Cpo.Cpo_def.html#monotonic">monotonic</a>: monotonic functions
+</li>
+<li><a href="html/Velus.Lustre.Denot.Cpo.Cpo_def.html#cpo">cpo</a>: CPO
+</li>
+<li><a href="html/Velus.Lustre.Denot.Cpo.Cpo_def.html#continuous">continuous</a>: continuous functions
+</li>
+<li><a href="html/Velus.Lustre.Denot.Cpo.Cpo_def.html#FIXP">FIXP</a>: fixpoint operator as a continuous function
+</li>
+</ul>
+<h4 id="stream-definitions">Stream definitions</h4>
+<ul>
+<li><a href="html/Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DStr">DStr</a>: the type of streams
+</li>
+<li><a href="html/Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DS_bot">DS_bot</a>: the bottom stream (Eps forever)
+</li>
+<li><a href="html/Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DS">DS</a>: the CPO of streams
+</li>
+<li>The <a href="html/Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#REM">REM</a>, <a href="html/Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#APP">APP</a>, <a href="html/Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#MAP">MAP</a>, <a href="html/Velus.Lustre.Denot.Cpo_ext.DS_ext.html#ZIP">zip</a>, <a href="html/Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#FILTER">FILTER</a> and <a href="html/Velus.Lustre.Denot.Cpo_ext.DS_ext.html#take">take</a> primitives, encoded with the <a href="html/Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DSCASE">scase</a> function
+</li>
+<li>The <a href="html/Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#isCon">is-cons</a> and <a href="html/Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#infinite">infinite</a> predicates
+</li>
+<li><a href="html/Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DSle">DSle</a>: the prefix order on streams
+</li>
+</ul>
+<h3 id="iii.a-values">III.A Values</h3>
+<ul>
+<li><a href="html/Velus.Lustre.Denot.SDfuns.html#sampl">sevalue (sampl)</a>: the type of synchronous possibly erroneous values
+</li>
+<li><a href="html/Velus.Lustre.Denot.SD.html#SD.SI">SEnv (DS_prod SI)</a>: the type of stream environments
+</li>
+<li><a href="html/Velus.Lustre.Denot.SD.html#SD.FI">FEnv (Dprodi FI)</a>: the type of stream functions environments
+</li>
+</ul>
+<h3 id="iii.b-fixpoint-semantics-of-nodes">III.B Fixpoint semantics of nodes</h3>
+<ul>
+<li><a href="html/Velus.Lustre.Denot.SD.html#SD.denot_node">denotN (denot_node)</a>: the denotation of nodes
+</li>
+<li><a href="html/Velus.Lustre.Denot.SD.html#SD.denot_exp_eq">denotE (denot_exp_eq)</a>: denotation of expressions
+</li>
+<li><a href="html/Velus.Lustre.Denot.SD.html#SD.denot_global">denotG (denot_global)</a>: denotation of programs
+</li>
+</ul>
+<h3 id="iii.c-synchronous-stream-operators">III.C Synchronous stream operators</h3>
+<h4 id="constants">Constants</h4>
+<ul>
+<li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.const">const</a>: constants in Vélus
+</li>
+<li><a href="html/Velus.Lustre.Denot.SDfuns.html#sconst">sconst</a>: denotational synchronous constant stream
+</li>
+<li><a href="html/Velus.Lustre.Denot.SDtoRel.html#SDTOREL.ok_const">ok_const</a>: correspondence lemma
+</li>
+</ul>
+<h4 id="binary-operators">Binary operators</h4>
+<ul>
+<li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.lift2">lift2</a>: relational lifting of binary operators
+</li>
+<li><a href="html/Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a>: denotational lifting of binary operators
+</li>
+<li><a href="html/Velus.Lustre.Denot.SDtoRel.html#SDTOREL.ok_binop">ok_binop</a>: correspondence lemma
+</li>
+</ul>
+<h4 id="sampling-operator">Sampling operator</h4>
+<ul>
+<li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.when">when</a>: relational sampling operator
+</li>
+<li><a href="html/Velus.Lustre.Denot.SDfuns.html#swhen">swhen</a>: denotational sampling operator
+</li>
+<li><a href="html/Velus.Lustre.Denot.SDtoRel.html#SDTOREL.ok_when">ok_when</a>: correspondence lemma
+</li>
+</ul>
+<h4 id="delay">Delay</h4>
+<ul>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.fby">fby</a>: relational delay operator
+</li>
+<li><a href="html/Velus.Lustre.Denot.SDfuns.html#fby_eq">fby</a>: denotational delay operator
+</li>
+<li><a href="html/Velus.Lustre.Denot.SDtoRel.html#SDTOREL.ok_fby">ok_fby</a>: correspondence lemma
+</li>
+</ul>
+<h3 id="iii.d-resettable-node-instances">III.D Resettable node instances</h3>
+<ul>
+<li><a href="html/Velus.CoindStreams.html#COINDSTREAMS.mask">mask</a>: the mask relational operator
+</li>
+<li><a href="html/Velus.Lustre.LSemantics.html#LSEMANTICS.Sapp">Sapp</a>: the relational smemantic rule for node instances
+</li>
+<li><a href="html/Velus.Lustre.Denot.ResetLs.html#reset_eq">reset</a>: characterization of reset à la Lucid Synchrone
+</li>
+<li><a href="html/Velus.Lustre.Denot.ResetLs.html#merge">merge'</a> / <a href="html/Velus.Lustre.Denot.ResetLs.html#expecta">expecta</a>: the speculative definition of merge
+</li>
+<li><a href="html/Velus.Lustre.Denot.ResetLs.html#sreset_eq">sreset</a>: characterization of denotation reset
+</li>
+<li><a href="html/Velus.Lustre.Denot.ResetLs.html#RESET_OK.reset_match">theorem 2 (reset_match)</a>: correspondence of the two characterizations
+</li>
+<li><a href="html/Velus.Lustre.Denot.SDtoRel.html#SDTOREL.ok_reset">theorem 3 (ok_reset)</a>: correspondence of denotational and relational reset
+</li>
+</ul>
+<p>Three main properties:</p>
+<ul>
+<li><a href="html/Velus.Lustre.Denot.Abs.html#ABS_INDEP.abs_indep_global">abs_indep_global</a>: invariance to initial absences
+</li>
+<li><a href="html/Velus.Lustre.Denot.Lp.html#LP.lp_global">lp_global</a>: commutation with stream prefixes
+</li>
+<li><a href="html/Velus.Lustre.Denot.ResetMask.html#abs_alignLE">abs_alignLE</a>: alignment of absences
+</li>
+</ul>
+<h3 id="iii.e-causality-errors">III.E Causality errors</h3>
+<ul>
+<li><a href="html/Velus.Lustre.Denot.Infty.html#is_ncons_S_fby">lemma 4 (is_ncons_S_fby)</a>
+</li>
+<li><a href="html/Velus.Lustre.Denot.InftyProof.html#LDENOTINF.denot_S">lemma 5 (denot_S)</a>
+</li>
+<li><a href="html/Velus.Lustre.Denot.InftyProof.html#LDENOTINF.denot_inf">theorem 4 (denot_inf)</a>
+</li>
+</ul>
+<h3 id="iii.f-typing-and-runtime-errors">III.F Typing and runtime errors</h3>
+<ul>
+<li><a href="html/Velus.Lustre.Denot.SDfuns.html#AC">clock-of (AC)</a>: getting a stream's boolean clock
+</li>
+<li><a href="html/Velus.Lustre.Denot.Safe.html#LDENOTSAFE.denot_clock">denotC (denot_clock)</a>: interpretation of a clock type
+</li>
+<li><a href="html/Velus.Lustre.Denot.Safe.html#LDENOTSAFE.wf_env">wf_env</a>: the well-formed predicate on stream environments
+</li>
+<li><a href="html/Velus.Lustre.Denot.OpErr.html#OP_ERR.no_rte_exp">no-rte-exp</a>: the no run-time errors predicate for expressions
+</li>
+<li><a href="html/Velus.Lustre.Denot.Safe.html#LDENOTSAFE.safe_node">lemma 6 (safe_node)</a>
+</li>
+<li>the same for <a href="html/Velus.Lustre.Denot.Safe.html#LDENOTSAFE.noerrors_prog">global programs</a>
+</li>
+</ul>
+<h3 id="iv-compiler-correctness">IV Compiler Correctness</h3>
+<ul>
+<li><a href="html/Velus.Lustre.Denot.SDtoRel.html#SDTOREL._ok_global_main">theorem 6 (_ok_global_main)</a>
+</li>
+<li><a href="html/Velus.VelusCorrectness.html#behavior_asm">behavior_asm</a>: original compiler correctness
+</li>
+<li><a href="html/Velus.VelusCorrectnessExistence.html#behavior_asm_exists">behavior_asm_exists</a>: new compiler correctness (figure 5)
+</li>
+</ul>
+<h3 id="iv.a-a-simple-static-analysis">IV.A A Simple static analysis</h3>
+<ul>
+<li><a href="html/Velus.ObcToClight.Interface.html#Op.check_unop">check_unop</a>: classification of CompCert's unary operators
+</li>
+<li><a href="html/Velus.ObcToClight.Interface.html#Op.check_binop">check_binop</a>: classification of CompCert's binary operators
+</li>
+<li><a href="html/Velus.Lustre.Denot.CheckOp.html#CHECKOP.check_exp">check_exp</a>: the check-ops procedure for expression
+</li>
+<li><a href="html/Velus.Lustre.Denot.OpErr.html#OP_ERR.check_global_ok">theorem 7 (check_global_ok)</a>: correction of the procedure
+</li>
+<li><a href="html/Velus.VelusCorrectnessExistence.html#behavior_asm_exists_check">theorem 8 (behavior_asm_new_check)</a>: new compiler correctness with static check
+</li>
+</ul>
+<h3 id="v-paragraph-on-dependently-typed-synchronous-semantics">V Paragraph on dependently-typed synchronous semantics</h3>
+<p>From <a href="https://www.di.ens.fr/~pouzet/lucid-synchrone/lucid_in_coq/">Boulmé and Hamon</a>, adapted to the new Coq syntax by <a href="https://www.lri.fr/~keller/etudes.html">Keller</a>.</p>
+<ul>
+<li><a href="html/lscoq/sampled_streams.html#samplElt">samplElt</a>: the type of clocked streams elements
+</li>
+<li><a href="html/lscoq/sampled_streams.html#samplStr">Str (samplStr)</a>: the type of clocked streams
+</li>
+<li><a href="html/lscoq/lucid_ops.html#sp_when">sp_when</a>: the sampling operator
+</li>
+</ul>
+</div></div></div></div><div class="navbar navbar-expand-md fixed-top navbar-dark bg-primary velus-navbar"><a class="navbar-brand" href="../index.html">Vélus</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar" aria-expanded="false" aria-label="Toggle navigation">•••</button><div class="collapse navbar-collapse" id="collapsingNavbar"><ul class="navbar-nav mr-auto"><li class="nav-item"><a class="nav-link" href="../compiler.html">compiler</a></li><li class="nav-item"><a class="nav-link" href="../publications.html">publications</a></li><li class="nav-item"><a class="nav-link" href="../tryvelus/index.html">demo</a></li><li class="nav-item"><a class="nav-link" href="../emsoft2023/index.html">EMSOFT2023</a></li><li class="nav-item active"><a class="nav-link" href="../lics2025/index.html">LICS2025</a></li></ul></div></div><script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script><script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script><script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script></div></body></html>

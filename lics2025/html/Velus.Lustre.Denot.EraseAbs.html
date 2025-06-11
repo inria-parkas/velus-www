@@ -1,0 +1,438 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module EraseAbs</title>
+<meta name="description" content="Documentation of Coq module EraseAbs" />
+<link href="coq2html.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<h1 class="title">Module EraseAbs</h1>
+<div class="coq">
+<span class="kwd">From</span> <span class="id">Coq</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html">Datatypes</a></span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Lists.List.html">List</a></span>.<br/>
+<span class="kwd">Import</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Lists.List.html#ListNotations">List.ListNotations</a></span>.<br/>
+<br/>
+<span class="kwd">From</span> <span class="id">Velus</span> <span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo.html">Lustre.Denot.Cpo</a></span> <span class="id"><a href="Velus.Common.CommonTactics.html">CommonTactics</a></span>.<br/>
+<span class="kwd">Require</span> <span class="kwd">Import</span> <span class="id"><a href="Velus.Lustre.Denot.CommonDS.html">CommonDS</a></span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html">SDfuns</a></span>.<br/>
+<br/>
+<h1> Effactement des absences dans les flots
+ * pour obtenir une sémantique de Kahn </h1>
+<br/>
+<div class="doc">définitions identiques à celles de Safe.v </div>
+<span class="kwd">Definition</span> <span class="id"><a name="safe_DS">safe_DS</a></span> {<span class="id">A</span>} : <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DS">DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sampl">sampl</a></span> <span class="id">A</span>) -&gt; <span class="kwd">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.CommonDS.html#DSForall">DSForall</a></span> (<span class="kwd">fun</span> <span class="id">v</span> =&gt; <span class="kwd">match</span> <span class="id">v</span> <span class="kwd">with</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#err">err</a></span> _ =&gt; <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Logic.html#False">False</a></span> | _ =&gt; <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Logic.html#True">True</a></span> <span class="kwd">end</span>).<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="safe_ty">safe_ty</a></span> {<span class="id">A</span>} : <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DS">DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sampl">sampl</a></span> <span class="id">A</span>) -&gt; <span class="kwd">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.CommonDS.html#DSForall">DSForall</a></span> (<span class="kwd">fun</span> <span class="id">v</span> =&gt; <span class="kwd">match</span> <span class="id">v</span> <span class="kwd">with</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#err">err</a></span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#error_Ty">error_Ty</a></span> =&gt; <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Logic.html#False">False</a></span> | _ =&gt; <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Logic.html#True">True</a></span> <span class="kwd">end</span>).<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="safe_cl">safe_cl</a></span> {<span class="id">A</span>} : <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DS">DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sampl">sampl</a></span> <span class="id">A</span>) -&gt; <span class="kwd">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.CommonDS.html#DSForall">DSForall</a></span> (<span class="kwd">fun</span> <span class="id">v</span> =&gt; <span class="kwd">match</span> <span class="id">v</span> <span class="kwd">with</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#err">err</a></span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#error_Cl">error_Cl</a></span> =&gt; <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Logic.html#False">False</a></span> | _ =&gt; <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Logic.html#True">True</a></span> <span class="kwd">end</span>).<br/>
+<br/>
+<span class="kwd">Definition</span> <span class="id"><a name="safe_op">safe_op</a></span> {<span class="id">A</span>} : <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DS">DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sampl">sampl</a></span> <span class="id">A</span>) -&gt; <span class="kwd">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.CommonDS.html#DSForall">DSForall</a></span> (<span class="kwd">fun</span> <span class="id">v</span> =&gt; <span class="kwd">match</span> <span class="id">v</span> <span class="kwd">with</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#err">err</a></span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#error_Op">error_Op</a></span> =&gt; <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Logic.html#False">False</a></span> | _ =&gt; <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Logic.html#True">True</a></span> <span class="kwd">end</span>).<br/>
+<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="nabs_dec">nabs_dec</a></span> : <span class="kwd">forall</span> <span class="id">A</span> (<span class="id">x</span> : <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sampl">sampl</a></span> <span class="id">A</span>), {<span class="id">x</span> &lt;&gt; <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#abs">abs</a></span>} + {~ <span class="id">x</span> &lt;&gt; <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#abs">abs</a></span>}.<br/>
+<details>
+<summary class="toggleproof">Proof.</summary>
+<div class="proofscript">
+ <span class="id">intros</span> ? []; <span class="id">auto</span>; <span class="id">now</span> <span class="id">left</span>. Qed.</div></details>
+<br/>
+<br/>
+<h2> Fonction d'effacement des absences d'un flot </h2>
+<span class="kwd">Definition</span> <span class="id"><a name="ea">ea</a></span> {<span class="id">A</span>} : <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DS">DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sampl">sampl</a></span> <span class="id">A</span>) -<span class="id">C</span>-&gt; <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DS">DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sampl">sampl</a></span> <span class="id">A</span>).<br/>
+&nbsp;&nbsp;<span class="id">refine</span> (<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#FILTER">FILTER</a></span> (<span class="kwd">fun</span> <span class="id">v</span> =&gt; <span class="id">v</span> &lt;&gt; <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#abs">abs</a></span>) _).<br/>
+&nbsp;&nbsp;<span class="id">intros</span> []; <span class="id">auto</span>; <span class="id">now</span> <span class="id">left</span>.<br/>
+Defined.
+<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="ea_cons">ea_cons</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">A</span> (<span class="id">x</span> : <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sampl">sampl</a></span> <span class="id">A</span>) <span class="id">xs</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> (<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#cons">cons</a></span> <span class="id">x</span> <span class="id">xs</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;== <span class="kwd">match</span> <span class="id">x</span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#abs">abs</a></span> =&gt; <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">xs</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| _ =&gt; <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#cons">cons</a></span> <span class="id">x</span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">xs</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">end</span>.<br/>
+<details>
+<summary class="toggleproof">Proof.</summary>
+<div class="proofscript">
+&nbsp;&nbsp;<span class="id">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id">unfold</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="kwd">at</span> 1.<br/>
+&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#FILTER_filter">FILTER_filter</a></span>, <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#filter_eq_cons">filter_eq_cons</a></span>.<br/>
+&nbsp;&nbsp;<span class="id">destruct</span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#nabs_dec">nabs_dec</a></span> <span class="id">A</span> <span class="id">x</span>), <span class="id">x</span>; <span class="id">try</span> <span class="id">congruence</span>; <span class="id">try</span> <span class="id">reflexivity</span>.<br/>
+Qed.</div></details>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="ea_is_cons">ea_is_cons</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">A</span> (<span class="id">xs</span> : <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DS">DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sampl">sampl</a></span> <span class="id">A</span>)),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons">is_cons</a></span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">xs</span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#isConP">isConP</a></span> (<span class="kwd">fun</span> <span class="id">v</span> =&gt; <span class="id">v</span> &lt;&gt; <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#abs">abs</a></span>) <span class="id">xs</span>.<br/>
+<details>
+<summary class="toggleproof">Proof.</summary>
+<div class="proofscript">
+&nbsp;&nbsp;<span class="id">unfold</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span>.<br/>
+&nbsp;&nbsp;<span class="id">intros</span> * <span class="id">Hc</span>%<span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#filter_is_cons">filter_is_cons</a></span>; <span class="id">auto</span>.<br/>
+Qed.</div></details>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="isConP_is_cons">isConP_is_cons</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">D</span> (<span class="id">P</span>:<span class="id">D</span>-&gt;<span class="kwd">Prop</span>) <span class="id">xs</span>, <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#isConP">isConP</a></span> <span class="id">P</span> <span class="id">xs</span> -&gt; <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons">is_cons</a></span> <span class="id">xs</span>.<br/>
+<details>
+<summary class="toggleproof">Proof.</summary>
+<div class="proofscript">
+&nbsp;&nbsp;<span class="id">induction</span> 1; <span class="id">auto</span>; <span class="id">now</span> <span class="id">constructor</span>.<br/>
+Qed.</div></details>
+<br/>
+<br/>
+<span class="kwd">Theorem</span> <span class="id"><a name="erase_unop">erase_unop</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">A</span> <span class="id">B</span> (<span class="id">op</span>:<span class="id">A</span>-&gt;<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id">B</span>) (<span class="id">xs</span> : <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DS">DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sampl">sampl</a></span> <span class="id">A</span>)),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sunop">sunop</a></span> <span class="id">op</span> <span class="id">xs</span>) == <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sunop">sunop</a></span> <span class="id">op</span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">xs</span>).<br/>
+<details>
+<summary class="toggleproof">Proof.</summary>
+<div class="proofscript">
+&nbsp;&nbsp;<span class="id">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id">unfold</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span>,<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sunop">sunop</a></span>.<br/>
+&nbsp;&nbsp;<span class="id">rewrite</span> 2 <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#MAP_map">MAP_map</a></span>.<br/>
+&nbsp;&nbsp;<span class="id">rewrite</span> 2 <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#FILTER_filter">FILTER_filter</a></span>.<br/>
+&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#map_filter">map_filter</a></span>; <span class="id">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id">intros</span> []; <span class="id">split</span>; <span class="id">intros</span>; <span class="id">try</span> <span class="id">congruence</span>.<br/>
+&nbsp;&nbsp;<span class="id">destruct</span> (<span class="id">op</span> <span class="id">a</span>); <span class="id">congruence</span>.<br/>
+Qed.</div></details>
+<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="erase_sbinop_1">erase_sbinop_1</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">A</span> <span class="id">B</span> <span class="id">C</span> (<span class="id">op</span>:<span class="id">A</span>-&gt;<span class="id">B</span>-&gt;<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id">C</span>) <span class="id">xs</span> <span class="id">ys</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#safe_DS">safe_DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> <span class="id">xs</span> <span class="id">ys</span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> <span class="id">xs</span> <span class="id">ys</span>) &lt;= <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">xs</span>) (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">ys</span>).<br/>
+<details>
+<summary class="toggleproof">Proof.</summary>
+<div class="proofscript">
+&nbsp;&nbsp;<span class="id">intros</span> * <span class="id">Hs</span>.<br/>
+&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#DSle_rec_eq2">DSle_rec_eq2</a></span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">R</span> := <span class="kwd">fun</span> <span class="id">U</span> <span class="id">V</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">exists</span> <span class="id">xs</span> <span class="id">ys</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#safe_DS">safe_DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> <span class="id">xs</span> <span class="id">ys</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\ <span class="id">U</span> == <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> <span class="id">xs</span> <span class="id">ys</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\ <span class="id">V</span> == <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">xs</span>) (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">ys</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;).<br/>
+&nbsp;&nbsp;3: <span class="id">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id">intros</span> * ? <span class="id">Eq1</span> <span class="id">Eq2</span>; <span class="id">setoid_rewrite</span> &lt;- <span class="id">Eq1</span>; <span class="id">setoid_rewrite</span> &lt;- <span class="id">Eq2</span>; <span class="id">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id">clear</span>; <span class="id">intros</span> <span class="id">U</span> <span class="id">V</span> <span class="id">Hc</span> (<span class="id">xs</span> &amp; <span class="id">ys</span> &amp; <span class="id">Hs</span> &amp; <span class="id">Hu</span> &amp; <span class="id">Hv</span>).<br/>
+&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id">Hu</span>, <span class="id">Hv</span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_is_cons">ea_is_cons</a></span> <span class="kwd">in</span> <span class="id">Hc</span> <span class="kwd">as</span> <span class="id">Hcp</span>.<br/>
+&nbsp;&nbsp;<span class="id">remember_ds</span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> <span class="id">xs</span> <span class="id">ys</span>) <span class="kwd">as</span> <span class="id">rs</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">xs</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">ys</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">U</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">V</span>.<br/>
+&nbsp;&nbsp;<span class="id">induction</span> <span class="id">Hcp</span>; <span class="id">intros</span>.<br/>
+&nbsp;&nbsp;{ <span class="id">rewrite</span> &lt;- <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#eqEps">eqEps</a></span> <span class="kwd">in</span> *; <span class="id">eauto</span> 2. }<br/>
+&nbsp;&nbsp;- <span class="id">assert</span> (<span class="id">a</span> = <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#abs">abs</a></span>); <span class="id">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">inv</span> <span class="id">Hs</span>. <span class="id">cases</span>. <span class="id">contradict</span> <span class="id">H</span>. <span class="id">congruence</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">xs</span>) <span class="kwd">as</span> (<span class="id">x</span> &amp; <span class="id">xs'</span> &amp; <span class="id">Hxs</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">eapply</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Logic.html#proj1">proj1</a></span>, <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop_is_cons">sbinop_is_cons</a></span>; <span class="id">rewrite</span> &lt;- <span class="id">Hrs</span>; <span class="id">auto</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">ys</span>) <span class="kwd">as</span> (<span class="id">y</span> &amp; <span class="id">ys'</span> &amp; <span class="id">Hys</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">eapply</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Logic.html#proj2">proj2</a></span>, <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop_is_cons">sbinop_is_cons</a></span>; <span class="id">rewrite</span> &lt;- <span class="id">Hrs</span>; <span class="id">auto</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id">Hxs</span>, <span class="id">Hys</span>, 3 <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop_eq">sbinop_eq</a></span> <span class="kwd">in</span> <span class="id">Hrs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#Con_eq_simpl">Con_eq_simpl</a></span> <span class="kwd">in</span> <span class="id">Hrs</span> <span class="kwd">as</span> [].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inv</span> <span class="id">Hs</span>; <span class="id">cases</span>; <span class="id">congruence</span>.<br/>
+&nbsp;&nbsp;- <span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">xs</span>) <span class="kwd">as</span> (<span class="id">x</span> &amp; <span class="id">xs'</span> &amp; <span class="id">Hxs</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">eapply</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Logic.html#proj1">proj1</a></span>, <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop_is_cons">sbinop_is_cons</a></span>; <span class="id">rewrite</span> &lt;- <span class="id">Hrs</span>; <span class="id">auto</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">ys</span>) <span class="kwd">as</span> (<span class="id">y</span> &amp; <span class="id">ys'</span> &amp; <span class="id">Hys</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">eapply</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Logic.html#proj2">proj2</a></span>, <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop_is_cons">sbinop_is_cons</a></span>; <span class="id">rewrite</span> &lt;- <span class="id">Hrs</span>; <span class="id">auto</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id">Hxs</span>, <span class="id">Hys</span>, 3 <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop_eq">sbinop_eq</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#Con_eq_simpl">Con_eq_simpl</a></span> <span class="kwd">in</span> <span class="id">Hrs</span> <span class="kwd">as</span> [? <span class="id">Hrs</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inv</span> <span class="id">Hs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">x</span>, <span class="id">y</span>; <span class="id">try</span> <span class="id">tauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop_eq">sbinop_eq</a></span>, <span class="id">Hrs</span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">cases_eqn</span> <span class="id">HH</span>; <span class="id">inv</span> <span class="id">HH</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> 2 <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#first_cons">first_cons</a></span>; <span class="id">split</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">setoid_rewrite</span> <span class="id">Hv</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">setoid_rewrite</span> <span class="id">Hu</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">setoid_rewrite</span> <span class="id">Hrs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> 2 <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#rem_cons">rem_cons</a></span>; <span class="id">eauto</span>.<br/>
+Qed.</div></details>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="erase_sbinop_2">erase_sbinop_2</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">A</span> <span class="id">B</span> <span class="id">C</span> (<span class="id">op</span>:<span class="id">A</span>-&gt;<span class="id">B</span>-&gt;<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id">C</span>) <span class="id">xs</span> <span class="id">ys</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#safe_DS">safe_DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> <span class="id">xs</span> <span class="id">ys</span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">xs</span>) (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">ys</span>) &lt;= <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> <span class="id">xs</span> <span class="id">ys</span>).<br/>
+<details>
+<summary class="toggleproof">Proof.</summary>
+<div class="proofscript">
+&nbsp;&nbsp;<span class="id">intros</span> * <span class="id">Hs</span>.<br/>
+&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#DSle_rec_eq2">DSle_rec_eq2</a></span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">R</span> := <span class="kwd">fun</span> <span class="id">U</span> <span class="id">V</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">exists</span> <span class="id">xs</span> <span class="id">ys</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#safe_DS">safe_DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> <span class="id">xs</span> <span class="id">ys</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\ <span class="id">U</span> == <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">xs</span>) (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">ys</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\ <span class="id">V</span> == <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> <span class="id">xs</span> <span class="id">ys</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;).<br/>
+&nbsp;&nbsp;3: <span class="id">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id">intros</span> * ? <span class="id">Eq1</span> <span class="id">Eq2</span>; <span class="id">setoid_rewrite</span> &lt;- <span class="id">Eq1</span>; <span class="id">setoid_rewrite</span> &lt;- <span class="id">Eq2</span>; <span class="id">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id">clear</span>; <span class="id">intros</span> <span class="id">U</span> <span class="id">V</span> <span class="id">Hc</span> (<span class="id">xs</span> &amp; <span class="id">ys</span> &amp; <span class="id">Hs</span> &amp; <span class="id">Hu</span> &amp; <span class="id">Hv</span>).<br/>
+&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id">Hu</span>, <span class="id">Hv</span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop_is_cons">sbinop_is_cons</a></span> <span class="kwd">in</span> <span class="id">Hc</span> <span class="kwd">as</span> [<span class="id">Hc1</span> <span class="id">Hc2</span>].<br/>
+&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_is_cons">ea_is_cons</a></span> <span class="kwd">in</span> <span class="id">Hc1</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">ys</span>.<br/>
+&nbsp;&nbsp;<span class="id">revert</span> <span class="id">U</span> <span class="id">V</span>.<br/>
+&nbsp;&nbsp;<span class="id">induction</span> <span class="id">Hc1</span>; <span class="id">intros</span>.<br/>
+&nbsp;&nbsp;- <span class="id">rewrite</span> &lt;- <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#eqEps">eqEps</a></span> <span class="kwd">in</span> *; <span class="id">apply</span> <span class="id">IHHc1</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;- <span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_is_cons">ea_is_cons</a></span> <span class="kwd">in</span> <span class="id">Hc2</span> <span class="kwd">as</span> <span class="id">Hc2'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">induction</span> <span class="id">Hc2'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id">rewrite</span> &lt;- <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#eqEps">eqEps</a></span> <span class="kwd">in</span> *; <span class="id">apply</span> <span class="id">IHHc2'</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop_eq">sbinop_eq</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inv</span> <span class="id">Hs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">cases_eqn</span> <span class="id">HH</span>; <span class="id">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2: <span class="id">contradict</span> <span class="id">H0</span>; <span class="id">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">repeat</span> <span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">eapply</span> <span class="id">IHHc1</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id">repeat</span> <span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">repeat</span> <span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop_eq">sbinop_eq</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inv</span> <span class="id">Hs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">cases_eqn</span> <span class="id">HH</span>; <span class="id">subst</span>; <span class="id">try</span> <span class="id">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">repeat</span> <span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop_eq">sbinop_eq</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">cases_eqn</span> <span class="id">HH</span>; <span class="id">subst</span>; <span class="id">try</span> <span class="id">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inv</span> <span class="id">HH2</span>; <span class="id">inv</span> <span class="id">HH</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> 2 <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#first_cons">first_cons</a></span>; <span class="id">split</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">do</span> 2 <span class="id">esplit</span>; <span class="id">rewrite</span> <span class="id">Hu</span>, <span class="id">Hv</span>, 2 <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#rem_cons">rem_cons</a></span>; <span class="id">eauto</span>.<br/>
+&nbsp;&nbsp;- <span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_is_cons">ea_is_cons</a></span> <span class="kwd">in</span> <span class="id">Hc2</span> <span class="kwd">as</span> <span class="id">Hc2'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">induction</span> <span class="id">Hc2'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id">rewrite</span> &lt;- <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#eqEps">eqEps</a></span> <span class="kwd">in</span> *; <span class="id">apply</span> <span class="id">IHHc2'</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop_eq">sbinop_eq</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inv</span> <span class="id">Hs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">cases_eqn</span> <span class="id">HH</span>; <span class="id">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">all</span>: <span class="id">contradict</span> <span class="id">H0</span>; <span class="id">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id">repeat</span> <span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">repeat</span> <span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop_eq">sbinop_eq</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inv</span> <span class="id">Hs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">cases_eqn</span> <span class="id">HH</span>; <span class="id">subst</span>; <span class="id">try</span> <span class="id">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">repeat</span> <span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop_eq">sbinop_eq</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">cases_eqn</span> <span class="id">HH</span>; <span class="id">subst</span>; <span class="id">try</span> <span class="id">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inv</span> <span class="id">HH2</span>; <span class="id">inv</span> <span class="id">HH</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> 2 <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#first_cons">first_cons</a></span>; <span class="id">split</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">do</span> 2 <span class="id">esplit</span>; <span class="id">rewrite</span> <span class="id">Hu</span>, <span class="id">Hv</span>, 2 <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#rem_cons">rem_cons</a></span>; <span class="id">eauto</span>.<br/>
+Qed.</div></details>
+<br/>
+<span class="kwd">Theorem</span> <span class="id"><a name="erase_sbinop">erase_sbinop</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">A</span> <span class="id">B</span> <span class="id">C</span> (<span class="id">op</span>:<span class="id">A</span>-&gt;<span class="id">B</span>-&gt;<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#option">option</a></span> <span class="id">C</span>) <span class="id">xs</span> <span class="id">ys</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#safe_DS">safe_DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> <span class="id">xs</span> <span class="id">ys</span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">xs</span>) (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">ys</span>) == <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sbinop">sbinop</a></span> <span class="id">op</span> <span class="id">xs</span> <span class="id">ys</span>).<br/>
+<details>
+<summary class="toggleproof">Proof.</summary>
+<div class="proofscript">
+&nbsp;&nbsp;<span class="id">split</span>; <span class="id">auto</span> <span class="kwd">using</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#erase_sbinop_1">erase_sbinop_1</a></span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#erase_sbinop_2">erase_sbinop_2</a></span>.<br/>
+Qed.</div></details>
+<br/>
+<br/>
+<span class="kwd">Lemma</span> <span class="id"><a name="erase_fby1">erase_fby1</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">A</span> <span class="id">v</span> (<span class="id">xs</span> <span class="id">ys</span> : <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DS">DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sampl">sampl</a></span> <span class="id">A</span>)),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#safe_DS">safe_DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1">fby1</a></span> (<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id">v</span>) <span class="id">xs</span> <span class="id">ys</span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1">fby1</a></span> (<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id">v</span>) <span class="id">xs</span> <span class="id">ys</span>) &lt;= <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#cons">cons</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#pres">pres</a></span> <span class="id">v</span>) (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">ys</span>).<br/>
+<details>
+<summary class="toggleproof">Proof.</summary>
+<div class="proofscript">
+&nbsp;&nbsp;<span class="id">intros</span> * <span class="id">Hs</span>.<br/>
+<br/>
+&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#DSle_rec_eq2">DSle_rec_eq2</a></span> <span class="kwd">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id">R</span> := <span class="kwd">fun</span> <span class="id">U</span> <span class="id">V</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">exists</span> <span class="id">v</span> <span class="id">xs</span> <span class="id">ys</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#safe_DS">safe_DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1">fby1</a></span> (<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id">v</span>) <span class="id">xs</span> <span class="id">ys</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\ <span class="id">U</span> == <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1">fby1</a></span> (<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id">v</span>) <span class="id">xs</span> <span class="id">ys</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\ <span class="id">V</span> == <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#cons">cons</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#pres">pres</a></span> <span class="id">v</span>) (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">ys</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\/<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="kwd">exists</span> <span class="id">xs</span> <span class="id">ys</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#safe_DS">safe_DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1AP">fby1AP</a></span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span> <span class="id">xs</span> <span class="id">ys</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\ <span class="id">U</span> == <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1AP">fby1AP</a></span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#None">None</a></span> <span class="id">xs</span> <span class="id">ys</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/\ <span class="id">V</span> == <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">ys</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;).<br/>
+&nbsp;&nbsp;3: <span class="id">eauto</span> 12.<br/>
+&nbsp;&nbsp;<span class="id">intros</span> * ? <span class="id">Eq1</span> <span class="id">Eq2</span>; <span class="id">setoid_rewrite</span> &lt;- <span class="id">Eq1</span>; <span class="id">setoid_rewrite</span> &lt;- <span class="id">Eq2</span>; <span class="id">eauto</span> 12.<br/>
+&nbsp;&nbsp;<span class="id">clear</span>; <span class="id">intros</span> <span class="id">U</span> <span class="id">V</span> <span class="id">Hc</span> [(<span class="id">v</span> &amp; <span class="id">xs</span> &amp; <span class="id">ys</span> &amp; <span class="id">Sf</span> &amp; <span class="id">Hu</span> &amp; <span class="id">Hv</span>) | (<span class="id">xs</span> &amp; <span class="id">ys</span> &amp; <span class="id">Sf</span> &amp; <span class="id">Hu</span> &amp; <span class="id">Hv</span>)].<br/>
+&nbsp;&nbsp;- <span class="id">rewrite</span> <span class="id">Hu</span>, <span class="id">Hv</span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_is_cons">ea_is_cons</a></span> <span class="kwd">in</span> <span class="id">Hc</span> <span class="kwd">as</span> <span class="id">Hcp</span>.<br/>
+&nbsp;&nbsp;<span class="id">remember_ds</span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1">fby1</a></span> (<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id">v</span>) <span class="id">xs</span> <span class="id">ys</span>) <span class="kwd">as</span> <span class="id">rs</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">xs</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">ys</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">U</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">V</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">v</span>.<br/>
+&nbsp;&nbsp;<span class="id">induction</span> <span class="id">Hcp</span>; <span class="id">intros</span>.<br/>
+&nbsp;&nbsp;{ <span class="id">rewrite</span> &lt;- <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#eqEps">eqEps</a></span> <span class="kwd">in</span> *; <span class="id">eauto</span> 2. }<br/>
+&nbsp;&nbsp;<span class="id">all</span>: <span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">xs</span>) <span class="kwd">as</span> (<span class="id">x</span> &amp; <span class="id">xs'</span> &amp; <span class="id">Hxs</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id">eapply</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1_cons">fby1_cons</a></span>; <span class="id">rewrite</span> &lt;- <span class="id">Hrs</span>; <span class="id">eauto</span> | <span class="id">rewrite</span> <span class="id">Hxs</span> <span class="kwd">in</span> *].<br/>
+&nbsp;&nbsp;+ <span class="id">assert</span> (<span class="id">a</span> = <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#abs">abs</a></span>); <span class="id">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">apply</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Logic.Decidable.html#not_not">Decidable.not_not</a></span> <span class="kwd">in</span> <span class="id">H</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">unfold</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Logic.Decidable.html#decidable">Decidable.decidable</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">a</span>; <span class="id">auto</span>; <span class="id">right</span>; <span class="id">congruence</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1_eq">fby1_eq</a></span> <span class="kwd">in</span> <span class="id">Hrs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">x</span>; <span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#Con_eq_simpl">Con_eq_simpl</a></span> <span class="kwd">in</span> <span class="id">Hrs</span> <span class="kwd">as</span> [? <span class="id">Hrs</span>]; <span class="id">try</span> <span class="id">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">all</span>: <span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">ys</span>) <span class="kwd">as</span> (<span class="id">y</span> &amp; <span class="id">ys'</span> &amp; <span class="id">Hys</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id">eapply</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1AP_cons">fby1AP_cons</a></span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#isConP_is_cons">isConP_is_cons</a></span>; <span class="id">rewrite</span> &lt;- <span class="id">Hrs</span>; <span class="id">eauto</span> | <span class="id">rewrite</span> <span class="id">Hys</span> <span class="kwd">in</span> *].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inversion_clear</span> <span class="id">Sf</span> <span class="kwd">as</span> [|??? <span class="id">Sf'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1AP_eq">fby1AP_eq</a></span> <span class="kwd">in</span> <span class="id">Hrs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">y</span>; <span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span> <span class="kwd">in</span> *; <span class="id">eauto</span> 2.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">all</span>: <span class="id">exfalso</span>; <span class="id">clear</span> <span class="id">IHHcp</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">all</span>: <span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">s</span>) <span class="kwd">as</span> (<span class="id">vs</span> &amp; <span class="id">s'</span> &amp; <span class="id">Hs</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id">eapply</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#isConP_is_cons">isConP_is_cons</a></span>; <span class="id">eauto</span> | <span class="id">rewrite</span> <span class="id">Hs</span> <span class="kwd">in</span> *].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">all</span>: <span class="id">apply</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Classes.RelationClasses.html#symmetry">symmetry</a></span>, <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#map_eq_cons_elim">map_eq_cons_elim</a></span> <span class="kwd">in</span> <span class="id">Hrs</span> <span class="kwd">as</span> (?&amp;?&amp;?&amp;?&amp;?); <span class="id">subst</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="id">inversion</span> <span class="id">Sf'</span>.<br/>
+&nbsp;&nbsp;+ <span class="id">inversion_clear</span> <span class="id">Sf</span> <span class="kwd">as</span> [|??? <span class="id">Sf'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1_eq">fby1_eq</a></span> <span class="kwd">in</span> <span class="id">Hrs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">a</span>, <span class="id">x</span>; <span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#Con_eq_simpl">Con_eq_simpl</a></span> <span class="kwd">in</span> <span class="id">Hrs</span> <span class="kwd">as</span> [<span class="id">HH</span> <span class="id">Ht</span>];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inversion_clear</span> <span class="id">HH</span>; <span class="id">try</span> (<span class="id">tauto</span> || <span class="id">congruence</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> 2 <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#first_cons">first_cons</a></span>; <span class="id">split</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">setoid_rewrite</span> <span class="id">Hu</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">setoid_rewrite</span> <span class="id">Hv</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">setoid_rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#rem_cons">rem_cons</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">setoid_rewrite</span> <span class="id">Ht</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id">Ht</span> <span class="kwd">in</span> <span class="id">Sf'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">right</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">exists</span> <span class="id">xs'</span>, <span class="id">ys</span>. <span class="id">split</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;-<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id">Hu</span>, <span class="id">Hv</span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">ys</span>) <span class="kwd">as</span> (<span class="id">y</span> &amp; <span class="id">ys'</span> &amp; <span class="id">Hys</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id">eapply</span>  <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1AP_cons">fby1AP_cons</a></span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#isConP_is_cons">isConP_is_cons</a></span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_is_cons">ea_is_cons</a></span>; <span class="id">eauto</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">rewrite</span> <span class="id">Hys</span> <span class="kwd">in</span> *].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1AP_eq">fby1AP_eq</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">y</span>; <span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;1,3: <span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">xs</span>) <span class="kwd">as</span> (<span class="id">x</span> &amp; <span class="id">xs'</span> &amp; <span class="id">Hxs</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id">eapply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#map_is_cons">map_is_cons</a></span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#isConP_is_cons">isConP_is_cons</a></span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_is_cons">ea_is_cons</a></span>, <span class="id">Hc</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">rewrite</span> <span class="id">Hxs</span>, <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#map_eq_cons">map_eq_cons</a></span> <span class="kwd">in</span> *]; <span class="id">now</span> <span class="id">inversion_clear</span> <span class="id">Sf</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;on&nbsp;se&nbsp;retrouve&nbsp;dans&nbsp;le&nbsp;même&nbsp;cas&nbsp;qu'avant&nbsp;!!&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">clear</span> <span class="id">Hys</span> <span class="id">ys</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rename</span> <span class="id">a</span> <span class="id">into</span> <span class="id">v</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rename</span> <span class="id">ys'</span> <span class="id">into</span> <span class="id">ys</span>.<br/>
+&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_is_cons">ea_is_cons</a></span> <span class="kwd">in</span> <span class="id">Hc</span> <span class="kwd">as</span> <span class="id">Hcp</span>.<br/>
+&nbsp;&nbsp;<span class="id">remember_ds</span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1">fby1</a></span> (<span class="id"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#Some">Some</a></span> <span class="id">v</span>) <span class="id">xs</span> <span class="id">ys</span>) <span class="kwd">as</span> <span class="id">rs</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">xs</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">ys</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">U</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">V</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">v</span>.<br/>
+&nbsp;&nbsp;<span class="id">induction</span> <span class="id">Hcp</span>; <span class="id">intros</span>.<br/>
+&nbsp;&nbsp;{ <span class="id">rewrite</span> &lt;- <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#eqEps">eqEps</a></span> <span class="kwd">in</span> *; <span class="id">eauto</span> 2. }<br/>
+&nbsp;&nbsp;<span class="id">all</span>: <span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">xs</span>) <span class="kwd">as</span> (<span class="id">x</span> &amp; <span class="id">xs'</span> &amp; <span class="id">Hxs</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id">eapply</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1_cons">fby1_cons</a></span>; <span class="id">rewrite</span> &lt;- <span class="id">Hrs</span>; <span class="id">eauto</span> | <span class="id">rewrite</span> <span class="id">Hxs</span> <span class="kwd">in</span> *].<br/>
+&nbsp;&nbsp;+ <span class="id">assert</span> (<span class="id">a</span> = <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#abs">abs</a></span>); <span class="id">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">apply</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Logic.Decidable.html#not_not">Decidable.not_not</a></span> <span class="kwd">in</span> <span class="id">H</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">unfold</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Logic.Decidable.html#decidable">Decidable.decidable</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">a</span>; <span class="id">auto</span>; <span class="id">right</span>; <span class="id">congruence</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1_eq">fby1_eq</a></span> <span class="kwd">in</span> <span class="id">Hrs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">x</span>; <span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#Con_eq_simpl">Con_eq_simpl</a></span> <span class="kwd">in</span> <span class="id">Hrs</span> <span class="kwd">as</span> [? <span class="id">Hrs</span>]; <span class="id">try</span> <span class="id">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">all</span>: <span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">ys</span>) <span class="kwd">as</span> (<span class="id">y</span> &amp; <span class="id">ys'</span> &amp; <span class="id">Hys</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id">eapply</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1AP_cons">fby1AP_cons</a></span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#isConP_is_cons">isConP_is_cons</a></span>; <span class="id">rewrite</span> &lt;- <span class="id">Hrs</span>; <span class="id">eauto</span> | <span class="id">rewrite</span> <span class="id">Hys</span> <span class="kwd">in</span> *].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inversion_clear</span> <span class="id">Sf</span> <span class="kwd">as</span> [|??? <span class="id">Sf'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1AP_eq">fby1AP_eq</a></span> <span class="kwd">in</span> <span class="id">Hrs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">y</span>; <span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span> <span class="kwd">in</span> *; <span class="id">eauto</span> 2.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">all</span>: <span class="id">exfalso</span>; <span class="id">clear</span> <span class="id">IHHcp</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">all</span>: <span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">s</span>) <span class="kwd">as</span> (<span class="id">vs</span> &amp; <span class="id">s'</span> &amp; <span class="id">Hs</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id">eapply</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#isConP_is_cons">isConP_is_cons</a></span>; <span class="id">eauto</span> | <span class="id">rewrite</span> <span class="id">Hs</span> <span class="kwd">in</span> *].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">all</span>: <span class="id">apply</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Classes.RelationClasses.html#symmetry">symmetry</a></span>, <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#map_eq_cons_elim">map_eq_cons_elim</a></span> <span class="kwd">in</span> <span class="id">Hrs</span> <span class="kwd">as</span> (?&amp;?&amp;?&amp;?&amp;?); <span class="id">subst</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="id">inversion</span> <span class="id">Sf'</span>.<br/>
+&nbsp;&nbsp;+ <span class="id">inversion_clear</span> <span class="id">Sf</span> <span class="kwd">as</span> [|??? <span class="id">Sf'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1_eq">fby1_eq</a></span> <span class="kwd">in</span> <span class="id">Hrs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">a</span>, <span class="id">x</span>; <span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#Con_eq_simpl">Con_eq_simpl</a></span> <span class="kwd">in</span> <span class="id">Hrs</span> <span class="kwd">as</span> [<span class="id">HH</span> <span class="id">Ht</span>];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inversion_clear</span> <span class="id">HH</span>; <span class="id">try</span> (<span class="id">tauto</span> || <span class="id">congruence</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> 2 <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#first_cons">first_cons</a></span>; <span class="id">split</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">setoid_rewrite</span> <span class="id">Hu</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">setoid_rewrite</span> <span class="id">Hv</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">setoid_rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#rem_cons">rem_cons</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">setoid_rewrite</span> <span class="id">Ht</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id">Ht</span> <span class="kwd">in</span> <span class="id">Sf'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">right</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kwd">exists</span> <span class="id">xs'</span>, <span class="id">ys</span>. <span class="id">split</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+Qed.</div></details>
+<br/>
+<span class="kwd">Theorem</span> <span class="id"><a name="erase_fby">erase_fby</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">A</span> (<span class="id">xs</span> <span class="id">ys</span> : <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DS">DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sampl">sampl</a></span> <span class="id">A</span>)),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#safe_DS">safe_DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby">fby</a></span> <span class="id">xs</span> <span class="id">ys</span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby">fby</a></span> <span class="id">xs</span> <span class="id">ys</span>) &lt;= <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#app">app</a></span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">xs</span>) (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">ys</span>).<br/>
+<details>
+<summary class="toggleproof">Proof.</summary>
+<div class="proofscript">
+&nbsp;&nbsp;<span class="id">intros</span> * <span class="id">Hs</span>.<br/>
+&nbsp;&nbsp;<span class="id">remember_ds</span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby">fby</a></span> <span class="id">xs</span> <span class="id">ys</span>)) <span class="kwd">as</span> <span class="id">U</span>.<br/>
+&nbsp;&nbsp;<span class="id">remember_ds</span> (<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#app">app</a></span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">xs</span>) (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">ys</span>)) <span class="kwd">as</span> <span class="id">V</span>.<br/>
+&nbsp;&nbsp;<span class="id">revert_all</span>; <span class="kwd">cofix</span> <span class="id">Cof</span>; <span class="id">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">U</span> <span class="kwd">as</span> [|<span class="id">u</span> <span class="id">U</span>]; [|<span class="id">clear</span> <span class="id">Cof</span>].<br/>
+&nbsp;&nbsp;{ <span class="id">constructor</span>; <span class="id">rewrite</span> &lt;- <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#eqEps">eqEps</a></span> <span class="kwd">in</span> *; <span class="id">eapply</span> <span class="id">Cof</span>; <span class="id">eauto</span>. }<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;on&nbsp;a&nbsp;une&nbsp;valeur&nbsp;sur&nbsp;U,&nbsp;donc&nbsp;un&nbsp;élément&nbsp;non&nbsp;absent&nbsp;dans&nbsp;xs&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id">remember_ds</span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby">fby</a></span> <span class="id">xs</span> <span class="id">ys</span>) <span class="kwd">as</span> <span class="id">t</span>.<br/>
+&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Classes.RelationClasses.html#symmetry">symmetry</a></span> <span class="kwd">in</span> <span class="id">HU</span> <span class="kwd">as</span> <span class="id">HU2</span>.<br/>
+&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#cons_is_cons">cons_is_cons</a></span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_is_cons">ea_is_cons</a></span> <span class="kwd">in</span> <span class="id">HU2</span>.<br/>
+&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id">HU</span>, <span class="id">HV</span>.<br/>
+&nbsp;&nbsp;<span class="id">clear</span> <span class="id">HU</span> <span class="id">HV</span> <span class="id">U</span> <span class="id">V</span> <span class="id">u</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">xs</span>.<br/>
+&nbsp;&nbsp;<span class="id">generalize</span> <span class="id">dependent</span> <span class="id">ys</span>.<br/>
+&nbsp;&nbsp;<span class="id">induction</span> <span class="id">HU2</span>; <span class="id">intros</span>.<br/>
+&nbsp;&nbsp;{ <span class="id">rewrite</span> &lt;- <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#eqEps">eqEps</a></span> <span class="kwd">in</span> *; <span class="id">auto</span>. }<br/>
+&nbsp;&nbsp;<span class="id">all</span>: <span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">xs</span>) <span class="kwd">as</span> (<span class="id">x</span> &amp; <span class="id">xs'</span> &amp; <span class="id">Hxs</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id">eapply</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby_cons">fby_cons</a></span>; <span class="id">rewrite</span> &lt;- <span class="id">Ht</span>; <span class="id">eauto</span> | <span class="id">rewrite</span> <span class="id">Hxs</span> <span class="kwd">in</span> *].<br/>
+&nbsp;&nbsp;- <span class="id">assert</span> (<span class="id">a</span> = <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#abs">abs</a></span>); <span class="id">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">apply</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Logic.Decidable.html#not_not">Decidable.not_not</a></span> <span class="kwd">in</span> <span class="id">H</span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">unfold</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Logic.Decidable.html#decidable">Decidable.decidable</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">a</span>; <span class="id">auto</span>; <span class="id">right</span>; <span class="id">congruence</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby_eq">fby_eq</a></span> <span class="kwd">in</span> <span class="id">Ht</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">x</span>; <span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#Con_eq_simpl">Con_eq_simpl</a></span> <span class="kwd">in</span> <span class="id">Ht</span> <span class="kwd">as</span> [? <span class="id">Ht</span>]; <span class="id">try</span> <span class="id">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">all</span>: <span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">ys</span>) <span class="kwd">as</span> (<span class="id">y</span> &amp; <span class="id">ys'</span> &amp; <span class="id">Hys</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id">eapply</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fbyA_cons">fbyA_cons</a></span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#isConP_is_cons">isConP_is_cons</a></span>; <span class="id">rewrite</span> &lt;- <span class="id">Ht</span>; <span class="id">eauto</span> | <span class="id">rewrite</span> <span class="id">Hys</span> <span class="kwd">in</span> *].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inversion_clear</span> <span class="id">Hs</span> <span class="kwd">as</span> [|??? <span class="id">Hs'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fbyA_eq">fbyA_eq</a></span> <span class="kwd">in</span> <span class="id">Ht</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">y</span>; <span class="id">rewrite</span> 3 <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span>; <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">all</span>: <span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">s</span>) <span class="kwd">as</span> (<span class="id">vs</span> &amp; <span class="id">s'</span> &amp; <span class="id">Hs</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id">eapply</span> <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#isConP_is_cons">isConP_is_cons</a></span>; <span class="id">eauto</span> | <span class="id">rewrite</span> <span class="id">Hs</span> <span class="kwd">in</span> *].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">all</span>: <span class="id">apply</span> <span class="id"><a href="https://coq.inria.fr/library/Coq.Classes.RelationClasses.html#symmetry">symmetry</a></span>, <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#map_eq_cons_elim">map_eq_cons_elim</a></span> <span class="kwd">in</span> <span class="id">Ht</span> <span class="kwd">as</span> (?&amp;?&amp;?&amp;?&amp;?); <span class="id">subst</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">now</span> <span class="id">inversion</span> <span class="id">Hs'</span>.<br/>
+&nbsp;&nbsp;- <span class="id">inversion_clear</span> <span class="id">Hs</span> <span class="kwd">as</span> [|??? <span class="id">Hs'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby_eq">fby_eq</a></span> <span class="kwd">in</span> <span class="id">Ht</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">a</span>, <span class="id">x</span>; <span class="id">try</span> (<span class="id">tauto</span> || <span class="id">congruence</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">all</span>: <span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo_ext.DS_ext.html#Con_eq_simpl">Con_eq_simpl</a></span> <span class="kwd">in</span> <span class="id">Ht</span> <span class="kwd">as</span> [<span class="id">HH</span> <span class="id">Ht</span>]; <span class="id">try</span> <span class="id">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">inversion_clear</span> <span class="id">HH</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> 2 <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span>, <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#app_cons">app_cons</a></span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">apply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#cons_le_compat">cons_le_compat</a></span>; <span class="id">auto</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">clear</span> - <span class="id">Ht</span> <span class="id">Hs'</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">remember_ds</span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">s</span>) <span class="kwd">as</span> <span class="id">U</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">remember_ds</span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">ys</span>) <span class="kwd">as</span> <span class="id">V</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">revert_all</span>; <span class="kwd">cofix</span> <span class="id">Cof</span>; <span class="id">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">U</span> <span class="kwd">as</span> [|<span class="id">u</span> <span class="id">U</span>]; [|<span class="id">clear</span> <span class="id">Cof</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id">constructor</span>; <span class="id">rewrite</span> &lt;- <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#eqEps">eqEps</a></span> <span class="kwd">in</span> *; <span class="id">eapply</span> <span class="id">Cof</span>; <span class="id">eauto</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">ys</span>) <span class="kwd">as</span> (<span class="id">y</span> &amp; <span class="id">ys'</span> &amp; <span class="id">Hys</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id">eapply</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1AP_cons">fby1AP_cons</a></span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#isConP_is_cons">isConP_is_cons</a></span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_is_cons">ea_is_cons</a></span>; <span class="id">rewrite</span> &lt;- <span class="id">Ht</span>, &lt;- <span class="id">HU</span>; <span class="id">eauto</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">rewrite</span> <span class="id">Hys</span> <span class="kwd">in</span> *].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby1AP_eq">fby1AP_eq</a></span> <span class="kwd">in</span> <span class="id">Ht</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> <span class="id">y</span>; <span class="id">rewrite</span> <span class="id">Ht</span> <span class="kwd">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;2: <span class="comment">(*&nbsp;cas&nbsp;intéressant&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">rewrite</span> <span class="id">HU</span>, <span class="id">HV</span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_cons">ea_cons</a></span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#erase_fby1">erase_fby1</a></span>; <span class="id">now</span> <span class="id">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">all</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id">destruct</span> (@<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#is_cons_elim">is_cons_elim</a></span> _ <span class="id">xs'</span>) <span class="kwd">as</span> (<span class="id">x</span> &amp; <span class="id">xs</span> &amp; <span class="id">Hxs</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id">eapply</span> <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#map_is_cons">map_is_cons</a></span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#isConP_is_cons">isConP_is_cons</a></span>, <span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea_is_cons">ea_is_cons</a></span>; <span class="id">rewrite</span> &lt;- <span class="id">HU</span>; <span class="id">eauto</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id">rewrite</span> <span class="id">Hxs</span>, <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#map_eq_cons">map_eq_cons</a></span> <span class="kwd">in</span> *; <span class="id">now</span> <span class="id">inversion</span> <span class="id">Hs'</span>].<br/>
+Qed.</div></details>
+<br/>
+<br/>
+<span class="kwd">Theorem</span> <span class="id"><a name="erase_fby_inf">erase_fby_inf</a></span> :<br/>
+&nbsp;&nbsp;<span class="kwd">forall</span> <span class="id">A</span> (<span class="id">xs</span> <span class="id">ys</span> : <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#DS">DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#sampl">sampl</a></span> <span class="id">A</span>)),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#infinite">infinite</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby">fby</a></span> <span class="id">xs</span> <span class="id">ys</span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#safe_DS">safe_DS</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby">fby</a></span> <span class="id">xs</span> <span class="id">ys</span>) -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> (<span class="id"><a href="Velus.Lustre.Denot.SDfuns.html#fby">fby</a></span> <span class="id">xs</span> <span class="id">ys</span>) == <span class="id"><a href="Velus.Lustre.Denot.Cpo.Cpo_streams_type.html#app">app</a></span> (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">xs</span>) (<span class="id"><a href="Velus.Lustre.Denot.EraseAbs.html#ea">ea</a></span> <span class="id">ys</span>).<br/>
+Abort.
+<br/>
+
+</div>
+<div class="footer"><hr/>Generated by <a href="https://github.com/xavierleroy/coq2html/">coq2html</a></div>
+</body>
+</html>
